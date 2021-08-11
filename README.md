@@ -1,4 +1,4 @@
-# The impact of upzoning on housing markets
+# Auckland Housing Market Dataset
 Geocoding building consents and residential transaction data into static maps  
 Enriching geospatial datasets with additional information
 
@@ -23,5 +23,5 @@ Enriching geospatial datasets with additional information
 
 These Python Jupyter (.ipynb) notebooks have been converted to HTML with `jupyter-nbconvert --to html phase1.ipynb` for ease of viewing results
 
-- [phase1](https://uoa-eresearch.github.io/house-upzone/phase1)
-- [phase2](https://uoa-eresearch.github.io/house-upzone/phase2)
+- [phase1](https://uoa-eresearch.github.io/auckland-housing/phase1)
+- [phase2](https://uoa-eresearch.github.io/auckland-housing/phase2)
