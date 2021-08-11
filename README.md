@@ -1,5 +1,5 @@
 # The impact of upzoning on housing markets
-Geocoding building consents and residential transaction data into static maps
+Geocoding building consents and residential transaction data into static maps  
 Enriching geospatial datasets with additional information
 
 ### Installation
