@@ -14392,6 +14392,11 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="4.-2018-Statistical-Area-2-Information-(information-on-the-2018SA2-that-the-consent-is-located-in)">4. 2018 Statistical Area 2 Information (information on the 2018SA2 that the consent is located in)<a class="anchor-link" href="#4.-2018-Statistical-Area-2-Information-(information-on-the-2018SA2-that-the-consent-is-located-in)">&#182;</a></h2>
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="a.-Name-(string)-SA22018_name">a. Name (string) <strong>SA22018_name</strong><a class="anchor-link" href="#a.-Name-(string)-SA22018_name">&#182;</a></h4><h4 id="b.-Numeric-code-SA22018_code">b. Numeric code <strong>SA22018_code</strong><a class="anchor-link" href="#b.-Numeric-code-SA22018_code">&#182;</a></h4>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14399,6 +14404,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sa2</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;NZ-SA/statistical-area-2-2020-generalised.gdb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+<span class="n">sa2</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14406,11 +14412,6 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="a.-Name-(string)-SA22018_name">a. Name (string) <strong>SA22018_name</strong><a class="anchor-link" href="#a.-Name-(string)-SA22018_name">&#182;</a></h4><h4 id="b.-Numeric-code-SA22018_code">b. Numeric code <strong>SA22018_code</strong><a class="anchor-link" href="#b.-Numeric-code-SA22018_code">&#182;</a></h4>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14420,7 +14421,7 @@ a.anchor-link {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
 <span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry_centroid&#39;</span><span class="p">]</span>
 <span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">parcels_sample</span><span class="p">,</span> <span class="n">sa2</span><span class="p">[[</span><span class="s1">&#39;SA22020_V1_00_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;SA22020_V1_00&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index_right&#39;</span><span class="p">])</span>
-<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;SA22020_V1_00_NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;SA22018_name&#39;</span><span class="p">,</span> <span class="s1">&#39;SA22020_V1_00&#39;</span><span class="p">:</span> <span class="s1">&#39;SA22018_code&#39;</span><span class="p">})</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;SA22020_V1_00_NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;SA22018_name&#39;</span><span class="p">,</span> <span class="s1">&#39;SA22020_V1_00&#39;</span><span class="p">:</span> <span class="s1">&#39;SA22018_code&#39;</span><span class="p">})</span>
 </pre></div>
 
      </div>
@@ -14450,6 +14451,397 @@ Wall time: 8.29 s
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="5.-Area-Unit-Information-(information-on-the-2013AU&#160;-that-the-consent-is-located-in):">5. Area Unit Information (information on the 2013AU&#160; that the consent is located in):<a class="anchor-link" href="#5.-Area-Unit-Information-(information-on-the-2013AU&#160;-that-the-consent-is-located-in):">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="a.-Name-(string)-AU2013_name">a. Name (string) <strong>AU2013_name</strong><a class="anchor-link" href="#a.-Name-(string)-AU2013_name">&#182;</a></h4><h4 id="b.-Numeric-code-AU2013_code">b. Numeric code <strong>AU2013_code</strong><a class="anchor-link" href="#b.-Numeric-code-AU2013_code">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[101]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">au2013</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;input/area-unit-2013.gdb.zip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+<span class="n">au2013</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[101]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AU2013_V1_00</th>
+      <th>AU2013_V1_00_NAME</th>
+      <th>AREA_SQ_KM</th>
+      <th>LAND_AREA_SQ_KM</th>
+      <th>Shape_Length</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1481</th>
+      <td>573903</td>
+      <td>Newlands North</td>
+      <td>0.804087</td>
+      <td>0.804087</td>
+      <td>5958.640337</td>
+      <td>MULTIPOLYGON (((174.82896 -41.21949, 174.83011...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>525202</td>
+      <td>Kawakawa-Orere</td>
+      <td>105.216001</td>
+      <td>105.216001</td>
+      <td>57437.556145</td>
+      <td>MULTIPOLYGON (((175.14259 -36.93214, 175.14265...</td>
+    </tr>
+    <tr>
+      <th>608</th>
+      <td>597102</td>
+      <td>Inland Water-Lake Ellesmere South</td>
+      <td>63.304671</td>
+      <td>0.000000</td>
+      <td>75233.330853</td>
+      <td>MULTIPOLYGON (((172.57398 -43.76779, 172.57401...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[103]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry_centroid&#39;</span><span class="p">]</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">parcels_sample</span><span class="p">,</span> <span class="n">au2013</span><span class="p">[[</span><span class="s1">&#39;AU2013_V1_00_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;AU2013_V1_00&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index_right&#39;</span><span class="p">])</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;AU2013_V1_00_NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;AU2013_name&#39;</span><span class="p">,</span> <span class="s1">&#39;AU2013_V1_00&#39;</span><span class="p">:</span> <span class="s1">&#39;AU2013_code&#39;</span><span class="p">})</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 6.96 s, sys: 0 ns, total: 6.96 s
+Wall time: 6.96 s
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="6.-2018-Meshblock-Information-(information-on-the-2018MB&#160;-that-the-consent-is-located-in):">6. 2018 Meshblock Information (information on the 2018MB&#160; that the consent is located in):<a class="anchor-link" href="#6.-2018-Meshblock-Information-(information-on-the-2018MB&#160;-that-the-consent-is-located-in):">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="a.-Code-MB2018_code">a. Code <strong>MB2018_code</strong><a class="anchor-link" href="#a.-Code-MB2018_code">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[100]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mb2018</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;input/meshblock-2018-clipped-generalised.gdb.zip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+<span class="n">mb2018</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[100]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MB2018_V1_00</th>
+      <th>LANDWATER</th>
+      <th>LANDWATER_NAME</th>
+      <th>LAND_AREA_SQ_KM</th>
+      <th>AREA_SQ_KM</th>
+      <th>SHAPE_Length</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>52865</th>
+      <td>4011926</td>
+      <td>12</td>
+      <td>Mainland</td>
+      <td>0.173710</td>
+      <td>0.173710</td>
+      <td>2129.422679</td>
+      <td>MULTIPOLYGON (((174.91945 -36.94519, 174.92053...</td>
+    </tr>
+    <tr>
+      <th>23832</th>
+      <td>1429800</td>
+      <td>12</td>
+      <td>Mainland</td>
+      <td>0.021918</td>
+      <td>0.021918</td>
+      <td>731.394363</td>
+      <td>MULTIPOLYGON (((176.91682 -39.49291, 176.91702...</td>
+    </tr>
+    <tr>
+      <th>15554</th>
+      <td>0759520</td>
+      <td>12</td>
+      <td>Mainland</td>
+      <td>0.020695</td>
+      <td>0.020695</td>
+      <td>928.355735</td>
+      <td>MULTIPOLYGON (((174.91840 -37.01411, 174.91871...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[97]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry_centroid&#39;</span><span class="p">]</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">parcels_sample</span><span class="p">,</span> <span class="n">mb2018</span><span class="p">[[</span><span class="s1">&#39;MB2018_V1_00&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index_right&#39;</span><span class="p">])</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MB2018_V1_00&#39;</span><span class="p">:</span> <span class="s1">&#39;MB2018_code&#39;</span><span class="p">})</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 11.3 s, sys: 8.2 ms, total: 11.3 s
+Wall time: 11.3 s
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="7.-2013-Meshblock-Information-(information-on-the-2013MB&#160;-that-the-consent-is-located-in):">7. 2013 Meshblock Information (information on the 2013MB&#160; that the consent is located in):<a class="anchor-link" href="#7.-2013-Meshblock-Information-(information-on-the-2013MB&#160;-that-the-consent-is-located-in):">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="a.-Code-MB2013_code">a. Code <strong>MB2013_code</strong><a class="anchor-link" href="#a.-Code-MB2013_code">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[84]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mb2013</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;input/meshblock-2013.gdb.zip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+<span class="n">mb2013</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[87]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="p">[</span><span class="s1">&#39;geometry_centroid&#39;</span><span class="p">]</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">parcels_sample</span><span class="p">,</span> <span class="n">mb2013</span><span class="p">[[</span><span class="s1">&#39;MeshblockNumber&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index_right&#39;</span><span class="p">])</span>
+<span class="n">parcels_sample</span> <span class="o">=</span> <span class="n">parcels_sample</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MeshblockNumber&#39;</span><span class="p">:</span> <span class="s1">&#39;MB2013_code&#39;</span><span class="p">})</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 11.4 s, sys: 7.05 ms, total: 11.4 s
+Wall time: 11.4 s
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="8.-Additional-distance-information-from-consent-location">8. Additional distance information from consent location<a class="anchor-link" href="#8.-Additional-distance-information-from-consent-location">&#182;</a></h2><ul>
+<li>b. Minimum Haversinedistance to Open Space(set of AUP Zones) <strong>Hdist_open</strong></li>
+<li>c. Minimum Haversine distance to motorway<strong>Hdist_motorway</strong></li>
+<li>d. Minimum Haversine distanceto main arterial road <strong>Hdist_main_road</strong></li>
+<li>e. Minimum Haversine distance to rail line <strong>Hdist_rail</strong></li>
+<li>f. Haversine distance to downtown (use Skytower coordinates) <strong>Hdist_skytowe</strong></li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>a. Minimum Haversine distance to coastline <strong>Hdist_coast</strong><br>
+There are a few different datasets that could be used for this:  <ul>
+<li>NZ Coastlines (Topo 1:50k) <a href="https://data.linz.govt.nz/layer/50258-nz-coastlines-topo-150k/">https://data.linz.govt.nz/layer/50258-nz-coastlines-topo-150k/</a></li>
+<li>NZ Coastline - mean high water <a href="https://data.linz.govt.nz/layer/105085-nz-coastline-mean-high-water/">https://data.linz.govt.nz/layer/105085-nz-coastline-mean-high-water/</a></li>
+<li>NZ Coastlines and Islands Polygons (Topo 1:50k) <a href="https://data.linz.govt.nz/layer/51153-nz-coastlines-and-islands-polygons-topo-150k/">https://data.linz.govt.nz/layer/51153-nz-coastlines-and-islands-polygons-topo-150k/</a>  </li>
+</ul>
+</li>
+</ul>
+<p>The first doesn't have islands (e.g. Waiheke).</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>b. Minimum Haversinedistance to Open Space(set of AUP Zones) <strong>Hdist_open</strong></li>
+<li>c. Minimum Haversine distance to motorway<strong>Hdist_motorway</strong></li>
+<li>d. Minimum Haversine distanceto main arterial road <strong>Hdist_main_road</strong></li>
+<li>e. Minimum Haversine distance to rail line <strong>Hdist_rail</strong></li>
+<li>f. Haversine distance to downtown (use Skytower coordinates) <strong>Hdist_skytowe</strong></li>
+</ul>
+
+</div>
 </div>
 </body>
 
