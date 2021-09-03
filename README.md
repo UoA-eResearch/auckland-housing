@@ -30,9 +30,16 @@ Enriching geospatial datasets with additional information
 - Population by Meshblock 2013 (statsnzpopulation-by-meshblock-2013-census-FGDB.zip): https://datafinder.stats.govt.nz/layer/8437-population-by-meshblock-2013-census/
 - SA2 2018 Higher Geographies (statsnzstatistical-area-2-higher-geographies-2018-clipped-generalis-FGDB.zip): https://datafinder.stats.govt.nz/layer/95065-statistical-area-2-higher-geographies-2018-generalised/
 
+#### Restricted data sources (restricted folder)
+
+Not publicly available.
+
+- CSV file containing dwellings that were sold at least once between 1990 and 2020 in the Auckland Region (QPIDs_Auckland_1990_2020.csv): https://www.library.auckland.ac.nz/databases/record/?record=ResProSalSta
+
 ### Notebooks
 
 These Python Jupyter (.ipynb) notebooks have been converted to HTML with `jupyter-nbconvert --to html phase1.ipynb` for ease of viewing results
 
 - [phase1](https://uoa-eresearch.github.io/auckland-housing/phase1)
 - [phase2](https://uoa-eresearch.github.io/auckland-housing/phase2)
+- [phase3](https://uoa-eresearch.github.io/auckland-housing/phase3)

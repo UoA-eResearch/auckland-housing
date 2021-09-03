@@ -128,7 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
-data
-CSTDAT8700_Output_20210607.zip
 nodebook_cache
+restricted
