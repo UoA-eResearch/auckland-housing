@@ -91,17 +91,26 @@ parcels_output = parcels.copy()
 parcels_output.sindex
 
 
+# In[8]:
+
+
+print('loading parcels complete')
+print(time.time() - last, 'seconds')
+last = time.time()
+print()
+
+
 # ## 1. LINZ parcel information
 # ##### a. **LINZ_parcel_ID** Parcel identifier - “certificate of title”.
 # 
 
-# In[8]:
+# In[9]:
 
 
 parcels_output['LINZ_parcel_ID'] = parcels_output.id
 
 
-# In[ ]:
+# In[10]:
 
 
 print('1a complete')
@@ -113,7 +122,7 @@ print()
 # ##### b. **LINZ_parcel_centroid_lon**
 # ##### c. **LINZ_parcel_centroid_lat**
 
-# In[9]:
+# In[11]:
 
 
 parcels_output['geometry'] = parcels_output.geometry_centroid_4326
@@ -122,7 +131,7 @@ parcels_output['LINZ_parcel_centroid_lon'] = parcels_output.geometry.x
 parcels_output['LINZ_parcel_centroid_lat'] = parcels_output.geometry.y
 
 
-# In[ ]:
+# In[12]:
 
 
 print('1bc complete')
@@ -134,7 +143,7 @@ print()
 # ##### d. **LINZ_parcel_vertices_lon** vector of longitudes of the vertices of the matched LINZ parcels 
 # ##### e. **LINZ_parcel_vertices_lat**
 
-# In[10]:
+# In[13]:
 
 
 # %%time
@@ -162,7 +171,7 @@ parcels_output["LINZ_parcel_vertices_lon"] = [v[0] for v in vertices]
 parcels_output["LINZ_parcel_vertices_lat"] = [v[1] for v in vertices]
 
 
-# In[ ]:
+# In[14]:
 
 
 print('1de complete')
@@ -174,7 +183,7 @@ print()
 # ##### f. **LINZ_parcel_roadvertices_lon** subvector of longitudes of parcel that sits adjacent to a road 
 # ##### g. **LINZ_parcel_roadvertices_lat**
 
-# In[11]:
+# In[15]:
 
 
 parcels_output['geometry'] = parcels_output.geometry_polygon_4326
@@ -183,21 +192,21 @@ parcels['geometry'] = parcels.geometry_polygon_4326
 parcels = parcels.set_crs(4326)
 
 
-# In[12]:
+# In[16]:
 
 
 roads = parcels[parcels.parcel_intent == "Road"]
 roads = roads.to_crs(parcels.crs)
 
 
-# In[13]:
+# In[17]:
 
 
 # %%time
 roads_dissolved = roads.dissolve()
 
 
-# In[14]:
+# In[20]:
 
 
 def pointarray2matarrays(pointarray):
@@ -238,7 +247,7 @@ def get_points_in_roads(row, return_matarray=True):
     return road_points
 
 
-# In[15]:
+# In[21]:
 
 
 # %%time
@@ -249,18 +258,18 @@ parcels_output['LINZ_parcel_roadvertices_lon'] = [r[0] for r in road_intersectio
 parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersections]
 
 
-# In[16]:
+# In[22]:
 
 
 parcels_output[~parcels_output.LINZ_parcel_roadvertices_lat.isin([[]])]
 
 
-# In[17]:
+# In[23]:
 
 
 # example
 # get a sample 
-sample = parcels_output.sample(1000)
+sample = parcels_output.sample(10000)
 # sample one row that has a non empty list of road vertices
 sample = sample[sample.apply(lambda x: len(x.LINZ_parcel_roadvertices_lat) != 0, axis=1)].sample(1)
 road_points = get_points_in_roads((None, sample.iloc[0]), return_matarray=False)
@@ -270,10 +279,10 @@ roads_dissolved.plot(ax=ax, color='red', alpha=0.5)
 x1, y1, x2, y2 = sample.buffer(0.001).total_bounds
 plt.xlim(x1, x2)
 plt.ylim(y1, y2)
-plt.show()
+plt.draw()
 
 
-# In[ ]:
+# In[24]:
 
 
 print('1fg complete')
@@ -298,7 +307,7 @@ print()
 
 # **first, 2a and 2b** - needed for 1i.
 
-# In[18]:
+# In[25]:
 
 
 # %%time
@@ -307,7 +316,7 @@ aup_zones.sindex
 aup_zones.sample(3)
 
 
-# In[19]:
+# In[ ]:
 
 
 # use 2193 for AUP; this will be useful later when calculating haversine distances to nearest zones
@@ -318,7 +327,7 @@ aup_zones = aup_zones.to_crs(parcels.crs)
 aup_zones = aup_zones.rename(columns={'ZONE_resol': 'LINZmatch_AUP_name', 'ZONE': 'LINZmatch_AUP_code'})
 
 
-# In[20]:
+# In[ ]:
 
 
 # %%time
@@ -331,7 +340,7 @@ display(parcels_zoned.loc[parcels_zoned.index.value_counts().index[0]][['LINZmat
 print(np.unique(parcels_zoned.index.value_counts(), return_counts=True))
 
 
-# In[21]:
+# In[ ]:
 
 
 # drop duplicate indexes and reassign to parcels
@@ -339,7 +348,7 @@ parcels_zoned = parcels_zoned.drop_duplicates(subset=['index_'])
 parcels = parcels_zoned
 
 
-# In[22]:
+# In[ ]:
 
 
 parcels_output['LINZmatch_AUP_code'] = parcels.loc[parcels_output.index].LINZmatch_AUP_code
@@ -348,7 +357,7 @@ parcels_output['LINZmatch_AUP_name'] = parcels.loc[parcels_output.index].LINZmat
 
 # **now do 1h & 1i** (now that parcels have zones)
 
-# In[23]:
+# In[ ]:
 
 
 # need polygons, will check for touching neighbours
@@ -358,7 +367,7 @@ parcels_output.geometry = parcels_output['geometry_polygon_4326']
 parcels_output = parcels_output.set_crs(4326)
 
 
-# In[24]:
+# In[ ]:
 
 
 # %%time
@@ -384,14 +393,14 @@ def find_neighbour_info(i):
 parcel_neighbour_chunks = process_map(find_neighbour_info, list(range((int(np.ceil(len(parcels_output) / row_chunk_size))))), max_workers=max_workers, chunksize=10)
 
 
-# In[25]:
+# In[ ]:
 
 
 parcels_output['LINZ_adjoining_parcel_ID'] = [ids for chunk in parcel_neighbour_chunks for ids in chunk[0]]
 parcels_output['LINZ_parcel_sides_zones'] = [zones for chunk in parcel_neighbour_chunks for zones in chunk[1]]
 
 
-# In[26]:
+# In[ ]:
 
 
 # plot a random parcel and its neighbours
@@ -413,7 +422,7 @@ print()
 # ##### j. ii. **LINZ_TRNSPWR_ohead_name**  
 # Note: What name to use? 'descriptio'? 
 
-# In[27]:
+# In[ ]:
 
 
 power = gpd.read_file('input/Transmission_Lines_exTRANSPOWER.zip!Transmission_Lines.shp').to_crs(parcels_output.crs)
@@ -422,7 +431,7 @@ power = power[power['type'] == 'TRANSLINE']
 power.sample(3)
 
 
-# In[28]:
+# In[ ]:
 
 
 # %%time
@@ -431,13 +440,13 @@ power.sample(3)
 power_intersect = gpd.sjoin(parcels_output, power[['descriptio', 'geometry']]).drop(columns=['index_right'])
 
 
-# In[29]:
+# In[ ]:
 
 
 power_intersect.index.value_counts()
 
 
-# In[30]:
+# In[ ]:
 
 
 # %%time
@@ -455,7 +464,7 @@ parcels_output['LINZ_TRNSPWR_ohead_name'] = parcel_powerlines
 parcels_output['LINZ_TRNSPWR_ohead_indicator'] = [int(p is not None) for p in parcel_powerlines]
 
 
-# In[31]:
+# In[ ]:
 
 
 ax = parcels_output[parcels_output['LINZ_TRNSPWR_ohead_indicator'] == 1].plot()
@@ -478,7 +487,7 @@ print()
 # ##### k. ii. **LINZ_VWSHFT_ohead_name** Name of the volcanic cone (e.g. Mt Albert). Leave blank if no viewshaft applies. 
 # ##### k. iii. **LINZ_VWSHFT_ohead_ID** OBJECTID of the viewshaft. Leave blank if no viewshaft applies.  
 
-# In[32]:
+# In[ ]:
 
 
 viewshafts_local = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_LocallySignificantVolcanicViewshafts.shp').to_crs(parcels_output.crs)
@@ -495,14 +504,14 @@ viewshafts_local['OBJECTID'] = ['LSVS_' + str(s) for s in viewshafts_local['OBJE
 viewshafts = pd.concat([viewshafts_museum, viewshafts_local, viewshafts_regional])
 
 
-# In[33]:
+# In[ ]:
 
 
 # %%time
 joined = gpd.sjoin(parcels_output, viewshafts[["NAME", "OBJECTID", "geometry"]])
 
 
-# In[34]:
+# In[ ]:
 
 
 # %%time
@@ -521,7 +530,7 @@ parcels_output['LINZ_VWSHFT_ohead_ID'] = [vs[0] if vs is not None else None for 
 parcels_output['LINZ_VWSHFT_ohead_indicator'] = [int(p is not None) for p in parcel_viewshafts]
 
 
-# In[35]:
+# In[ ]:
 
 
 ax = parcels_output[parcels_output.LINZ_VWSHFT_ohead_indicator == 1].plot()
@@ -554,7 +563,7 @@ print()
 # 'Rural - Waitakere Ranges Zone',  
 # 'Rural - Waitakere Foothills Zone']    
 
-# In[36]:
+# In[ ]:
 
 
 # dealing with distances: everything should be epsg 2193
@@ -562,7 +571,7 @@ parcels_output['geometry'] = parcels_output.geometry_polygon_2193
 parcels_output = parcels_output.set_crs(2193)
 
 
-# In[37]:
+# In[ ]:
 
 
 # %%time
@@ -571,13 +580,13 @@ aup_zones = aup_zones.to_crs(2193)
 aup_zones.sample(3)
 
 
-# In[38]:
+# In[ ]:
 
 
 rural_codes = aup_zones[aup_zones.ZONE_resol.str.lower().str.contains('rural - ', na=False)]['ZONE'].unique()
 
 
-# In[39]:
+# In[ ]:
 
 
 # check that each rural zone code matches with a unique rural zone name 
@@ -586,26 +595,26 @@ assert all([len(aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for 
 rural_code2name = {code: aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()[0] for code in rural_codes}
 
 
-# In[40]:
+# In[ ]:
 
 
 aup_zones[aup_zones.ZONE_resol.isna()]
 
 
-# In[41]:
+# In[ ]:
 
 
 # 2 NAs in ZONE_resol are from a zone 58, which only has observations
 aup_zones[aup_zones.ZONE == '58']
 
 
-# In[42]:
+# In[ ]:
 
 
 rural = aup_zones[aup_zones.ZONE.isin(rural_codes)]
 
 
-# In[43]:
+# In[ ]:
 
 
 rural_by_zone_dict = {code: rural[rural.ZONE == code].dissolve() for code in rural_codes}
@@ -630,7 +639,7 @@ code_candidates = np.array([x[1] for x in output])
 min_idx = np.argmin(distance_candidates, axis=-1)
 
 
-# In[44]:
+# In[ ]:
 
 
 parcels_output['Hdist_rural'] = distance_candidates[(np.arange(len(distance_candidates)), min_idx)]
@@ -638,7 +647,7 @@ parcels_output['Hdist_rural_code'] = code_candidates[(np.arange(len(distance_can
 parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2name[x.Hdist_rural_code], axis=1)
 
 
-# In[45]:
+# In[ ]:
 
 
 import matplotlib.patches as mpatches
@@ -678,13 +687,13 @@ print()
 # ##### d. i. **Hdist_bus_name**
 # ##### d. ii. **Hdist_bus_code**
 
-# In[46]:
+# In[ ]:
 
 
 business_codes = aup_zones[aup_zones.ZONE_resol.str.lower().str.contains('business - ', na=False)]['ZONE'].unique()
 
 
-# In[47]:
+# In[ ]:
 
 
 # check that each business zone code matches with a unique business zone name 
@@ -694,7 +703,7 @@ business_code2name = {code: aup_zones[aup_zones.ZONE == code].ZONE_resol.unique(
 business_code2name
 
 
-# In[48]:
+# In[ ]:
 
 
 business = aup_zones[aup_zones.ZONE.isin(business_codes)]
@@ -1140,7 +1149,7 @@ plt.xlim((plot_bounds[0], plot_bounds[2]))
 plt.ylim((plot_bounds[1], plot_bounds[3]))
 plt.title(area_code_col)
 # ctx.add_basemap(ax, crs=plot_gdf.crs, source=ctx.providers.Esri.WorldImagery)
-plt.show()
+plt.draw()
 
 
 # In[ ]:
