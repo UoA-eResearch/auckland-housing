@@ -47,15 +47,9 @@ last = time.time()
 max_workers = 30
 
 
-# In[4]:
-
-
-# ls('restricted')
-
-
 # ## Setup
 
-# In[5]:
+# In[ ]:
 
 
 # %%time
@@ -307,7 +301,7 @@ print()
 
 # **first, 2a and 2b** - needed for 1i.
 
-# In[25]:
+# In[ ]:
 
 
 # %%time
@@ -335,9 +329,9 @@ parcels_zoned = gpd.sjoin(parcels, aup_zones[['LINZmatch_AUP_name', 'LINZmatch_A
 # index for dropping duplicates
 parcels_zoned['index_'] = parcels_zoned.index
 parcels_zoned = parcels_zoned.drop_duplicates(subset=['index_', 'LINZmatch_AUP_code'])
-# only one parcel falls in two AUP zone polygons with different zone codes 
-display(parcels_zoned.loc[parcels_zoned.index.value_counts().index[0]][['LINZmatch_AUP_name', 'LINZmatch_AUP_code']])
-print(np.unique(parcels_zoned.index.value_counts(), return_counts=True))
+# # only one parcel falls in two AUP zone polygons with different zone codes 
+# display(parcels_zoned.loc[parcels_zoned.index.value_counts().index[0]][['LINZmatch_AUP_name', 'LINZmatch_AUP_code']])
+# print(np.unique(parcels_zoned.index.value_counts(), return_counts=True))
 
 
 # In[ ]:
@@ -629,7 +623,7 @@ def find_nearest(item):
     return distance_candidates, code_candidates
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=10, total=len(parcels_output))
+output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
@@ -724,12 +718,11 @@ def find_nearest(item):
     return distance_candidates, code_candidates
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=1, total=len(parcels_output))
+output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
-code_candidates = np.array([x[1] for x in output])
-
+code_candidates 
 # indices of minimum distances
 min_idx = np.argmin(distance_candidates, axis=-1)
 
@@ -829,7 +822,7 @@ def find_nearest(item):
     return distance_candidates, code_candidates
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=1, total=len(parcels_output))
+output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
@@ -907,7 +900,7 @@ for postfix, zone in tqdm(postfix2name.items()):
     resid_gdf = resid[resid.ZONE_resol == zone].dissolve()
     def get_distance(geo):
         return geo.distance(resid_gdf.geometry[0])
-    parcels_output[f'Hdist_{postfix}'] = process_map(get_distance, parcels_output.geometry, max_workers=max_workers, chunksize=1)
+    parcels_output[f'Hdist_{postfix}'] = process_map(get_distance, parcels_output.geometry, max_workers=max_workers, chunksize=100)
 
 
 # In[ ]:
@@ -930,6 +923,12 @@ print('2fghi complete')
 print(time.time() - last, 'seconds')
 last = time.time()
 print()
+
+
+# In[ ]:
+
+
+print('2 all complete')
 
 
 # ## 3-7: Areas that parcels are located in (e.g. sa2, aup etc.)  
@@ -1058,6 +1057,15 @@ param_sets.append(
 )
 
 mb2013.sample(3)
+
+
+# In[ ]:
+
+
+print('3-7 reading files complete')
+print(time.time() - last, 'seconds')
+last = time.time()
+print()
 
 
 # ## 3 - 7. perform the joins
