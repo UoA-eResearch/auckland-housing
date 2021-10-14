@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Repostat: git repository statistics.</title>
+	<link type="text/css" rel="stylesheet" href="assets/gitstats.css">
+    <link type="text/css" rel="stylesheet" href="assets/nv.d3.css">
+	<script type="text/javascript" src="assets/d3.v3.min.js"></script>
+	<script type="text/javascript" src="assets/nv.d3.min.js"></script>
+    <script type="text/javascript" src="assets/sortable.js"></script>
+    <meta name="author" content="Viktor Kopp">
+    <meta name="generator" content="Repostat ">
+</head>
+<body>
+    <h1>Authors</h1>
+    <ul class="nav">
+                    <li>
+                <a href="general.html">General</a></li>
+                    <li>
+                <a href="activity.html">Activity</a></li>
+                    <li class="active">
+                <a href="authors.html">Authors</a></li>
+                    <li>
+                <a href="files.html">Files</a></li>
+                    <li>
+                <a href="tags.html">Tags</a></li>
+                    <li>
+                <a href="about.html">About</a></li>
+        </ul>
+    <h2 id="list_of_authors"><a href="#list_of_authors">Authors statistics (top-3) </a></h2>
+<table class="authors sortable" id="authors">
+    <tr>
+        <th>Author</th>
+        <th>Commits</th><th>Merge commits</th>
+        <th>+ lines</th><th>- lines</th>
+        <th>First commit</th><th>Latest commit</th>
+        <th>Contributed (days)</th><th>Actively contributed (days)</th>
+    </tr>
+        <tr>
+        <td>Nick Young</td>
+        <td>38 (42.70%)</td>
+        <td>2 (2.25%)</td>
+        <td>115362</td><td>17713</td>
+        <td>2021-07-13</td>
+        <td>2021-09-22</td>
+        <td>71</td><td>22</td>
+    </tr>
+        <tr>
+        <td>Andrew Leathwick</td>
+        <td>33 (37.08%)</td>
+        <td>3 (3.37%)</td>
+        <td>81224</td><td>53597</td>
+        <td>2021-06-29</td>
+        <td>2021-09-29</td>
+        <td>91</td><td>21</td>
+    </tr>
+        <tr>
+        <td>aleathwick</td>
+        <td>18 (20.22%)</td>
+        <td>1 (1.12%)</td>
+        <td>15351</td><td>20452</td>
+        <td>2021-06-29</td>
+        <td>2021-10-10</td>
+        <td>102</td><td>5</td>
+    </tr>
+    </table>
+<div>
+<p class="moreauthors">These didn't make it to the top:</p>
+<ul class="nontop">
+</ul>
+</div>
+
+<h2 id="contribution"><a href="#contribution">Contribution<sup>*</sup></a></h2>
+<div id="chart_contribution" style="border: 1px solid #808080; width: 507px"><svg style="height: 480px; width: 100%"></svg></div>
+<p><sup>*</sup><small> Lines from an author left in the HEAD commit</small></p>
+
+<h2 id="cumulated_added_lines_of_code_per_author"><a href="#cumulated_added_lines_of_code_per_author">Cumulated Added Lines of Code per Author</a></h2>
+<div id="chart_loc" style="border: 1px solid #808080; width: 1014px"><svg style="height: 480px; width: 100%"></svg></div>
+
+<h2 id="commits_per_author"><a href="#commits_per_author">Commits per Author</a></h2>
+
+<div style="border: 1px solid #808080; width: 1014px">
+<div id="chart_commits"><svg style="height: 480px; width: 100%"></svg></div>
+<div id="chart_steam"><svg style="height: 480px; width: 100%"></svg></div>
+</div>
+
+<h2 id="author_of_month"><a href="#author_of_month">Author of the Month</a></h2>
+<table class="sortable" id="aom">
+    <tr>
+        <th>Month</th>
+        <th>Author</th><th>Commits count</th>
+        <th class="unsortable">Next top 5</th>
+        <th>Total authors count</th>
+    </tr>
+        <tr>
+        <td>2021-10</td>
+        <td>aleathwick</td>
+        <td align="center">16 (of 16)</td>
+        <td></td>
+        <td align="center">1</td>
+    </tr>
+        <tr>
+        <td>2021-09</td>
+        <td>Andrew Leathwick</td>
+        <td align="center">20 (of 34)</td>
+        <td>Nick Young</td>
+        <td align="center">2</td>
+    </tr>
+        <tr>
+        <td>2021-08</td>
+        <td>Nick Young</td>
+        <td align="center">21 (of 31)</td>
+        <td>Andrew Leathwick</td>
+        <td align="center">2</td>
+    </tr>
+        <tr>
+        <td>2021-07</td>
+        <td>Nick Young</td>
+        <td align="center">3 (of 4)</td>
+        <td>Andrew Leathwick</td>
+        <td align="center">2</td>
+    </tr>
+        <tr>
+        <td>2021-06</td>
+        <td>aleathwick</td>
+        <td align="center">2 (of 4)</td>
+        <td>Andrew Leathwick</td>
+        <td align="center">2</td>
+    </tr>
+    </table>
+
+<h2 id="author_of_year"><a href="#author_of_year">Author of the Year</a></h2>
+<table class="sortable" id="aoy">
+    <tr>
+        <th>Year</th>
+        <th>Author</th><th>Commits count</th>
+        <th class="unsortable">Next top 5</th>
+        <th>Total authors count</th>
+    </tr>
+        <tr>
+        <td>2021</td>
+        <td>Nick Young</td>
+        <td align="center">38 (of 89)</td>
+        <td>Andrew Leathwick, aleathwick</td>
+        <td align="center">3</td>
+    </tr>
+    </table>
+
+<h2 id="knowledge_carriers"><a href="#knowledge_carriers">Top knowledge carriers</a></h2>
+<table>
+    <tr>
+        <th>Author</th>
+        <th>Lines count</th>
+    </tr>
+        <tr>
+        <td>Nick Young</td>
+        <td>93556</td>
+    </tr>
+        <tr>
+        <td>Andrew Leathwick</td>
+        <td>18582</td>
+    </tr>
+        <tr>
+        <td>aleathwick</td>
+        <td>8037</td>
+    </tr>
+    </table>
+
+<h2 id="commits_by_domains"><a href="#commits_by_domains">Commits by Email Domains</a></h2>
+<div id="chart_domains" style="border: 1px solid #808080; width: 507px"><svg style="height: 480px; width: 100%"></svg></div>
+<script src="authors.js"></script>
+</body>
+</html>

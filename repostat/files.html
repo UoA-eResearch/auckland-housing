@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Repostat: git repository statistics.</title>
+	<link type="text/css" rel="stylesheet" href="assets/gitstats.css">
+    <link type="text/css" rel="stylesheet" href="assets/nv.d3.css">
+	<script type="text/javascript" src="assets/d3.v3.min.js"></script>
+	<script type="text/javascript" src="assets/nv.d3.min.js"></script>
+    <script type="text/javascript" src="assets/sortable.js"></script>
+    <meta name="author" content="Viktor Kopp">
+    <meta name="generator" content="Repostat ">
+</head>
+<body>
+    <h1>Files</h1>
+    <ul class="nav">
+                    <li>
+                <a href="general.html">General</a></li>
+                    <li>
+                <a href="activity.html">Activity</a></li>
+                    <li>
+                <a href="authors.html">Authors</a></li>
+                    <li class="active">
+                <a href="files.html">Files</a></li>
+                    <li>
+                <a href="tags.html">Tags</a></li>
+                    <li>
+                <a href="about.html">About</a></li>
+        </ul>
+    <dl>
+    <dt>Total number of files</dt><dd>51</dd>
+    <dt>Total codebase</dt><dd>68.8 MB</dd>
+    <dt>Average file size</dt>
+    <dd>1.3 MB</dd>
+        <dt>Mono-author files count</dt>
+    <dd>
+        45 (88.24%)
+    </dd>
+    <dt>"Lost knowledge" ratio</dt>
+    <dd>
+        0.00%
+    </dd>
+    </dl>
+
+<h2 id="file_count_by_date"><a href="#file_count_by_date">Files number by date</a></h2>
+
+<div id="chart_files" style="border: 1px solid #808080; width: 1014px"><svg style="height: 400px; width: 100%"></svg></div>
+<script src="files.js"></script>
+
+<div class="row">
+    <div class="column">
+    <h2 id="extensions"><a href="#extensions">File types</a></h2>
+    <table class="sortable" id="ext">
+        <tr><th>Extension</th><th>Count (%)</th><th>Byte Size (%)</th><th>Lines count (%)</th><th>Lines per file</th></tr>
+                    <tr>
+                                <td>zip</td>
+                <td>21 (41.18%)</td>
+                <td>2784 (0.00%)</td>
+                                <td>63 (0.05%)</td>
+                <td>3.0</td>
+                            </tr>
+                    <tr>
+                                <td>csv</td>
+                <td>9 (17.65%)</td>
+                <td>1188 (0.00%)</td>
+                                <td>27 (0.02%)</td>
+                <td>3.0</td>
+                            </tr>
+                    <tr>
+                                <td>ipynb</td>
+                <td>5 (9.80%)</td>
+                <td>34901058 (50.72%)</td>
+                                <td>32330 (26.90%)</td>
+                <td>6466.0</td>
+                            </tr>
+                    <tr>
+                                <td>html</td>
+                <td>4 (7.84%)</td>
+                <td>33848698 (49.19%)</td>
+                                <td>86064 (71.62%)</td>
+                <td>21516.0</td>
+                            </tr>
+                    <tr>
+                                <td>gpkg</td>
+                <td>3 (5.88%)</td>
+                <td>398 (0.00%)</td>
+                                <td>9 (0.01%)</td>
+                <td>3.0</td>
+                            </tr>
+                    <tr>
+                                <td>xlsx</td>
+                <td>3 (5.88%)</td>
+                <td>392 (0.00%)</td>
+                                <td>9 (0.01%)</td>
+                <td>3.0</td>
+                            </tr>
+                    <tr>
+                                <td>py</td>
+                <td>2 (3.92%)</td>
+                <td>45029 (0.07%)</td>
+                                <td>1485 (1.24%)</td>
+                <td>742.5</td>
+                            </tr>
+                    <tr>
+                                <td>.gitattributes</td>
+                <td>1 (1.96%)</td>
+                <td>89 (0.00%)</td>
+                                <td>2 (0.00%)</td>
+                <td>2.0</td>
+                            </tr>
+                    <tr>
+                                <td>.gitignore</td>
+                <td>1 (1.96%)</td>
+                <td>1826 (0.00%)</td>
+                                <td>132 (0.11%)</td>
+                <td>132.0</td>
+                            </tr>
+                    <tr>
+                                <td>md</td>
+                <td>1 (1.96%)</td>
+                <td>3748 (0.01%)</td>
+                                <td>46 (0.04%)</td>
+                <td>46.0</td>
+                            </tr>
+                    <tr>
+                                <td>txt</td>
+                <td>1 (1.96%)</td>
+                <td>62 (0.00%)</td>
+                                <td>8 (0.01%)</td>
+                <td>8.0</td>
+                            </tr>
+            </table>
+    </div>
+        <div class="column">
+        <h2><a href="#extensions">Source files with most of the authors</a></h2>
+        <table>
+            <tr><th>File path</th><th>Authors count</th></tr>
+                            <tr>
+                    <td>phase0.html</td>
+                    <td  style="text-align:center">3</td>
+                </tr>
+                            <tr>
+                    <td>.gitignore</td>
+                    <td  style="text-align:center">2</td>
+                </tr>
+                            <tr>
+                    <td>README.md</td>
+                    <td  style="text-align:center">2</td>
+                </tr>
+                            <tr>
+                    <td>phase1-geocode-addresses.ipynb</td>
+                    <td  style="text-align:center">2</td>
+                </tr>
+                            <tr>
+                    <td>phase1-geocode-addresses.html</td>
+                    <td  style="text-align:center">2</td>
+                </tr>
+                            <tr>
+                    <td>phase0.ipynb</td>
+                    <td  style="text-align:center">2</td>
+                </tr>
+                            <tr>
+                    <td>util.py</td>
+                    <td  style="text-align:center">1</td>
+                </tr>
+                            <tr>
+                    <td>input/AucklandArea.gpkg</td>
+                    <td  style="text-align:center">1</td>
+                </tr>
+                            <tr>
+                    <td>input/lds-nz-coastline-mean-high-water-FGDB.zip</td>
+                    <td  style="text-align:center">1</td>
+                </tr>
+                            <tr>
+                    <td>input/kx-nz-state-highway-on-ramps-off-ramps-SHP.zip</td>
+                    <td  style="text-align:center">1</td>
+                </tr>
+                    </table>
+    </div>
+    </div>
+</body>
+</html>
