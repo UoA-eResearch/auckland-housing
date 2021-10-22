@@ -722,7 +722,7 @@ output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_wo
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
-code_candidates 
+code_candidates = np.array([x[1] for x in output])
 # indices of minimum distances
 min_idx = np.argmin(distance_candidates, axis=-1)
 
