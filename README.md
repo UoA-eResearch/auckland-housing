@@ -41,6 +41,6 @@ Not publicly available.
 These Python Jupyter (.ipynb) notebooks have been converted to HTML with `jupyter-nbconvert --to html phase1.ipynb` for ease of viewing results
 
 - [phase0](https://uoa-eresearch.github.io/auckland-housing/phase0)
-- [phase1](https://uoa-eresearch.github.io/auckland-housing/phase1-geocode-addresses)
+- [phase1](https://uoa-eresearch.github.io/auckland-housing/phase1)
 - [phase2](https://uoa-eresearch.github.io/auckland-housing/phase2)
 - [phase3](https://uoa-eresearch.github.io/auckland-housing/phase3)
