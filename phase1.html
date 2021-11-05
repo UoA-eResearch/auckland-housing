@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="eacb3cf6-4f29-4ef7-848d-df929c34b1bb" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="8aa380ae-2388-4d27-9653-832084cdc5dc" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('eacb3cf6-4f29-4ef7-848d-df929c34b1bb');
+var element = document.getElementById('8aa380ae-2388-4d27-9653-832084cdc5dc');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -16979,9 +16979,9 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="979e4682-476a-49b4-9998-f554c1f9bf98" class="jupyter-widgets jp-OutputArea-output ">
+<div id="e84450dc-3115-4120-8b11-9f4826251c46" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('979e4682-476a-49b4-9998-f554c1f9bf98');
+var element = document.getElementById('e84450dc-3115-4120-8b11-9f4826251c46');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b7627ce64c8d4a44b8d42901e39b7a82", "version_major": 2, "version_minor": 0}
@@ -18149,9 +18149,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="9424bb63-ccc9-41cc-b507-998f203efecf" class="jupyter-widgets jp-OutputArea-output ">
+<div id="2fb0f413-3e0c-4894-9383-d7d11ef52f93" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('9424bb63-ccc9-41cc-b507-998f203efecf');
+var element = document.getElementById('2fb0f413-3e0c-4894-9383-d7d11ef52f93');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "8d2f5ce5a36640dc82952a8ba3ed19b1", "version_major": 2, "version_minor": 0}
@@ -18303,6 +18303,20 @@ dtype: float64</pre>
 
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;distance_to_parcel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -18403,6 +18417,838 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 </div>
 
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Ranged_Address_indicator</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>4.0    5494
+1.0     391
+2.0     389
+3.0     103
+5.0       1
+Name: LINZ_MATCH_CODE, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>MATCHING FOR RANGED ADDRESSES:
+For ranged addresses, follow the same approach for each individual address, using the same geo-coordinate for each address in step 1. However, we set r in step 2 to a larger number in order to do a wider search. If no matches are found at step 2, but at least one match in the ranged address is found at step 1 or step 2, go to step 5. This avoids matching parcels that are far away from the rest of the group. Only if there is no match within the ranged addresses at either step 1 or step 2 do we proceed to step 3.</p>
+<p>We include an additional flag for each ranged address that indicates the best (i.e. lowest) LINZ_MATCH_CODE for that range. E.g. for a ranged address with five addresses, if at least one of them had LINZ_MATCH_CODE = 2, and all others were LINZ_MATCH_CODE &gt; 2, then the best LINZ_MATCH_CODE would be 2. This is call LINZ_2ND_MATCH_CODE below.
+Each address (in the ranged address set) is assigned its own unique LINZ parcel. Each parcel is then assigned the information given in 1 through 11 below. Because the parcels share the same consent ID, we can tell that the different parcels pertain to the same consent, thereby avoiding double counting.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranged</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Ranged_Address_indicator</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)]</span>
+<span class="n">ranged</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBS</th>
+      <th>CONSENT_DATE</th>
+      <th>MARCH_YEAR</th>
+      <th>ADDRESS_1</th>
+      <th>ADDRESS_2</th>
+      <th>ADDRESS_3</th>
+      <th>LB_Name</th>
+      <th>BUILDING_TYPE_NAME</th>
+      <th>BUILDING_TYPE_CODE</th>
+      <th>FLOOR_AREA</th>
+      <th>VALUE</th>
+      <th>BUILDINGS</th>
+      <th>Building_Type_Group</th>
+      <th>Residential_Type</th>
+      <th>Business_Group</th>
+      <th>Business_Category</th>
+      <th>Type_Class_Year</th>
+      <th>MBCODE</th>
+      <th>MBYEAR</th>
+      <th>AUP_BaseZone</th>
+      <th>AUP_BaseZone_Group</th>
+      <th>ZONE</th>
+      <th>ZONE_ID</th>
+      <th>ZONE_NAME</th>
+      <th>ZONE_TYPE</th>
+      <th>BUSINESS_TYPE</th>
+      <th>PlanAreaName</th>
+      <th>SHA_Name_154</th>
+      <th>X_Coordinate</th>
+      <th>Y_Coordinate</th>
+      <th>geometry</th>
+      <th>Ranged_Address_indicator</th>
+      <th>number_name</th>
+      <th>full_address</th>
+      <th>LINZ_parcel_ID</th>
+      <th>addresses</th>
+      <th>LINZ_MATCH_CODE</th>
+      <th>distance_to_parcel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12</th>
+      <td>228134.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>7-19 TONAR STREET</td>
+      <td>Northcote</td>
+      <td>Auckland</td>
+      <td>Kaipatiki</td>
+      <td>Apartments</td>
+      <td>1121.0</td>
+      <td>2905.0</td>
+      <td>NaN</td>
+      <td>29.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>364300.0</td>
+      <td>2013.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>Residential</td>
+      <td>8.0</td>
+      <td>NSC_5611</td>
+      <td>Residential 6A1</td>
+      <td>Residential</td>
+      <td>NaN</td>
+      <td>Northcote Strategic Area</td>
+      <td>Northcote Strategic Area</td>
+      <td>174.747240</td>
+      <td>-36.795608</td>
+      <td>POINT (1755884.597 5926377.252)</td>
+      <td>True</td>
+      <td>7-19 tonar</td>
+      <td>7-19 tonar street northcote auckland</td>
+      <td>8090222</td>
+      <td>[19a tonar, 19b tonar, 15 tonar]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>228236.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>74-80 Wellesley Street West</td>
+      <td>Auckland Central</td>
+      <td>Auckland</td>
+      <td>Waitemata</td>
+      <td>Hotels, motels, and other short-term accommoda...</td>
+      <td>2121.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Business</td>
+      <td>NaN</td>
+      <td>Group 2</td>
+      <td>Hospitality</td>
+      <td>2014.0</td>
+      <td>434101.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_29</td>
+      <td>Victoria Quarter D</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.759814</td>
+      <td>-36.849841</td>
+      <td>POINT (1756895.713 5920339.797)</td>
+      <td>True</td>
+      <td>74-80 wellesley</td>
+      <td>74-80 wellesley street west auckland central a...</td>
+      <td>5127693</td>
+      <td>[78 wellesley]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>228263.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>469-471 Parnell Road</td>
+      <td>Parnell</td>
+      <td>Auckland</td>
+      <td>Waitemata</td>
+      <td>Non-building construction</td>
+      <td>3111.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>452100.0</td>
+      <td>2013.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>Residential</td>
+      <td>8.0</td>
+      <td>ACC_27</td>
+      <td>Residential 7b</td>
+      <td>Residential</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.782298</td>
+      <td>-36.860785</td>
+      <td>POINT (1758877.787 5919088.400)</td>
+      <td>True</td>
+      <td>469-471 parnell</td>
+      <td>469-471 parnell road parnell auckland</td>
+      <td>4789405</td>
+      <td>[471 parnell, 469 parnell]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>228338.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>17-19 TUHAERE STREET</td>
+      <td>Orakei</td>
+      <td>Auckland</td>
+      <td>Orakei</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>450.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>496600.0</td>
+      <td>2013.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>Residential</td>
+      <td>18.0</td>
+      <td>ACC_20</td>
+      <td>Residential 2b</td>
+      <td>Residential</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.808929</td>
+      <td>-36.853044</td>
+      <td>POINT (1761268.211 5919902.539)</td>
+      <td>True</td>
+      <td>17-19 tuhaere</td>
+      <td>17-19 tuhaere street orakei auckland</td>
+      <td>4805914</td>
+      <td>[17 tuhaere]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>910</th>
+      <td>226714.0</td>
+      <td>Jan 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>39-41 BRUCE MCLAREN ROAD</td>
+      <td>Henderson</td>
+      <td>Auckland</td>
+      <td>Henderson - Massey</td>
+      <td>Townhouses, flats, units, and other dwellings</td>
+      <td>1129.0</td>
+      <td>28.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>242501.0</td>
+      <td>2013.0</td>
+      <td>Business - Light Industry Zone</td>
+      <td>Business</td>
+      <td>17.0</td>
+      <td>WCC_19</td>
+      <td>Working</td>
+      <td>Business</td>
+      <td>Industrial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.628708</td>
+      <td>-36.893463</td>
+      <td>POINT (1745123.508 5915707.499)</td>
+      <td>True</td>
+      <td>39-41 bruce</td>
+      <td>39-41 bruce mclaren road henderson auckland</td>
+      <td>4870711</td>
+      <td>[43 bruce]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>207053</th>
+      <td>151520.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>2-6</td>
+      <td>TITIRANGI RD</td>
+      <td>NEW LYNN</td>
+      <td>Whau</td>
+      <td>New Shops</td>
+      <td>1451.0</td>
+      <td>0.0</td>
+      <td>10100000.0</td>
+      <td>0.0</td>
+      <td>Business</td>
+      <td>NaN</td>
+      <td>Group 2</td>
+      <td>Retail</td>
+      <td>1998.0</td>
+      <td>264901.0</td>
+      <td>2013.0</td>
+      <td>Business - Metropolitan Centre Zone</td>
+      <td>Business</td>
+      <td>10.0</td>
+      <td>WCC_3</td>
+      <td>Community</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.677785</td>
+      <td>-36.910257</td>
+      <td>POINT (1749463.952 5913768.524)</td>
+      <td>True</td>
+      <td>2-6 titirangi</td>
+      <td>2-6 titirangi rd new lynn</td>
+      <td>4882242</td>
+      <td>[10 titirangi]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>207065</th>
+      <td>151508.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>433-435</td>
+      <td>HOBSONVILLE RD</td>
+      <td>HOBSONVILLE</td>
+      <td>Upper Harbour</td>
+      <td>New (and pre-built) house, unit, bach, crib, b...</td>
+      <td>1100.0</td>
+      <td>206.0</td>
+      <td>288680.0</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>221907.0</td>
+      <td>2013.0</td>
+      <td>Residential - Mixed Housing Urban Zone</td>
+      <td>Residential</td>
+      <td>60.0</td>
+      <td>WCC_16</td>
+      <td>Special Area</td>
+      <td>Special</td>
+      <td>NaN</td>
+      <td>Scott Point, Sunderland Precinct, Hobsonville ...</td>
+      <td>Scott Point, Sunderland Precinct, Hobsonville ...</td>
+      <td>174.654389</td>
+      <td>-36.794236</td>
+      <td>POINT (1747602.556 5926676.720)</td>
+      <td>True</td>
+      <td>433-435 hobsonville</td>
+      <td>433-435 hobsonville rd hobsonville</td>
+      <td>7447549</td>
+      <td>[70 hobsonville]</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>207216</th>
+      <td>151357.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>9-11</td>
+      <td>FENTON ST</td>
+      <td>EDEN TERRACE</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>3760.0</td>
+      <td>3000000.0</td>
+      <td>37.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>419702.0</td>
+      <td>2013.0</td>
+      <td>Business - Mixed Use Zone</td>
+      <td>Business</td>
+      <td>12.0</td>
+      <td>ACC_10</td>
+      <td>Business MU</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.757447</td>
+      <td>-36.868315</td>
+      <td>POINT (1756646.878 5918294.000)</td>
+      <td>True</td>
+      <td>9-11 fenton</td>
+      <td>9-11 fenton st eden terrace</td>
+      <td>7523952</td>
+      <td>[501/11 fenton, 401/11 fenton, 402/11 fenton, ...</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>207218</th>
+      <td>151355.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>138A-138C</td>
+      <td>GOWING DR</td>
+      <td>MEADOWBANK</td>
+      <td>Orakei</td>
+      <td>New (and pre-built) house, unit, bach, crib, b...</td>
+      <td>1100.0</td>
+      <td>214.0</td>
+      <td>390000.0</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>461300.0</td>
+      <td>2013.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>Residential</td>
+      <td>18.0</td>
+      <td>ACC_24</td>
+      <td>Residential 6a</td>
+      <td>Residential</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.838299</td>
+      <td>-36.867962</td>
+      <td>POINT (1763854.987 5918197.479)</td>
+      <td>True</td>
+      <td>138a-138c gowing</td>
+      <td>138a-138c gowing dr meadowbank</td>
+      <td>7533935</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>207221</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>164-168 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5598 rows × 38 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_int</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">(),</span> <span class="n">value</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">range_expand</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;given a range r, like &#39;20-23&#39;, expand the range on one side of the road, e.g. [&#39;20&#39;, &#39;21&#39;, &#39;22&#39;, &#39;23&#39;]&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">a</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">b</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">parse_int</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">parse_int</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r1</span> <span class="o">&lt;</span> <span class="n">r2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">ranged</span><span class="o">.</span><span class="n">number_name</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">range_expand</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsing of </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2"> failed&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Parsing of 5-sep failed
+Parsing of 1/ failed
+Parsing of 2/ failed
+Parsing of 2/ failed
+Parsing of r failed
+Parsing of r failed
+Parsing of 837a-c failed
+Parsing of 108j-l failed
+Parsing of 4b-c failed
+Parsing of 79e-h failed
+Parsing of 17b-d failed
+Parsing of 21d-f failed
+Parsing of 27 failed
+Parsing of 1 failed
+Parsing of 331- failed
+Parsing of 59b-c failed
+Parsing of 53a-c failed
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">expanded_ranged_addresses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">ranged</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ranged</span><span class="p">)):</span>
+    <span class="c1"># Expand this ranged address into it&#39;s own dataframe, with each number as it&#39;s own row</span>
+    <span class="n">number</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">range_expanded</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">range_expanded</span> <span class="o">=</span> <span class="n">range_expand</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t expand </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">, skipping&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">range_expand</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">number_name</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">name</span>
+        <span class="n">row</span><span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">OBS</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;unique_id&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sample</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_unique</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+        <span class="k">raise</span>
+
+    <span class="c1"># Step 1</span>
+    <span class="k">def</span> <span class="nf">check_match</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">number_name</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">addresses</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">addresses</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">check_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">match</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#However, we set r in step 2 to a larger number in order to do a wider search.</span>
+
+    <span class="k">def</span> <span class="nf">find_match_in_range</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="n">indices_in_range</span> <span class="o">=</span> <span class="n">parcel_tree</span><span class="o">.</span><span class="n">query_ball_point</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">],</span> <span class="mi">2000</span><span class="p">)</span>
+        <span class="n">potential_matches</span> <span class="o">=</span> <span class="n">parcels</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices_in_range</span><span class="p">]</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">potential_matches</span><span class="p">[</span><span class="n">potential_matches</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">number_name</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">row</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span>
+        <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])</span> <span class="o">&amp;</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_match_in_range</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+
+    <span class="c1"># If no matches are found at step 2, but at least one match in the ranged address is found at step 1 or step 2, go to step 5.</span>
+    <span class="c1"># This avoids matching parcels that are far away from the rest of the group</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)):</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Only if there is no match within the ranged addresses at either step 1 or step 2 do we proceed to step 3. </span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_text_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+    <span class="c1">#We include an additional flag for each ranged address that indicates the best (i.e. lowest) LINZ_MATCH_CODE for that range.</span>
+    <span class="c1">#E.g. for a ranged address with five addresses, if at least one of them had LINZ_MATCH_CODE = 2,</span>
+    <span class="c1">#and all others were LINZ_MATCH_CODE &gt; 2, then the best LINZ_MATCH_CODE would be 2. This is call LINZ_2ND_MATCH_CODE below.</span>
+    <span class="c1"># Each address (in the ranged address set) is assigned its own unique LINZ parcel.</span>
+    <span class="c1"># Each parcel is then assigned the information given in 1 through 11 below.</span>
+    <span class="c1"># Because the parcels share the same consent ID, we can tell that the different parcels pertain to the same consent, thereby avoiding double counting. </span>
+    <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_2ND_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">expanded_ranged_addresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+
+
+
+<div id="9bc7d971-a3cb-473a-b72d-3fb553edc843" class="jupyter-widgets jp-OutputArea-output ">
+<script type="text/javascript">
+var element = document.getElementById('9bc7d971-a3cb-473a-b72d-3fb553edc843');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "06c18e80e3f348cdbc74e44e102a0387", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
 </div>
 
 </div>
