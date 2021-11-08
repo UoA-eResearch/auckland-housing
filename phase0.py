@@ -1440,7 +1440,7 @@ parcels_output = parcels_output.set_crs(4326)
 
 # In[ ]:
 
-cols_to_drop = ["geometry_polygon_4326", "geometry_polygon_2193", "geometry_centroid_2193", "representative_point_2193", "geometry_centroid_4326", "representative_point_4326"]
+cols_to_drop = ["geometry", "geometry_polygon_4326", "geometry_polygon_2193", "geometry_centroid_2193", "representative_point_2193", "geometry_centroid_4326", "representative_point_4326"]
 parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv')
 # errors out because some entries are lists:
 # parcels_output.drop([c for c in orginal_columns if c != 'geometry'], axis=1, errors='ignore').to_file('parcels_phase0.gpkg', driver='GPKG')
