@@ -14280,7 +14280,7 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[92]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#pragma nodebook off</span>
@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="55cee152-c3dd-4e19-9d27-d5bb60837cc5" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="b0e11779-4236-4a94-8c4c-c035cd95e542" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('55cee152-c3dd-4e19-9d27-d5bb60837cc5');
+var element = document.getElementById('b0e11779-4236-4a94-8c4c-c035cd95e542');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -16979,9 +16979,9 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="98f3e715-3355-4123-bd41-eda6ffa2031c" class="jupyter-widgets jp-OutputArea-output ">
+<div id="16960b8a-52bd-4780-bbbd-692c273f3e37" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('98f3e715-3355-4123-bd41-eda6ffa2031c');
+var element = document.getElementById('16960b8a-52bd-4780-bbbd-692c273f3e37');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b7627ce64c8d4a44b8d42901e39b7a82", "version_major": 2, "version_minor": 0}
@@ -18149,9 +18149,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="845f9b7b-1dda-4312-9f8c-5f1be819e2d7" class="jupyter-widgets jp-OutputArea-output ">
+<div id="20a58611-61ed-46b8-aa68-9e06cbaf4409" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('845f9b7b-1dda-4312-9f8c-5f1be819e2d7');
+var element = document.getElementById('20a58611-61ed-46b8-aa68-9e06cbaf4409');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "8d2f5ce5a36640dc82952a8ba3ed19b1", "version_major": 2, "version_minor": 0}
@@ -19214,9 +19214,9 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 
 
-<div id="91a399b9-a636-4e5d-84e4-133a845f7e57" class="jupyter-widgets jp-OutputArea-output ">
+<div id="4abdeda1-063f-4fbe-b055-3dcb902c733f" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('91a399b9-a636-4e5d-84e4-133a845f7e57');
+var element = document.getElementById('4abdeda1-063f-4fbe-b055-3dcb902c733f');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "944f72579f9841d283c12d7874544806", "version_major": 2, "version_minor": 0}
@@ -19938,6 +19938,107 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">distances</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">parcels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]],</span> <span class="n">align</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">distances</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>0           0.000000
+1           0.000000
+2           0.000000
+3         272.107738
+4         302.608731
+             ...    
+271663      0.000000
+271664      0.000000
+271665      0.000000
+271666     38.226506
+271667      0.000000
+Length: 271496, dtype: float64</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>count     71097.000000
+mean       2822.592040
+std        9149.245392
+min           0.000062
+25%          14.005567
+50%          61.063103
+75%         264.926642
+max      119923.533860
+dtype: float64</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 13.1 s, sys: 715 ms, total: 13.8 s
+Wall time: 14 s
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;distance_to_parcel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
 <span class="n">phase0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/parcels_phase0.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;LINZ_parcel_ID&quot;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">phase0</span>
 </pre></div>
@@ -19959,8 +20060,8 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 12.3 s, sys: 1.71 s, total: 14 s
-Wall time: 14.1 s
+<pre>CPU times: user 11.8 s, sys: 2.89 s, total: 14.7 s
+Wall time: 15.1 s
 </pre>
 </div>
 </div>
@@ -20757,8 +20858,8 @@ Wall time: 14.1 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 10.3 s, sys: 1.53 s, total: 11.9 s
-Wall time: 12 s
+<pre>CPU times: user 10.5 s, sys: 1.77 s, total: 12.3 s
+Wall time: 12.5 s
 </pre>
 </div>
 </div>
@@ -20789,6 +20890,7 @@ Wall time: 12 s
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>index</th>
       <th>OBS</th>
       <th>CONSENT_DATE</th>
       <th>MARCH_YEAR</th>
@@ -20882,6 +20984,7 @@ Wall time: 12 s
   <tbody>
     <tr>
       <th>0</th>
+      <td>0</td>
       <td>227614.0</td>
       <td>Feb 01, 2021 12:00:00 AM</td>
       <td>Mar 01, 2020 12:00:00 AM</td>
@@ -20973,6 +21076,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>1</th>
+      <td>1</td>
       <td>227656.0</td>
       <td>Feb 01, 2021 12:00:00 AM</td>
       <td>Mar 01, 2020 12:00:00 AM</td>
@@ -21064,6 +21168,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>2</th>
+      <td>2</td>
       <td>227796.0</td>
       <td>Feb 01, 2021 12:00:00 AM</td>
       <td>Mar 01, 2020 12:00:00 AM</td>
@@ -21155,6 +21260,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>3</th>
+      <td>3</td>
       <td>227896.0</td>
       <td>Feb 01, 2021 12:00:00 AM</td>
       <td>Mar 01, 2020 12:00:00 AM</td>
@@ -21246,6 +21352,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>4</th>
+      <td>4</td>
       <td>227902.0</td>
       <td>Feb 01, 2021 12:00:00 AM</td>
       <td>Mar 01, 2020 12:00:00 AM</td>
@@ -21425,9 +21532,11 @@ Wall time: 12 s
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
       <th>271663</th>
+      <td>151352.0_164</td>
       <td>151352.0</td>
       <td>Jul 01, 2014 12:00:00 AM</td>
       <td>Mar 01, 2015 12:00:00 AM</td>
@@ -21519,6 +21628,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>271664</th>
+      <td>151352.0_165</td>
       <td>151352.0</td>
       <td>Jul 01, 2014 12:00:00 AM</td>
       <td>Mar 01, 2015 12:00:00 AM</td>
@@ -21610,6 +21720,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>271665</th>
+      <td>151352.0_166</td>
       <td>151352.0</td>
       <td>Jul 01, 2014 12:00:00 AM</td>
       <td>Mar 01, 2015 12:00:00 AM</td>
@@ -21701,6 +21812,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>271666</th>
+      <td>151352.0_167</td>
       <td>151352.0</td>
       <td>Jul 01, 2014 12:00:00 AM</td>
       <td>Mar 01, 2015 12:00:00 AM</td>
@@ -21737,7 +21849,7 @@ Wall time: 12 s
       <td>5039459.0</td>
       <td>[167 hobson]</td>
       <td>2.0</td>
-      <td>0.000000</td>
+      <td>38.226506</td>
       <td>1.0</td>
       <td>Lot 1 DP 104999</td>
       <td>DP 104999</td>
@@ -21792,6 +21904,7 @@ Wall time: 12 s
     </tr>
     <tr>
       <th>271667</th>
+      <td>151352.0_168</td>
       <td>151352.0</td>
       <td>Jul 01, 2014 12:00:00 AM</td>
       <td>Mar 01, 2015 12:00:00 AM</td>
@@ -21883,7 +21996,7 @@ Wall time: 12 s
     </tr>
   </tbody>
 </table>
-<p>271668 rows × 88 columns</p>
+<p>271668 rows × 89 columns</p>
 </div>
 </div>
 
@@ -21921,7 +22034,7 @@ Wall time: 12 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>Index([&#39;OBS&#39;, &#39;CONSENT_DATE&#39;, &#39;MARCH_YEAR&#39;, &#39;ADDRESS_1&#39;, &#39;ADDRESS_2&#39;,
+<pre>Index([&#39;index&#39;, &#39;OBS&#39;, &#39;CONSENT_DATE&#39;, &#39;MARCH_YEAR&#39;, &#39;ADDRESS_1&#39;, &#39;ADDRESS_2&#39;,
        &#39;ADDRESS_3&#39;, &#39;LB_Name&#39;, &#39;BUILDING_TYPE_NAME&#39;, &#39;BUILDING_TYPE_CODE&#39;,
        &#39;FLOOR_AREA&#39;, &#39;VALUE&#39;, &#39;BUILDINGS&#39;, &#39;Building_Type_Group&#39;,
        &#39;Residential_Type&#39;, &#39;Business_Group&#39;, &#39;Business_Category&#39;,
