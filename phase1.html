@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="8aa380ae-2388-4d27-9653-832084cdc5dc" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="0d9a5352-cfe7-4126-89fe-fee4cb80d696" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('8aa380ae-2388-4d27-9653-832084cdc5dc');
+var element = document.getElementById('0d9a5352-cfe7-4126-89fe-fee4cb80d696');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -16979,9 +16979,9 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="e84450dc-3115-4120-8b11-9f4826251c46" class="jupyter-widgets jp-OutputArea-output ">
+<div id="42af55f8-d236-4fb4-a1c5-678bf81bcaeb" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('e84450dc-3115-4120-8b11-9f4826251c46');
+var element = document.getElementById('42af55f8-d236-4fb4-a1c5-678bf81bcaeb');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b7627ce64c8d4a44b8d42901e39b7a82", "version_major": 2, "version_minor": 0}
@@ -18149,9 +18149,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="2fb0f413-3e0c-4894-9383-d7d11ef52f93" class="jupyter-widgets jp-OutputArea-output ">
+<div id="7043e19b-119a-49b5-921a-38e3854dce99" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('2fb0f413-3e0c-4894-9383-d7d11ef52f93');
+var element = document.getElementById('7043e19b-119a-49b5-921a-38e3854dce99');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "8d2f5ce5a36640dc82952a8ba3ed19b1", "version_major": 2, "version_minor": 0}
@@ -19020,7 +19020,7 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
@@ -19028,6 +19028,11 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_int</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">(),</span> <span class="n">value</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">char_range</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates the characters from `c1` to `c2`, inclusive.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c1</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">range_expand</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;given a range r, like &#39;20-23&#39;, expand the range on one side of the road, e.g. [&#39;20&#39;, &#39;21&#39;, &#39;22&#39;, &#39;23&#39;]&quot;&quot;&quot;</span>
@@ -19042,18 +19047,55 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
     <span class="k">else</span><span class="p">:</span>
         <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r2</span> <span class="o">==</span> <span class="s2">&quot;sep&quot;</span> <span class="ow">or</span> <span class="n">r2</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">r2</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">char_range</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">r2</span><span class="p">)]</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">parse_int</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
     <span class="n">r2</span> <span class="o">=</span> <span class="n">parse_int</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">r1</span> <span class="o">&lt;</span> <span class="n">r2</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">suffix</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">r1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">corrections</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1/ 231-235&quot;</span><span class="p">:</span> <span class="s2">&quot;231-235 hinemoa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2/ 16-18&quot;</span><span class="p">:</span> <span class="s2">&quot;16-18 montgomery&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2/ 2-8&quot;</span><span class="p">:</span> <span class="s2">&quot;2-8 matipo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;r 35-41&quot;</span><span class="p">:</span> <span class="s2">&quot;35-41 birkenhead&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;r 31-35&quot;</span><span class="p">:</span> <span class="s2">&quot;31-35 cresta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;27 -&quot;</span><span class="p">:</span> <span class="s2">&quot;27-31 victoria&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1 &amp;&quot;</span><span class="p">:</span> <span class="s2">&quot;2-1/96 bernleigh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;55121-23 morrison&quot;</span><span class="p">:</span> <span class="s2">&quot;21-23 morrison&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1954-60 great&quot;</span><span class="p">:</span> <span class="s2">&quot;1954-1960 great&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;3-9 &quot;</span><span class="p">:</span> <span class="s2">&quot;3-9 faldo&quot;</span>
+<span class="p">}</span>
+<span class="n">ranged</span><span class="o">.</span><span class="n">number_name</span> <span class="o">=</span> <span class="n">ranged</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">corrections</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">ranged</span><span class="o">.</span><span class="n">number_name</span><span class="p">:</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">range_expand</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">number</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">range_expanded</span> <span class="o">=</span> <span class="n">range_expand</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">range_expanded</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">range_expanded</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1000</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsing of </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2"> failed&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsing of </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2"> failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">ranged</span><span class="p">[</span><span class="n">ranged</span><span class="o">.</span><span class="n">number_name</span> <span class="o">==</span> <span class="n">r</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">test_case</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;20-28&#39;</span><span class="p">,</span> <span class="s1">&#39;1-5/32a&#39;</span><span class="p">,</span> <span class="s1">&#39;53a-c&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_case</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">range_expand</span><span class="p">(</span><span class="n">test_case</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -19073,23 +19115,9 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Parsing of 5-sep failed
-Parsing of 1/ failed
-Parsing of 2/ failed
-Parsing of 2/ failed
-Parsing of r failed
-Parsing of r failed
-Parsing of 837a-c failed
-Parsing of 108j-l failed
-Parsing of 4b-c failed
-Parsing of 79e-h failed
-Parsing of 17b-d failed
-Parsing of 21d-f failed
-Parsing of 27 failed
-Parsing of 1 failed
-Parsing of 331- failed
-Parsing of 59b-c failed
-Parsing of 53a-c failed
+<pre>20-28: [&#39;20&#39;, &#39;21&#39;, &#39;22&#39;, &#39;23&#39;, &#39;24&#39;, &#39;25&#39;, &#39;26&#39;, &#39;27&#39;, &#39;28&#39;]
+1-5/32a: [&#39;1/32a&#39;, &#39;2/32a&#39;, &#39;3/32a&#39;, &#39;4/32a&#39;, &#39;5/32a&#39;]
+53a-c: [&#39;53a&#39;, &#39;53b&#39;, &#39;53c&#39;]
 </pre>
 </div>
 </div>
@@ -19110,12 +19138,6 @@ Parsing of 53a-c failed
     <span class="c1"># Expand this ranged address into it&#39;s own dataframe, with each number as it&#39;s own row</span>
     <span class="n">number</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">range_expanded</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">range_expanded</span> <span class="o">=</span> <span class="n">range_expand</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t expand </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">, skipping&quot;</span><span class="p">)</span>
-        <span class="k">continue</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">range_expand</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
         <span class="n">row</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">row</span><span class="o">.</span><span class="n">number_name</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">name</span>
@@ -19136,7 +19158,6 @@ Parsing of 53a-c failed
         <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">match</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1">#However, we set r in step 2 to a larger number in order to do a wider search.</span>
 
@@ -19151,18 +19172,17 @@ Parsing of 53a-c failed
         <span class="k">return</span> <span class="n">row</span>
     <span class="n">matches</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span>
         <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="p">)</span> <span class="o">&amp;</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])</span> <span class="o">&amp;</span>
-        <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_match_in_range</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_match_in_range</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
 
     <span class="c1"># If no matches are found at step 2, but at least one match in the ranged address is found at step 1 or step 2, go to step 5.</span>
     <span class="c1"># This avoids matching parcels that are far away from the rest of the group</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)):</span>
-        <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)):</span> <span class="c1"># all na here means no matches in step 1 or 2</span>
         <span class="c1"># Only if there is no match within the ranged addresses at either step 1 or step 2 do we proceed to step 3. </span>
         <span class="n">matches</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">sample</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_text_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">),</span> <span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="c1">#We include an additional flag for each ranged address that indicates the best (i.e. lowest) LINZ_MATCH_CODE for that range.</span>
     <span class="c1">#E.g. for a ranged address with five addresses, if at least one of them had LINZ_MATCH_CODE = 2,</span>
     <span class="c1">#and all others were LINZ_MATCH_CODE &gt; 2, then the best LINZ_MATCH_CODE would be 2. This is call LINZ_2ND_MATCH_CODE below.</span>
@@ -19194,13 +19214,2790 @@ Parsing of 53a-c failed
 
 
 
-<div id="9bc7d971-a3cb-473a-b72d-3fb553edc843" class="jupyter-widgets jp-OutputArea-output ">
+<div id="ba473f48-9ba6-4ef6-955a-1a148423da55" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('9bc7d971-a3cb-473a-b72d-3fb553edc843');
+var element = document.getElementById('ba473f48-9ba6-4ef6-955a-1a148423da55');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "06c18e80e3f348cdbc74e44e102a0387", "version_major": 2, "version_minor": 0}
+{"model_id": "944f72579f9841d283c12d7874544806", "version_major": 2, "version_minor": 0}
 </script>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 33min 27s, sys: 20.4 s, total: 33min 47s
+Wall time: 33min 40s
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ranged</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">]</span> <span class="o">+</span> <span class="n">expanded_ranged_addresses</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBS</th>
+      <th>CONSENT_DATE</th>
+      <th>MARCH_YEAR</th>
+      <th>ADDRESS_1</th>
+      <th>ADDRESS_2</th>
+      <th>ADDRESS_3</th>
+      <th>LB_Name</th>
+      <th>BUILDING_TYPE_NAME</th>
+      <th>BUILDING_TYPE_CODE</th>
+      <th>FLOOR_AREA</th>
+      <th>VALUE</th>
+      <th>BUILDINGS</th>
+      <th>Building_Type_Group</th>
+      <th>Residential_Type</th>
+      <th>Business_Group</th>
+      <th>Business_Category</th>
+      <th>Type_Class_Year</th>
+      <th>MBCODE</th>
+      <th>MBYEAR</th>
+      <th>AUP_BaseZone</th>
+      <th>AUP_BaseZone_Group</th>
+      <th>ZONE</th>
+      <th>ZONE_ID</th>
+      <th>ZONE_NAME</th>
+      <th>ZONE_TYPE</th>
+      <th>BUSINESS_TYPE</th>
+      <th>PlanAreaName</th>
+      <th>SHA_Name_154</th>
+      <th>X_Coordinate</th>
+      <th>Y_Coordinate</th>
+      <th>geometry</th>
+      <th>Ranged_Address_indicator</th>
+      <th>number_name</th>
+      <th>full_address</th>
+      <th>LINZ_parcel_ID</th>
+      <th>addresses</th>
+      <th>LINZ_MATCH_CODE</th>
+      <th>distance_to_parcel</th>
+      <th>LINZ_2ND_MATCH_CODE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>227614.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>398 PAKIRI BLOCK ROAD</td>
+      <td>Tomarata</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>231.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>135900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.634550</td>
+      <td>-36.224858</td>
+      <td>POINT (1746904.853 5989872.553)</td>
+      <td>False</td>
+      <td>398 pakiri</td>
+      <td>398 pakiri block road tomarata auckland</td>
+      <td>5209817</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>227656.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>Ahuroa Road</td>
+      <td>Puhoi</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Non-building construction</td>
+      <td>3111.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>146701.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.568721</td>
+      <td>-36.475863</td>
+      <td>POINT (1740536.028 5962125.407)</td>
+      <td>False</td>
+      <td>ahuroa road</td>
+      <td>ahuroa road puhoi auckland</td>
+      <td>5227114</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>227796.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>Upper Orewa Road</td>
+      <td>Upper Orewa</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Townhouses, flats, units, and other dwellings</td>
+      <td>1129.0</td>
+      <td>260.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>177701.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.641586</td>
+      <td>-36.590190</td>
+      <td>POINT (1746847.868 5949333.496)</td>
+      <td>False</td>
+      <td>upper orewa</td>
+      <td>upper orewa road upper orewa auckland</td>
+      <td>6605265</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>227896.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>56 VINISTRA ROAD</td>
+      <td>Huapai</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>179.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>214900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>RDC_7</td>
+      <td>Future Urban</td>
+      <td>Rural</td>
+      <td>NaN</td>
+      <td>Huapai Triangle</td>
+      <td>Huapai Triangle</td>
+      <td>174.541738</td>
+      <td>-36.778192</td>
+      <td>POINT (1737579.970 5928624.665)</td>
+      <td>False</td>
+      <td>56 vinistra</td>
+      <td>56 vinistra road huapai auckland</td>
+      <td>8081617</td>
+      <td>[56 vinistra]</td>
+      <td>2.0</td>
+      <td>272.107738</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>227902.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>77 VINISTRA ROAD</td>
+      <td>Huapai</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>180.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>214900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>RDC_7</td>
+      <td>Future Urban</td>
+      <td>Rural</td>
+      <td>NaN</td>
+      <td>Huapai Triangle</td>
+      <td>Huapai Triangle</td>
+      <td>174.541738</td>
+      <td>-36.778192</td>
+      <td>POINT (1737579.970 5928624.665)</td>
+      <td>False</td>
+      <td>77 vinistra</td>
+      <td>77 vinistra road huapai auckland</td>
+      <td>8081611</td>
+      <td>[77 vinistra]</td>
+      <td>2.0</td>
+      <td>302.608731</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>151352.0_164</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>164 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>1.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>151352.0_165</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>165 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>5.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>151352.0_166</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>166 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>1.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>151352.0_167</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>167 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>5039459.0</td>
+      <td>[167 hobson]</td>
+      <td>2.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>151352.0_168</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>POINT (1756936.812 5920152.000)</td>
+      <td>True</td>
+      <td>168 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>5.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>271668 rows × 39 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Ranged_Address_indicator</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>5.0    31857
+2.0    28236
+4.0     4583
+1.0     3739
+3.0     2405
+Name: LINZ_MATCH_CODE, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_2ND_MATCH_CODE</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Ranged_Address_indicator</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>2.0    36452
+1.0    26600
+4.0     4251
+3.0     2737
+NaN      780
+Name: LINZ_2ND_MATCH_CODE, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>1.0    127397
+2.0     62184
+4.0     41426
+5.0     32029
+3.0      8632
+Name: LINZ_MATCH_CODE, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">phase0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/parcels_phase0.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;LINZ_parcel_ID&quot;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">phase0</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 15.2 s, sys: 2.43 s, total: 17.6 s
+Wall time: 17.9 s
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>id</th>
+      <th>appellation</th>
+      <th>affected_surveys</th>
+      <th>parcel_intent</th>
+      <th>topology_type</th>
+      <th>statutory_actions</th>
+      <th>land_district</th>
+      <th>titles</th>
+      <th>survey_area</th>
+      <th>calc_area</th>
+      <th>geometry</th>
+      <th>LINZ_parcel_centroid_lon</th>
+      <th>LINZ_parcel_centroid_lat</th>
+      <th>LINZ_parcel_vertices_lon</th>
+      <th>LINZ_parcel_vertices_lat</th>
+      <th>LINZ_parcel_roadvertices_lon</th>
+      <th>LINZ_parcel_roadvertices_lat</th>
+      <th>LINZmatch_AUP_code</th>
+      <th>LINZmatch_AUP_name</th>
+      <th>LINZ_adjoining_parcel_ID</th>
+      <th>LINZ_parcel_sides_zones</th>
+      <th>LINZ_TRNSPWR_ohead_name</th>
+      <th>LINZ_TRNSPWR_ohead_indicator</th>
+      <th>LINZ_VWSHFT_ohead_name</th>
+      <th>LINZ_VWSHFT_ohead_ID</th>
+      <th>LINZ_VWSHFT_ohead_indicator</th>
+      <th>Hdist_rural</th>
+      <th>Hdist_rural_code</th>
+      <th>Hdist_rural_name</th>
+      <th>Hdist_bus</th>
+      <th>Hdist_bus_code</th>
+      <th>Hdist_bus_name</th>
+      <th>Hdist_resid</th>
+      <th>Hdist_resid_code</th>
+      <th>Hdist_resid_name</th>
+      <th>Hdist_SH</th>
+      <th>Hdist_MHS</th>
+      <th>Hdist_MHU</th>
+      <th>Hdist_THA</th>
+      <th>Local_Area_name</th>
+      <th>SA22018_name</th>
+      <th>SA22018_code</th>
+      <th>AU2013_name</th>
+      <th>AU2013_code</th>
+      <th>MB2018_code</th>
+      <th>MB2013_code</th>
+      <th>Hdist_coast</th>
+      <th>Hdist_motorway</th>
+      <th>Hdist_main_road</th>
+      <th>Hdist_rail</th>
+      <th>Hdist_skytower</th>
+      <th>SpHA_indicator</th>
+    </tr>
+    <tr>
+      <th>LINZ_parcel_ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4918991</th>
+      <td>0</td>
+      <td>4918991</td>
+      <td>Lot 327 DP 56341</td>
+      <td>DP 56341</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NA8C/911</td>
+      <td>642.0</td>
+      <td>643.0</td>
+      <td>MULTIPOLYGON (((174.8429935 -36.87592199999995...</td>
+      <td>174.843218</td>
+      <td>-36.876042</td>
+      <td>[174.842994; 174.843152; 174.84337; 174.843471...</td>
+      <td>[-36.875922; -36.875957; -36.876006; -36.87602...</td>
+      <td>[174.842994; 174.842997]</td>
+      <td>[-36.875922; -36.876074]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[5061331, 5002265, 5228435, 5061335, 4722548, ...</td>
+      <td>['18', '18', '27', '18', '18', '18']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7228.891309</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>96.953993</td>
+      <td>44</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>0.000000</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>1499.258244</td>
+      <td>0.000000</td>
+      <td>463.752596</td>
+      <td>342.351869</td>
+      <td>Orakei</td>
+      <td>Saint Johns East</td>
+      <td>144500.0</td>
+      <td>St Johns</td>
+      <td>517201</td>
+      <td>4006757.0</td>
+      <td>465102</td>
+      <td>1626.866018</td>
+      <td>3904.389673</td>
+      <td>30.431054</td>
+      <td>675.367028</td>
+      <td>7850.889144</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4919914</th>
+      <td>1</td>
+      <td>4919914</td>
+      <td>Lot 178 DP 56342</td>
+      <td>DP 56342</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>474924, NA8C/768</td>
+      <td>650.0</td>
+      <td>651.0</td>
+      <td>MULTIPOLYGON (((174.8464503170001 -36.87369938...</td>
+      <td>174.846572</td>
+      <td>-36.873551</td>
+      <td>[174.84645; 174.846486; 174.846701; 174.846648]</td>
+      <td>[-36.873699; -36.873386; -36.873407; -36.873721]</td>
+      <td>[174.846486; 174.846701]</td>
+      <td>[-36.873386; -36.873407]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[4789870, 4877424, 5005927, 4804873, 5178022, ...</td>
+      <td>['18', '18', '18', '18', '18', '27']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7571.289947</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>219.321245</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>0.000000</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>1504.842901</td>
+      <td>0.000000</td>
+      <td>380.053451</td>
+      <td>411.291837</td>
+      <td>Orakei</td>
+      <td>Saint Johns East</td>
+      <td>144500.0</td>
+      <td>St Johns</td>
+      <td>517201</td>
+      <td>4006774.0</td>
+      <td>464800</td>
+      <td>1666.931163</td>
+      <td>4307.322450</td>
+      <td>275.948865</td>
+      <td>296.455456</td>
+      <td>8026.797757</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4926734</th>
+      <td>2</td>
+      <td>4926734</td>
+      <td>Lot 144 DP 53562</td>
+      <td>DP 53562</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>386353, 386354, 386355, 386356, NA4D/859</td>
+      <td>640.0</td>
+      <td>640.0</td>
+      <td>MULTIPOLYGON (((174.8450694000001 -36.87325971...</td>
+      <td>174.845299</td>
+      <td>-36.873269</td>
+      <td>[174.845069; 174.845157; 174.845513; 174.84546]</td>
+      <td>[-36.87326; -36.873123; -36.87327; -36.873421]</td>
+      <td>[174.845069; 174.845157]</td>
+      <td>[-36.87326; -36.873123]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[5236861, 5048379, 4926945, 4797737]</td>
+      <td>['27', '18', '18', '18']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7574.099005</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>197.076711</td>
+      <td>44</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>0.000000</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>1551.382113</td>
+      <td>0.000000</td>
+      <td>336.510990</td>
+      <td>468.042305</td>
+      <td>Orakei</td>
+      <td>Saint Johns East</td>
+      <td>144500.0</td>
+      <td>St Johns</td>
+      <td>517201</td>
+      <td>4006774.0</td>
+      <td>464800</td>
+      <td>1556.501519</td>
+      <td>4232.755849</td>
+      <td>170.250936</td>
+      <td>317.577857</td>
+      <td>7909.576996</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4926945</th>
+      <td>3</td>
+      <td>4926945</td>
+      <td>Lot 183 DP 56342</td>
+      <td>DP 56342</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>433646, NA8C/773</td>
+      <td>913.0</td>
+      <td>914.0</td>
+      <td>MULTIPOLYGON (((174.8457752500001 -36.87317731...</td>
+      <td>174.845585</td>
+      <td>-36.873350</td>
+      <td>[174.845775; 174.84557; 174.845408; 174.84546;...</td>
+      <td>[-36.873177; -36.873603; -36.87357; -36.873421...</td>
+      <td>[174.845775; 174.845575; 174.845689]</td>
+      <td>[-36.873177; -36.873095; -36.873142]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[5233326, 5048379, 4797737, 5054505, 7342193, ...</td>
+      <td>['27', '18', '18', '18', '18', '18', '18', '18']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7556.977156</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>180.285687</td>
+      <td>44</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>0.000000</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>1529.480918</td>
+      <td>0.000000</td>
+      <td>333.915495</td>
+      <td>445.926909</td>
+      <td>Orakei</td>
+      <td>Saint Johns East</td>
+      <td>144500.0</td>
+      <td>St Johns</td>
+      <td>517201</td>
+      <td>4006774.0</td>
+      <td>464800</td>
+      <td>1582.400173</td>
+      <td>4248.261840</td>
+      <td>195.278997</td>
+      <td>314.544307</td>
+      <td>7936.587996</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4929034</th>
+      <td>4</td>
+      <td>4929034</td>
+      <td>Lot 260 DP 56341</td>
+      <td>DP 56341</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>488577, NA8C/850</td>
+      <td>622.0</td>
+      <td>624.0</td>
+      <td>MULTIPOLYGON (((174.8474274170001 -36.87504544...</td>
+      <td>174.847627</td>
+      <td>-36.874955</td>
+      <td>[174.847427; 174.847674; 174.847826; 174.84757...</td>
+      <td>[-36.875045; -36.874775; -36.874864; -36.87513...</td>
+      <td>[174.847674; 174.847826]</td>
+      <td>[-36.874775; -36.874864]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[4860765, 5186671, 5186670, 5057572, 5262615]</td>
+      <td>['18', '18', '18', '18', '27']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>7452.133541</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>162.913359</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>0.000000</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>1580.494775</td>
+      <td>0.000000</td>
+      <td>489.570672</td>
+      <td>263.495431</td>
+      <td>Orakei</td>
+      <td>Saint Johns East</td>
+      <td>144500.0</td>
+      <td>St Johns</td>
+      <td>517201</td>
+      <td>464600.0</td>
+      <td>464600</td>
+      <td>1834.490817</td>
+      <td>4299.136620</td>
+      <td>434.784957</td>
+      <td>395.754035</td>
+      <td>8169.879981</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5227472</th>
+      <td>547898</td>
+      <td>5227472</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Road</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1330.0</td>
+      <td>MULTIPOLYGON (((174.8750380330001 -36.95994291...</td>
+      <td>174.874361</td>
+      <td>-36.959668</td>
+      <td>[174.875038; 174.874961; 174.874884; 174.87480...</td>
+      <td>[-36.959943; -36.959973; -36.960003; -36.96003...</td>
+      <td>[174.875038; 174.874961; 174.874884; 174.87480...</td>
+      <td>[-36.959943; -36.959973; -36.960003; -36.96003...</td>
+      <td>27.0</td>
+      <td>Road</td>
+      <td>[5214220, 4906751, 5142410, 4891625, 5256195, ...</td>
+      <td>['27', '17', '17', '17', '27', '17', '17', '17...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>3963.447367</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>86.562395</td>
+      <td>8</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>760.946689</td>
+      <td>239.919686</td>
+      <td>387.444562</td>
+      <td>86.562395</td>
+      <td>Otara</td>
+      <td>Otara Central</td>
+      <td>154400.0</td>
+      <td>Otara North</td>
+      <td>523501</td>
+      <td>700602.0</td>
+      <td>700602</td>
+      <td>983.514550</td>
+      <td>658.806820</td>
+      <td>45.095107</td>
+      <td>2934.237955</td>
+      <td>15888.342992</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5242816</th>
+      <td>547899</td>
+      <td>5242816</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Road</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1049.0</td>
+      <td>MULTIPOLYGON (((174.872008733 -36.958680732999...</td>
+      <td>174.872269</td>
+      <td>-36.958674</td>
+      <td>[174.872009; 174.872304; 174.872476; 174.87240...</td>
+      <td>[-36.958681; -36.958453; -36.958569; -36.95863...</td>
+      <td>[174.872009; 174.872304; 174.872476; 174.87240...</td>
+      <td>[-36.958681; -36.958453; -36.958569; -36.95863...</td>
+      <td>27.0</td>
+      <td>Road</td>
+      <td>[4733845, 5231272, 4866075, 4785948, 5234594, ...</td>
+      <td>['64', '27', '33', '32', '27', '27', '8']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>4211.055507</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>82.178171</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>0.000000</td>
+      <td>8</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>785.375433</td>
+      <td>262.434622</td>
+      <td>328.712745</td>
+      <td>0.000000</td>
+      <td>Otara</td>
+      <td>Otara Central</td>
+      <td>154400.0</td>
+      <td>Otara North</td>
+      <td>523501</td>
+      <td>700601.0</td>
+      <td>700601</td>
+      <td>801.720167</td>
+      <td>611.330344</td>
+      <td>5.025442</td>
+      <td>2831.983258</td>
+      <td>15685.595260</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7520053</th>
+      <td>547900</td>
+      <td>7520053</td>
+      <td>Lot 5 DP 465319</td>
+      <td>DP 465319</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>621250</td>
+      <td>2253.0</td>
+      <td>2252.0</td>
+      <td>MULTIPOLYGON (((174.875695433 -36.959427516999...</td>
+      <td>174.875600</td>
+      <td>-36.959503</td>
+      <td>[174.875695; 174.875801; 174.876171; 174.87630...</td>
+      <td>[-36.959428; -36.959472; -36.959629; -36.95968...</td>
+      <td>[174.875149; 174.875145; 174.875141; 174.87513...</td>
+      <td>[-36.959472; -36.959456; -36.95944; -36.959424...</td>
+      <td>17.0</td>
+      <td>Business - Light Industry Zone</td>
+      <td>[5214220, 7520050, 7520049]</td>
+      <td>['27', '17', '17']</td>
+      <td>['Otahuhu - Whakamaru C']</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>3911.904824</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>150.152069</td>
+      <td>8</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>845.357322</td>
+      <td>197.645867</td>
+      <td>386.422868</td>
+      <td>150.152069</td>
+      <td>Otara</td>
+      <td>Otara Central</td>
+      <td>154400.0</td>
+      <td>Otara North</td>
+      <td>523501</td>
+      <td>700602.0</td>
+      <td>700602</td>
+      <td>905.449427</td>
+      <td>757.841845</td>
+      <td>137.798477</td>
+      <td>3038.063157</td>
+      <td>15943.954833</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7520049</th>
+      <td>547901</td>
+      <td>7520049</td>
+      <td>Lot 1 DP 465319</td>
+      <td>DP 465319</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>619244</td>
+      <td>13064.0</td>
+      <td>13062.0</td>
+      <td>MULTIPOLYGON (((174.875695433 -36.959427516999...</td>
+      <td>174.876401</td>
+      <td>-36.959399</td>
+      <td>[174.875695; 174.875635; 174.875514; 174.87543...</td>
+      <td>[-36.959428; -36.959402; -36.959351; -36.95931...</td>
+      <td>[174.875187; 174.875207; 174.875323; 174.87533...</td>
+      <td>[-36.959212; -36.959182; -36.959006; -36.95899...</td>
+      <td>17.0</td>
+      <td>Business - Light Industry Zone</td>
+      <td>[7520050, 5214220, 7520053, 7520052]</td>
+      <td>['17', '27', '17', '17']</td>
+      <td>['Otahuhu - Whakamaru C']</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>3808.115618</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>139.072671</td>
+      <td>18</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>870.886671</td>
+      <td>139.072671</td>
+      <td>274.592516</td>
+      <td>143.276761</td>
+      <td>Otara</td>
+      <td>Otara Central</td>
+      <td>154400.0</td>
+      <td>Otara North</td>
+      <td>523501</td>
+      <td>700602.0</td>
+      <td>700602</td>
+      <td>859.190377</td>
+      <td>823.461575</td>
+      <td>202.451909</td>
+      <td>3105.040962</td>
+      <td>15980.395818</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4733845</th>
+      <td>547902</td>
+      <td>4733845</td>
+      <td>Part Lot 59 DP 60001</td>
+      <td>DP 60001</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>[Referenced] Declaration That State Housing La...</td>
+      <td>North Auckland</td>
+      <td>NA86D/103</td>
+      <td>5449.0</td>
+      <td>5447.0</td>
+      <td>MULTIPOLYGON (((174.8707008000001 -36.95891744...</td>
+      <td>174.871298</td>
+      <td>-36.958743</td>
+      <td>[174.870701; 174.870815; 174.870818; 174.87082...</td>
+      <td>[-36.958917; -36.958509; -36.9585; -36.958492;...</td>
+      <td>[174.870701; 174.870815; 174.870818; 174.87082...</td>
+      <td>[-36.958917; -36.958509; -36.9585; -36.958492;...</td>
+      <td>64.0</td>
+      <td>Special Purpose - Tertiary Education Zone</td>
+      <td>[5187557, 4758156, 5254506, 4866075, 5225006, ...</td>
+      <td>['33', '64', '27', '33', '27', '27', '27', '27']</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>4250.207218</td>
+      <td>3</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>124.492091</td>
+      <td>17</td>
+      <td>Business - Light Industry Zone</td>
+      <td>20.115492</td>
+      <td>8</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>751.195267</td>
+      <td>304.268175</td>
+      <td>310.515280</td>
+      <td>20.115492</td>
+      <td>Otara</td>
+      <td>Otara Central</td>
+      <td>154400.0</td>
+      <td>Otara North</td>
+      <td>523501</td>
+      <td>700700.0</td>
+      <td>700700</td>
+      <td>769.844893</td>
+      <td>561.066825</td>
+      <td>37.791191</td>
+      <td>2753.967151</td>
+      <td>15637.574122</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>547902 rows × 53 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase0</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">phase0</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>(271668, 155593, 547902, 547902)</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;geometry&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">phase0</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">,</span> <span class="s2">&quot;Unnamed: 0&quot;</span><span class="p">]),</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;LINZ_parcel_ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 39.1 s, sys: 13.9 s, total: 52.9 s
+Wall time: 53 s
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBS</th>
+      <th>CONSENT_DATE</th>
+      <th>MARCH_YEAR</th>
+      <th>ADDRESS_1</th>
+      <th>ADDRESS_2</th>
+      <th>ADDRESS_3</th>
+      <th>LB_Name</th>
+      <th>BUILDING_TYPE_NAME</th>
+      <th>BUILDING_TYPE_CODE</th>
+      <th>FLOOR_AREA</th>
+      <th>VALUE</th>
+      <th>BUILDINGS</th>
+      <th>Building_Type_Group</th>
+      <th>Residential_Type</th>
+      <th>Business_Group</th>
+      <th>Business_Category</th>
+      <th>Type_Class_Year</th>
+      <th>MBCODE</th>
+      <th>MBYEAR</th>
+      <th>AUP_BaseZone</th>
+      <th>AUP_BaseZone_Group</th>
+      <th>ZONE</th>
+      <th>ZONE_ID</th>
+      <th>ZONE_NAME</th>
+      <th>ZONE_TYPE</th>
+      <th>BUSINESS_TYPE</th>
+      <th>PlanAreaName</th>
+      <th>SHA_Name_154</th>
+      <th>X_Coordinate</th>
+      <th>Y_Coordinate</th>
+      <th>Ranged_Address_indicator</th>
+      <th>number_name</th>
+      <th>full_address</th>
+      <th>LINZ_parcel_ID</th>
+      <th>addresses</th>
+      <th>LINZ_MATCH_CODE</th>
+      <th>distance_to_parcel</th>
+      <th>LINZ_2ND_MATCH_CODE</th>
+      <th>id</th>
+      <th>appellation</th>
+      <th>affected_surveys</th>
+      <th>parcel_intent</th>
+      <th>topology_type</th>
+      <th>statutory_actions</th>
+      <th>land_district</th>
+      <th>titles</th>
+      <th>survey_area</th>
+      <th>calc_area</th>
+      <th>LINZ_parcel_centroid_lon</th>
+      <th>LINZ_parcel_centroid_lat</th>
+      <th>LINZ_parcel_vertices_lon</th>
+      <th>LINZ_parcel_vertices_lat</th>
+      <th>LINZ_parcel_roadvertices_lon</th>
+      <th>LINZ_parcel_roadvertices_lat</th>
+      <th>LINZmatch_AUP_code</th>
+      <th>LINZmatch_AUP_name</th>
+      <th>LINZ_adjoining_parcel_ID</th>
+      <th>LINZ_parcel_sides_zones</th>
+      <th>LINZ_TRNSPWR_ohead_name</th>
+      <th>LINZ_TRNSPWR_ohead_indicator</th>
+      <th>LINZ_VWSHFT_ohead_name</th>
+      <th>LINZ_VWSHFT_ohead_ID</th>
+      <th>LINZ_VWSHFT_ohead_indicator</th>
+      <th>Hdist_rural</th>
+      <th>Hdist_rural_code</th>
+      <th>Hdist_rural_name</th>
+      <th>Hdist_bus</th>
+      <th>Hdist_bus_code</th>
+      <th>Hdist_bus_name</th>
+      <th>Hdist_resid</th>
+      <th>Hdist_resid_code</th>
+      <th>Hdist_resid_name</th>
+      <th>Hdist_SH</th>
+      <th>Hdist_MHS</th>
+      <th>Hdist_MHU</th>
+      <th>Hdist_THA</th>
+      <th>Local_Area_name</th>
+      <th>SA22018_name</th>
+      <th>SA22018_code</th>
+      <th>AU2013_name</th>
+      <th>AU2013_code</th>
+      <th>MB2018_code</th>
+      <th>MB2013_code</th>
+      <th>Hdist_coast</th>
+      <th>Hdist_motorway</th>
+      <th>Hdist_main_road</th>
+      <th>Hdist_rail</th>
+      <th>Hdist_skytower</th>
+      <th>SpHA_indicator</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>227614.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>398 PAKIRI BLOCK ROAD</td>
+      <td>Tomarata</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>231.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>135900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.634550</td>
+      <td>-36.224858</td>
+      <td>False</td>
+      <td>398 pakiri</td>
+      <td>398 pakiri block road tomarata auckland</td>
+      <td>5209817</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>5209817.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Road</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37312.0</td>
+      <td>174.635139</td>
+      <td>-36.225655</td>
+      <td>[174.633642; 174.634421; 174.638887; 174.63909...</td>
+      <td>[-36.225013; -36.22472; -36.223077; -36.222995...</td>
+      <td>[174.633642; 174.634421; 174.638887; 174.63909...</td>
+      <td>[-36.225013; -36.22472; -36.223077; -36.222995...</td>
+      <td>27.0</td>
+      <td>Road</td>
+      <td>[5258110, 4769050, 5221993, 4767534, 4746161, ...</td>
+      <td>['27', '16', '27', '16', '16', '16', '16', '16...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>16.0</td>
+      <td>Rural - Rural Production Zone</td>
+      <td>11269.184643</td>
+      <td>7.0</td>
+      <td>Business - Local Centre Zone</td>
+      <td>9036.582078</td>
+      <td>20.0</td>
+      <td>Residential - Rural and Coastal Settlement Zone</td>
+      <td>11205.543559</td>
+      <td>18920.259216</td>
+      <td>18750.532060</td>
+      <td>40015.227830</td>
+      <td>Rodney-Wellsford</td>
+      <td>Cape Rodney</td>
+      <td>110400.0</td>
+      <td>Cape Rodney</td>
+      <td>506660.0</td>
+      <td>135900.0</td>
+      <td>135900.0</td>
+      <td>4851.343624</td>
+      <td>11207.049033</td>
+      <td>4467.269461</td>
+      <td>11164.627575</td>
+      <td>70025.980859</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>227656.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>Ahuroa Road</td>
+      <td>Puhoi</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Non-building construction</td>
+      <td>3111.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>146701.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.568721</td>
+      <td>-36.475863</td>
+      <td>False</td>
+      <td>ahuroa road</td>
+      <td>ahuroa road puhoi auckland</td>
+      <td>5227114</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>5227114.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Road</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>80759.0</td>
+      <td>174.585217</td>
+      <td>-36.478316</td>
+      <td>[174.566432; 174.566443; 174.567537; 174.56922...</td>
+      <td>[-36.475931; -36.475749; -36.475498; -36.47586...</td>
+      <td>[174.566432; 174.566443; 174.567537; 174.56922...</td>
+      <td>[-36.475931; -36.475749; -36.475498; -36.47586...</td>
+      <td>27.0</td>
+      <td>Road</td>
+      <td>[4987194, 4709140, 5024783, 5251538, 7311836, ...</td>
+      <td>['16', '16', '16', '27', '27', '16', '16', '16...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>16.0</td>
+      <td>Rural - Rural Production Zone</td>
+      <td>6297.169428</td>
+      <td>44.0</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>5618.408650</td>
+      <td>20.0</td>
+      <td>Residential - Rural and Coastal Settlement Zone</td>
+      <td>8897.821431</td>
+      <td>8970.194906</td>
+      <td>10112.311743</td>
+      <td>14508.493948</td>
+      <td>Rodney-Warkworth</td>
+      <td>Puhoi Valley</td>
+      <td>111200.0</td>
+      <td>Tauhoa-Puhoi</td>
+      <td>506613.0</td>
+      <td>4011785.0</td>
+      <td>146800.0</td>
+      <td>8434.164907</td>
+      <td>5645.861778</td>
+      <td>3195.582938</td>
+      <td>2243.035783</td>
+      <td>44003.687693</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>227796.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>Upper Orewa Road</td>
+      <td>Upper Orewa</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Townhouses, flats, units, and other dwellings</td>
+      <td>1129.0</td>
+      <td>260.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>177701.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.641586</td>
+      <td>-36.590190</td>
+      <td>False</td>
+      <td>upper orewa</td>
+      <td>upper orewa road upper orewa auckland</td>
+      <td>6605265</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>6605265.0</td>
+      <td>NaN</td>
+      <td>SO 70497</td>
+      <td>Road</td>
+      <td>Primary</td>
+      <td>[Create] Road New Zealand Gazette 2002 p 4425</td>
+      <td>North Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31584.0</td>
+      <td>174.643877</td>
+      <td>-36.590466</td>
+      <td>[174.639162; 174.639336; 174.63948; 174.6402; ...</td>
+      <td>[-36.588696; -36.588543; -36.588617; -36.58861...</td>
+      <td>[174.639162; 174.639336; 174.63948; 174.6402; ...</td>
+      <td>[-36.588696; -36.588543; -36.588617; -36.58861...</td>
+      <td>27.0</td>
+      <td>Road</td>
+      <td>[4861183, 5242128, 4958957, 5186615, 7178486, ...</td>
+      <td>['16', '27', '16', '16', '4', '4', '4', '4', '...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>16.0</td>
+      <td>Rural - Rural Production Zone</td>
+      <td>1543.902667</td>
+      <td>44.0</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>1173.748007</td>
+      <td>19.0</td>
+      <td>Residential - Single House Zone</td>
+      <td>1173.748007</td>
+      <td>1199.633600</td>
+      <td>1505.570194</td>
+      <td>1904.225235</td>
+      <td>Rodney-Warkworth</td>
+      <td>Wainui-Waiwera</td>
+      <td>112100.0</td>
+      <td>Tahekeroa</td>
+      <td>506614.0</td>
+      <td>177701.0</td>
+      <td>177701.0</td>
+      <td>1485.621881</td>
+      <td>1732.402338</td>
+      <td>1726.240871</td>
+      <td>9791.914387</td>
+      <td>30507.445807</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>227896.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>56 VINISTRA ROAD</td>
+      <td>Huapai</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>179.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>214900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>RDC_7</td>
+      <td>Future Urban</td>
+      <td>Rural</td>
+      <td>NaN</td>
+      <td>Huapai Triangle</td>
+      <td>Huapai Triangle</td>
+      <td>174.541738</td>
+      <td>-36.778192</td>
+      <td>False</td>
+      <td>56 vinistra</td>
+      <td>56 vinistra road huapai auckland</td>
+      <td>8081617</td>
+      <td>[56 vinistra]</td>
+      <td>2.0</td>
+      <td>272.107738</td>
+      <td>NaN</td>
+      <td>8081617.0</td>
+      <td>Lot 34 DP 544111</td>
+      <td>DP 544111</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>920825</td>
+      <td>465.0</td>
+      <td>465.0</td>
+      <td>174.538805</td>
+      <td>-36.777169</td>
+      <td>[174.538639; 174.538666; 174.538985; 174.53897...</td>
+      <td>[-36.777206; -36.777073; -36.777117; -36.77716...</td>
+      <td>[174.538639; 174.538666]</td>
+      <td>[-36.777206; -36.777073]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[8081650, 8081618, 8081641, 8081616]</td>
+      <td>['18', '18', '18', '18']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>761.856736</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>458.682949</td>
+      <td>44.0</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>0.000000</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>267.947276</td>
+      <td>0.000000</td>
+      <td>1655.660174</td>
+      <td>5907.963638</td>
+      <td>Rodney-Kumeu-Riverhead</td>
+      <td>Kumeu-Huapai</td>
+      <td>115000.0</td>
+      <td>Huapai</td>
+      <td>505602.0</td>
+      <td>214900.0</td>
+      <td>214900.0</td>
+      <td>4939.838754</td>
+      <td>616.928756</td>
+      <td>616.696515</td>
+      <td>524.164730</td>
+      <td>21438.011994</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>227902.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>77 VINISTRA ROAD</td>
+      <td>Huapai</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>180.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>214900.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>RDC_7</td>
+      <td>Future Urban</td>
+      <td>Rural</td>
+      <td>NaN</td>
+      <td>Huapai Triangle</td>
+      <td>Huapai Triangle</td>
+      <td>174.541738</td>
+      <td>-36.778192</td>
+      <td>False</td>
+      <td>77 vinistra</td>
+      <td>77 vinistra road huapai auckland</td>
+      <td>8081611</td>
+      <td>[77 vinistra]</td>
+      <td>2.0</td>
+      <td>302.608731</td>
+      <td>NaN</td>
+      <td>8081611.0</td>
+      <td>Lot 28 DP 544111</td>
+      <td>DP 544111</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>920819</td>
+      <td>548.0</td>
+      <td>548.0</td>
+      <td>174.538242</td>
+      <td>-36.777440</td>
+      <td>[174.538057; 174.538433; 174.538439; 174.53845...</td>
+      <td>[-36.777366; -36.777373; -36.777443; -36.77751...</td>
+      <td>[174.538433; 174.538439; 174.538455]</td>
+      <td>[-36.777373; -36.777443; -36.777512]</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>[8081612, 8081610, 8081650, 7662953, 8081614, ...</td>
+      <td>['18', '18', '18', '18', '18', '18']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>757.692105</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>513.691231</td>
+      <td>44.0</td>
+      <td>Business - Neighbourhood Centre Zone</td>
+      <td>0.000000</td>
+      <td>18.0</td>
+      <td>Residential - Mixed Housing Suburban Zone</td>
+      <td>276.253606</td>
+      <td>0.000000</td>
+      <td>1706.825709</td>
+      <td>5923.944020</td>
+      <td>Rodney-Kumeu-Riverhead</td>
+      <td>Kumeu-Huapai</td>
+      <td>115000.0</td>
+      <td>Huapai</td>
+      <td>505602.0</td>
+      <td>214900.0</td>
+      <td>214900.0</td>
+      <td>4980.828618</td>
+      <td>648.145684</td>
+      <td>648.604486</td>
+      <td>564.633606</td>
+      <td>21473.659691</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>271663</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>True</td>
+      <td>164 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>1.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>6752833.0</td>
+      <td>Lot 1 DP 348651</td>
+      <td>DP 348651, DP 497469</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>734869, 734870, 734871, 734872, 734873, 734874...</td>
+      <td>664.0</td>
+      <td>664.0</td>
+      <td>174.760350</td>
+      <td>-36.851522</td>
+      <td>[174.760735; 174.760552; 174.760475; 174.76038...</td>
+      <td>[-36.851544; -36.85149; -36.851468; -36.851668...</td>
+      <td>[174.760387; 174.760133; 174.760254; 174.76027]</td>
+      <td>[-36.851668; -36.851597; -36.851407; -36.851382]</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>[5238725, 5241240, 5245509, 5127911, 6703018]</td>
+      <td>['27', '27', '27', '35', '35']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>['Mount Eden']</td>
+      <td>['RSVS_47']</td>
+      <td>1.0</td>
+      <td>11015.432271</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>461.942869</td>
+      <td>8.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>718.145089</td>
+      <td>1388.878784</td>
+      <td>1160.296223</td>
+      <td>461.942869</td>
+      <td>Auckland Central</td>
+      <td>Hobson Ridge Central</td>
+      <td>133400.0</td>
+      <td>Auckland Central West</td>
+      <td>514102.0</td>
+      <td>4000057.0</td>
+      <td>434200.0</td>
+      <td>728.566386</td>
+      <td>333.059740</td>
+      <td>27.128068</td>
+      <td>1061.448125</td>
+      <td>383.915160</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>271664</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>True</td>
+      <td>165 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>5.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>6752833.0</td>
+      <td>Lot 1 DP 348651</td>
+      <td>DP 348651, DP 497469</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>734869, 734870, 734871, 734872, 734873, 734874...</td>
+      <td>664.0</td>
+      <td>664.0</td>
+      <td>174.760350</td>
+      <td>-36.851522</td>
+      <td>[174.760735; 174.760552; 174.760475; 174.76038...</td>
+      <td>[-36.851544; -36.85149; -36.851468; -36.851668...</td>
+      <td>[174.760387; 174.760133; 174.760254; 174.76027]</td>
+      <td>[-36.851668; -36.851597; -36.851407; -36.851382]</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>[5238725, 5241240, 5245509, 5127911, 6703018]</td>
+      <td>['27', '27', '27', '35', '35']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>['Mount Eden']</td>
+      <td>['RSVS_47']</td>
+      <td>1.0</td>
+      <td>11015.432271</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>461.942869</td>
+      <td>8.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>718.145089</td>
+      <td>1388.878784</td>
+      <td>1160.296223</td>
+      <td>461.942869</td>
+      <td>Auckland Central</td>
+      <td>Hobson Ridge Central</td>
+      <td>133400.0</td>
+      <td>Auckland Central West</td>
+      <td>514102.0</td>
+      <td>4000057.0</td>
+      <td>434200.0</td>
+      <td>728.566386</td>
+      <td>333.059740</td>
+      <td>27.128068</td>
+      <td>1061.448125</td>
+      <td>383.915160</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>271665</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>True</td>
+      <td>166 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>1.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>6752833.0</td>
+      <td>Lot 1 DP 348651</td>
+      <td>DP 348651, DP 497469</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>734869, 734870, 734871, 734872, 734873, 734874...</td>
+      <td>664.0</td>
+      <td>664.0</td>
+      <td>174.760350</td>
+      <td>-36.851522</td>
+      <td>[174.760735; 174.760552; 174.760475; 174.76038...</td>
+      <td>[-36.851544; -36.85149; -36.851468; -36.851668...</td>
+      <td>[174.760387; 174.760133; 174.760254; 174.76027]</td>
+      <td>[-36.851668; -36.851597; -36.851407; -36.851382]</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>[5238725, 5241240, 5245509, 5127911, 6703018]</td>
+      <td>['27', '27', '27', '35', '35']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>['Mount Eden']</td>
+      <td>['RSVS_47']</td>
+      <td>1.0</td>
+      <td>11015.432271</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>461.942869</td>
+      <td>8.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>718.145089</td>
+      <td>1388.878784</td>
+      <td>1160.296223</td>
+      <td>461.942869</td>
+      <td>Auckland Central</td>
+      <td>Hobson Ridge Central</td>
+      <td>133400.0</td>
+      <td>Auckland Central West</td>
+      <td>514102.0</td>
+      <td>4000057.0</td>
+      <td>434200.0</td>
+      <td>728.566386</td>
+      <td>333.059740</td>
+      <td>27.128068</td>
+      <td>1061.448125</td>
+      <td>383.915160</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>271666</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>True</td>
+      <td>167 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>5039459.0</td>
+      <td>[167 hobson]</td>
+      <td>2.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>5039459.0</td>
+      <td>Lot 1 DP 104999</td>
+      <td>DP 104999</td>
+      <td>DCDB</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>NA57D/1215</td>
+      <td>602.0</td>
+      <td>603.0</td>
+      <td>174.759812</td>
+      <td>-36.851360</td>
+      <td>[174.759761; 174.759994; 174.759839; 174.75964...</td>
+      <td>[-36.851207; -36.851273; -36.851515; -36.85145...</td>
+      <td>[174.759994; 174.759839; 174.759646]</td>
+      <td>[-36.851273; -36.851515; -36.851459]</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>[5245509, 5237081, 4908456, 6651804, 5238725]</td>
+      <td>['27', '27', '35', '35', '27']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>['Mount Eden']</td>
+      <td>['RSVS_47']</td>
+      <td>1.0</td>
+      <td>11056.808509</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>433.458321</td>
+      <td>8.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>687.388404</td>
+      <td>1432.952054</td>
+      <td>1115.817520</td>
+      <td>433.458321</td>
+      <td>Auckland Central</td>
+      <td>Hobson Ridge Central</td>
+      <td>133400.0</td>
+      <td>Auckland Central West</td>
+      <td>514102.0</td>
+      <td>434105.0</td>
+      <td>434105.0</td>
+      <td>701.735442</td>
+      <td>326.282365</td>
+      <td>23.737802</td>
+      <td>1080.416831</td>
+      <td>391.318193</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>271667</th>
+      <td>151352.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>164-168</td>
+      <td>HOBSON ST</td>
+      <td>AUCKLAND</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>0.0</td>
+      <td>3650000.0</td>
+      <td>0.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>434200.0</td>
+      <td>2013.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>Business</td>
+      <td>35.0</td>
+      <td>CBD_1</td>
+      <td>Central Area A</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.760314</td>
+      <td>-36.851526</td>
+      <td>True</td>
+      <td>168 hobson</td>
+      <td>164-168 hobson st auckland</td>
+      <td>6752833.0</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>5.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>6752833.0</td>
+      <td>Lot 1 DP 348651</td>
+      <td>DP 348651, DP 497469</td>
+      <td>Fee Simple Title</td>
+      <td>Primary</td>
+      <td>NaN</td>
+      <td>North Auckland</td>
+      <td>734869, 734870, 734871, 734872, 734873, 734874...</td>
+      <td>664.0</td>
+      <td>664.0</td>
+      <td>174.760350</td>
+      <td>-36.851522</td>
+      <td>[174.760735; 174.760552; 174.760475; 174.76038...</td>
+      <td>[-36.851544; -36.85149; -36.851468; -36.851668...</td>
+      <td>[174.760387; 174.760133; 174.760254; 174.76027]</td>
+      <td>[-36.851668; -36.851597; -36.851407; -36.851382]</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>[5238725, 5241240, 5245509, 5127911, 6703018]</td>
+      <td>['27', '27', '27', '35', '35']</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>['Mount Eden']</td>
+      <td>['RSVS_47']</td>
+      <td>1.0</td>
+      <td>11015.432271</td>
+      <td>3.0</td>
+      <td>Rural - Countryside Living Zone</td>
+      <td>0.000000</td>
+      <td>35.0</td>
+      <td>Business - City Centre Zone</td>
+      <td>461.942869</td>
+      <td>8.0</td>
+      <td>Residential - Terrace Housing and Apartment Bu...</td>
+      <td>718.145089</td>
+      <td>1388.878784</td>
+      <td>1160.296223</td>
+      <td>461.942869</td>
+      <td>Auckland Central</td>
+      <td>Hobson Ridge Central</td>
+      <td>133400.0</td>
+      <td>Auckland Central West</td>
+      <td>514102.0</td>
+      <td>4000057.0</td>
+      <td>434200.0</td>
+      <td>728.566386</td>
+      <td>333.059740</td>
+      <td>27.128068</td>
+      <td>1061.448125</td>
+      <td>383.915160</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>271668 rows × 89 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>Index([&#39;OBS&#39;, &#39;CONSENT_DATE&#39;, &#39;MARCH_YEAR&#39;, &#39;ADDRESS_1&#39;, &#39;ADDRESS_2&#39;,
+       &#39;ADDRESS_3&#39;, &#39;LB_Name&#39;, &#39;BUILDING_TYPE_NAME&#39;, &#39;BUILDING_TYPE_CODE&#39;,
+       &#39;FLOOR_AREA&#39;, &#39;VALUE&#39;, &#39;BUILDINGS&#39;, &#39;Building_Type_Group&#39;,
+       &#39;Residential_Type&#39;, &#39;Business_Group&#39;, &#39;Business_Category&#39;,
+       &#39;Type_Class_Year&#39;, &#39;MBCODE&#39;, &#39;MBYEAR&#39;, &#39;AUP_BaseZone&#39;,
+       &#39;AUP_BaseZone_Group&#39;, &#39;ZONE&#39;, &#39;ZONE_ID&#39;, &#39;ZONE_NAME&#39;, &#39;ZONE_TYPE&#39;,
+       &#39;BUSINESS_TYPE&#39;, &#39;PlanAreaName&#39;, &#39;SHA_Name_154&#39;, &#39;X_Coordinate&#39;,
+       &#39;Y_Coordinate&#39;, &#39;Ranged_Address_indicator&#39;, &#39;number_name&#39;,
+       &#39;full_address&#39;, &#39;LINZ_parcel_ID&#39;, &#39;addresses&#39;, &#39;LINZ_MATCH_CODE&#39;,
+       &#39;distance_to_parcel&#39;, &#39;LINZ_2ND_MATCH_CODE&#39;, &#39;id&#39;, &#39;appellation&#39;,
+       &#39;affected_surveys&#39;, &#39;parcel_intent&#39;, &#39;topology_type&#39;,
+       &#39;statutory_actions&#39;, &#39;land_district&#39;, &#39;titles&#39;, &#39;survey_area&#39;,
+       &#39;calc_area&#39;, &#39;LINZ_parcel_centroid_lon&#39;, &#39;LINZ_parcel_centroid_lat&#39;,
+       &#39;LINZ_parcel_vertices_lon&#39;, &#39;LINZ_parcel_vertices_lat&#39;,
+       &#39;LINZ_parcel_roadvertices_lon&#39;, &#39;LINZ_parcel_roadvertices_lat&#39;,
+       &#39;LINZmatch_AUP_code&#39;, &#39;LINZmatch_AUP_name&#39;, &#39;LINZ_adjoining_parcel_ID&#39;,
+       &#39;LINZ_parcel_sides_zones&#39;, &#39;LINZ_TRNSPWR_ohead_name&#39;,
+       &#39;LINZ_TRNSPWR_ohead_indicator&#39;, &#39;LINZ_VWSHFT_ohead_name&#39;,
+       &#39;LINZ_VWSHFT_ohead_ID&#39;, &#39;LINZ_VWSHFT_ohead_indicator&#39;, &#39;Hdist_rural&#39;,
+       &#39;Hdist_rural_code&#39;, &#39;Hdist_rural_name&#39;, &#39;Hdist_bus&#39;, &#39;Hdist_bus_code&#39;,
+       &#39;Hdist_bus_name&#39;, &#39;Hdist_resid&#39;, &#39;Hdist_resid_code&#39;, &#39;Hdist_resid_name&#39;,
+       &#39;Hdist_SH&#39;, &#39;Hdist_MHS&#39;, &#39;Hdist_MHU&#39;, &#39;Hdist_THA&#39;, &#39;Local_Area_name&#39;,
+       &#39;SA22018_name&#39;, &#39;SA22018_code&#39;, &#39;AU2013_name&#39;, &#39;AU2013_code&#39;,
+       &#39;MB2018_code&#39;, &#39;MB2013_code&#39;, &#39;Hdist_coast&#39;, &#39;Hdist_motorway&#39;,
+       &#39;Hdist_main_road&#39;, &#39;Hdist_rail&#39;, &#39;Hdist_skytower&#39;, &#39;SpHA_indicator&#39;],
+      dtype=&#39;object&#39;)</pre>
 </div>
 
 </div>
@@ -19215,7 +22012,7 @@ var element = document.getElementById('9bc7d971-a3cb-473a-b72d-3fb553edc843');
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;restricted/BCs_issued_by_AUP_TLADCs_2021FEB_augmented.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
      </div>
