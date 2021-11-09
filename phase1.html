@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="b0e11779-4236-4a94-8c4c-c035cd95e542" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="938e1e68-bb8a-49e9-9009-2981a43ee8cf" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('b0e11779-4236-4a94-8c4c-c035cd95e542');
+var element = document.getElementById('938e1e68-bb8a-49e9-9009-2981a43ee8cf');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -16979,9 +16979,9 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="16960b8a-52bd-4780-bbbd-692c273f3e37" class="jupyter-widgets jp-OutputArea-output ">
+<div id="eece3892-e1bd-4349-98dd-94de23adda09" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('16960b8a-52bd-4780-bbbd-692c273f3e37');
+var element = document.getElementById('eece3892-e1bd-4349-98dd-94de23adda09');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b7627ce64c8d4a44b8d42901e39b7a82", "version_major": 2, "version_minor": 0}
@@ -18119,8 +18119,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <span class="k">def</span> <span class="nf">find_text_match</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">parcels</span><span class="p">[</span><span class="n">parcels</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">number_name</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
-        <span class="n">row</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">row</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">closest_parcel_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span> <span class="o">=</span> <span class="n">closest_parcel_id</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="n">closest_parcel_id</span><span class="p">]</span>
         <span class="n">row</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="k">return</span> <span class="n">row</span>
 <span class="n">matches</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">df</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="p">)]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="n">find_text_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -18149,12 +18150,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="20a58611-61ed-46b8-aa68-9e06cbaf4409" class="jupyter-widgets jp-OutputArea-output ">
+<div id="844fda5f-e479-4d09-814d-7a4c5610f113" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('20a58611-61ed-46b8-aa68-9e06cbaf4409');
+var element = document.getElementById('844fda5f-e479-4d09-814d-7a4c5610f113');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8d2f5ce5a36640dc82952a8ba3ed19b1", "version_major": 2, "version_minor": 0}
+{"model_id": "9c8659ba34dd44eab9c8071011a0f7d7", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -18167,8 +18168,8 @@ var element = document.getElementById('20a58611-61ed-46b8-aa68-9e06cbaf4409');
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 10min 5s, sys: 3.95 s, total: 10min 9s
-Wall time: 10min 7s
+<pre>CPU times: user 11min 11s, sys: 3.96 s, total: 11min 15s
+Wall time: 11min 12s
 </pre>
 </div>
 </div>
@@ -18223,8 +18224,8 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 9.92 s, sys: 882 ms, total: 10.8 s
-Wall time: 10.9 s
+<pre>CPU times: user 9.66 s, sys: 541 ms, total: 10.2 s
+Wall time: 10.2 s
 </pre>
 </div>
 </div>
@@ -18287,13 +18288,13 @@ Length: 207053, dtype: float64</pre>
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
 <pre>count     40667.000000
-mean       3431.747621
-std       10306.992116
+mean       2674.287749
+std        8338.535776
 min           0.000062
 25%           9.526412
 50%          29.306844
 75%         230.652134
-max      112305.063569
+max      100594.158959
 dtype: float64</pre>
 </div>
 
@@ -19214,12 +19215,12 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 
 
-<div id="4abdeda1-063f-4fbe-b055-3dcb902c733f" class="jupyter-widgets jp-OutputArea-output ">
+<div id="40dc6354-f92c-41ce-bfc7-a741c7d12429" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('4abdeda1-063f-4fbe-b055-3dcb902c733f');
+var element = document.getElementById('40dc6354-f92c-41ce-bfc7-a741c7d12429');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "944f72579f9841d283c12d7874544806", "version_major": 2, "version_minor": 0}
+{"model_id": "907e1d6ef05b4e8395d953fed9da8876", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -19232,8 +19233,8 @@ var element = document.getElementById('4abdeda1-063f-4fbe-b055-3dcb902c733f');
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 33min 27s, sys: 20.4 s, total: 33min 47s
-Wall time: 33min 40s
+<pre>CPU times: user 34min 22s, sys: 21 s, total: 34min 43s
+Wall time: 34min 36s
 </pre>
 </div>
 </div>
@@ -19989,13 +19990,13 @@ Length: 271496, dtype: float64</pre>
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
 <pre>count     71097.000000
-mean       2822.592040
-std        9149.245392
+mean       2068.368501
+std        6986.586947
 min           0.000062
 25%          14.005567
 50%          61.063103
 75%         264.926642
-max      119923.533860
+max      100594.158959
 dtype: float64</pre>
 </div>
 
@@ -20008,8 +20009,8 @@ dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 13.1 s, sys: 715 ms, total: 13.8 s
-Wall time: 14 s
+<pre>CPU times: user 11.9 s, sys: 882 ms, total: 12.8 s
+Wall time: 12.9 s
 </pre>
 </div>
 </div>
@@ -20060,8 +20061,8 @@ Wall time: 14 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 11.8 s, sys: 2.89 s, total: 14.7 s
-Wall time: 15.1 s
+<pre>CPU times: user 12.6 s, sys: 8.73 s, total: 21.3 s
+Wall time: 21.7 s
 </pre>
 </div>
 </div>
@@ -20821,7 +20822,7 @@ Wall time: 15.1 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>(271668, 155593, 547902, 547902)</pre>
+<pre>(271668, 155950, 547902, 547902)</pre>
 </div>
 
 </div>
@@ -20858,8 +20859,8 @@ Wall time: 15.1 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 10.5 s, sys: 1.77 s, total: 12.3 s
-Wall time: 12.5 s
+<pre>CPU times: user 11.1 s, sys: 2.38 s, total: 13.4 s
+Wall time: 13.6 s
 </pre>
 </div>
 </div>
