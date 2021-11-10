@@ -14280,7 +14280,7 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#pragma nodebook off</span>
@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="0b64d327-65de-4cd6-97c0-ee5fe7973c8c" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="f16080d1-06aa-4751-b1cd-288231f22673" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('0b64d327-65de-4cd6-97c0-ee5fe7973c8c');
+var element = document.getElementById('f16080d1-06aa-4751-b1cd-288231f22673');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -16130,6 +16130,44 @@ Wall time: 29.1 s
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;mt&quot;</span><span class="p">)),</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;mount&quot;</span><span class="p">)),</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;mt&quot;</span><span class="p">)),</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">addresses</span><span class="o">.</span><span class="n">address_number_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;mount&quot;</span><span class="p">)))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>690 597 132 4849
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index_right&quot;</span><span class="p">:</span> <span class="s2">&quot;LINZ_parcel_ID&quot;</span><span class="p">})</span>
 <span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;Int64&quot;</span><span class="p">)</span>
 <span class="n">df</span>
@@ -16979,9 +17017,9 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="8ba31226-5851-4495-9af7-ed3550b4f48c" class="jupyter-widgets jp-OutputArea-output ">
+<div id="a0194233-a38a-4cf3-851d-639757c6c330" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('8ba31226-5851-4495-9af7-ed3550b4f48c');
+var element = document.getElementById('a0194233-a38a-4cf3-851d-639757c6c330');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b7627ce64c8d4a44b8d42901e39b7a82", "version_major": 2, "version_minor": 0}
@@ -18150,9 +18188,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="e65eac1f-cbc6-46ee-80e3-fd433bb850c9" class="jupyter-widgets jp-OutputArea-output ">
+<div id="dbb2bb6e-4959-4cbd-a74a-4ffd7b1602ea" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('e65eac1f-cbc6-46ee-80e3-fd433bb850c9');
+var element = document.getElementById('dbb2bb6e-4959-4cbd-a74a-4ffd7b1602ea');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "9c8659ba34dd44eab9c8071011a0f7d7", "version_major": 2, "version_minor": 0}
@@ -19219,9 +19257,9 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 
 
-<div id="4fed0f01-8763-47ca-90e6-8c0f7fa22dea" class="jupyter-widgets jp-OutputArea-output ">
+<div id="be7efe03-b804-4954-8b14-2c28bf7e4451" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('4fed0f01-8763-47ca-90e6-8c0f7fa22dea');
+var element = document.getElementById('be7efe03-b804-4954-8b14-2c28bf7e4451');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "2fe204ceba6b4369a3ca97d21f507613", "version_major": 2, "version_minor": 0}
@@ -20043,6 +20081,622 @@ Wall time: 14 s
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">distance_to_parcel</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">)]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>OBS</th>
+      <th>CONSENT_DATE</th>
+      <th>MARCH_YEAR</th>
+      <th>ADDRESS_1</th>
+      <th>ADDRESS_2</th>
+      <th>ADDRESS_3</th>
+      <th>LB_Name</th>
+      <th>BUILDING_TYPE_NAME</th>
+      <th>BUILDING_TYPE_CODE</th>
+      <th>FLOOR_AREA</th>
+      <th>VALUE</th>
+      <th>BUILDINGS</th>
+      <th>Building_Type_Group</th>
+      <th>Residential_Type</th>
+      <th>Business_Group</th>
+      <th>Business_Category</th>
+      <th>Type_Class_Year</th>
+      <th>MBCODE</th>
+      <th>MBYEAR</th>
+      <th>AUP_BaseZone</th>
+      <th>AUP_BaseZone_Group</th>
+      <th>ZONE</th>
+      <th>ZONE_ID</th>
+      <th>ZONE_NAME</th>
+      <th>ZONE_TYPE</th>
+      <th>BUSINESS_TYPE</th>
+      <th>PlanAreaName</th>
+      <th>SHA_Name_154</th>
+      <th>X_Coordinate</th>
+      <th>Y_Coordinate</th>
+      <th>geometry</th>
+      <th>Ranged_Address_indicator</th>
+      <th>number_name</th>
+      <th>full_address</th>
+      <th>LINZ_parcel_ID</th>
+      <th>addresses</th>
+      <th>LINZ_MATCH_CODE</th>
+      <th>distance_to_parcel</th>
+      <th>LINZ_2ND_MATCH_CODE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>9</td>
+      <td>227954.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>60 CLARK ROAD</td>
+      <td>Hobsonville</td>
+      <td>Auckland</td>
+      <td>Upper Harbour</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>195.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>222600.0</td>
+      <td>2013.0</td>
+      <td>Residential - Mixed Housing Urban Zone</td>
+      <td>Residential</td>
+      <td>60.0</td>
+      <td>WCC_16</td>
+      <td>Special Area</td>
+      <td>Special</td>
+      <td>NaN</td>
+      <td>Scott Point, Sunderland Precinct, Hobsonville ...</td>
+      <td>Scott Point, Sunderland Precinct, Hobsonville ...</td>
+      <td>174.652342</td>
+      <td>-36.798024</td>
+      <td>POINT (1747412.651 5926259.663)</td>
+      <td>False</td>
+      <td>60 clark</td>
+      <td>60 clark road hobsonville auckland</td>
+      <td>4888203.0</td>
+      <td>[60 clark]</td>
+      <td>3.0</td>
+      <td>39445.096624</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>21</td>
+      <td>228822.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>149 GROVE ROAD</td>
+      <td>PAPAKURA</td>
+      <td>Auckland</td>
+      <td>Devonport - Takapuna</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>100.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>332800.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.804500</td>
+      <td>-36.819603</td>
+      <td>POINT (1760943.384 5923620.191)</td>
+      <td>False</td>
+      <td>149 grove</td>
+      <td>149 grove road papakura auckland</td>
+      <td>8140635.0</td>
+      <td>[149 grove]</td>
+      <td>3.0</td>
+      <td>28148.896307</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>22</td>
+      <td>228824.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>173 GROVE ROAD</td>
+      <td>PAPAKURA</td>
+      <td>Auckland</td>
+      <td>Devonport - Takapuna</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>100.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>332800.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.804500</td>
+      <td>-36.819603</td>
+      <td>POINT (1760943.384 5923620.191)</td>
+      <td>False</td>
+      <td>173 grove</td>
+      <td>173 grove road papakura auckland</td>
+      <td>8140623.0</td>
+      <td>[173 grove]</td>
+      <td>3.0</td>
+      <td>28052.419672</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>26</td>
+      <td>228828.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>139 GROVE ROAD</td>
+      <td>PAPAKURA</td>
+      <td>Auckland</td>
+      <td>Devonport - Takapuna</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>133.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>332800.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.804500</td>
+      <td>-36.819603</td>
+      <td>POINT (1760943.384 5923620.191)</td>
+      <td>False</td>
+      <td>139 grove</td>
+      <td>139 grove road papakura auckland</td>
+      <td>8140640.0</td>
+      <td>[139 grove]</td>
+      <td>3.0</td>
+      <td>28181.672558</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>27</td>
+      <td>228829.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>157 GROVE ROAD</td>
+      <td>PAPAKURA</td>
+      <td>Auckland</td>
+      <td>Devonport - Takapuna</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>133.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>332800.0</td>
+      <td>2013.0</td>
+      <td>Road</td>
+      <td>General</td>
+      <td>27.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.804500</td>
+      <td>-36.819603</td>
+      <td>POINT (1760943.384 5923620.191)</td>
+      <td>False</td>
+      <td>157 grove</td>
+      <td>157 grove road papakura auckland</td>
+      <td>8140631.0</td>
+      <td>[157 grove]</td>
+      <td>3.0</td>
+      <td>28122.170061</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>239434</th>
+      <td>77988.0_35</td>
+      <td>77988.0</td>
+      <td>Feb 01, 2002 12:00:00 AM</td>
+      <td>Apr 01, 2002 12:00:00 AM</td>
+      <td>29-37</td>
+      <td>THE CONCOURSE</td>
+      <td>LINCOLN NORTH</td>
+      <td>Waitakere Ranges</td>
+      <td>New Schools - excludes school hostels</td>
+      <td>1431.0</td>
+      <td>86.0</td>
+      <td>66600.0</td>
+      <td>1.0</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>303101.0</td>
+      <td>2013.0</td>
+      <td>Open Space - Conservation Zone</td>
+      <td>Public Open Space</td>
+      <td>31.0</td>
+      <td>WCC_14</td>
+      <td>Open Space</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.592228</td>
+      <td>-36.999096</td>
+      <td>POINT (1741676.973 5904043.031)</td>
+      <td>True</td>
+      <td>35 the</td>
+      <td>29-37 the concourse lincoln north</td>
+      <td>5067844</td>
+      <td>[35 the]</td>
+      <td>3.0</td>
+      <td>13918.905045</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>239435</th>
+      <td>77988.0_37</td>
+      <td>77988.0</td>
+      <td>Feb 01, 2002 12:00:00 AM</td>
+      <td>Apr 01, 2002 12:00:00 AM</td>
+      <td>29-37</td>
+      <td>THE CONCOURSE</td>
+      <td>LINCOLN NORTH</td>
+      <td>Waitakere Ranges</td>
+      <td>New Schools - excludes school hostels</td>
+      <td>1431.0</td>
+      <td>86.0</td>
+      <td>66600.0</td>
+      <td>1.0</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>303101.0</td>
+      <td>2013.0</td>
+      <td>Open Space - Conservation Zone</td>
+      <td>Public Open Space</td>
+      <td>31.0</td>
+      <td>WCC_14</td>
+      <td>Open Space</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.592228</td>
+      <td>-36.999096</td>
+      <td>POINT (1741676.973 5904043.031)</td>
+      <td>True</td>
+      <td>37 the</td>
+      <td>29-37 the concourse lincoln north</td>
+      <td>6683126</td>
+      <td>[37 the]</td>
+      <td>3.0</td>
+      <td>13868.723699</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>239588</th>
+      <td>150655.0_143</td>
+      <td>150655.0</td>
+      <td>May 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>143-157</td>
+      <td>GREAT SOUTH RD</td>
+      <td>NaN</td>
+      <td>Papakura</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>529.0</td>
+      <td>495000.0</td>
+      <td>7.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>791600.0</td>
+      <td>2013.0</td>
+      <td>Business - Metropolitan Centre Zone</td>
+      <td>Business</td>
+      <td>10.0</td>
+      <td>PDC_5</td>
+      <td>Commercial 3</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.941675</td>
+      <td>-37.062273</td>
+      <td>POINT (1772630.738 5896456.145)</td>
+      <td>True</td>
+      <td>143 great</td>
+      <td>143-157 great south rd</td>
+      <td>5131766</td>
+      <td>[143 great]</td>
+      <td>3.0</td>
+      <td>12643.555050</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>239589</th>
+      <td>150655.0_145</td>
+      <td>150655.0</td>
+      <td>May 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>143-157</td>
+      <td>GREAT SOUTH RD</td>
+      <td>NaN</td>
+      <td>Papakura</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>529.0</td>
+      <td>495000.0</td>
+      <td>7.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>791600.0</td>
+      <td>2013.0</td>
+      <td>Business - Metropolitan Centre Zone</td>
+      <td>Business</td>
+      <td>10.0</td>
+      <td>PDC_5</td>
+      <td>Commercial 3</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.941675</td>
+      <td>-37.062273</td>
+      <td>POINT (1772630.738 5896456.145)</td>
+      <td>True</td>
+      <td>145 great</td>
+      <td>143-157 great south rd</td>
+      <td>5002729</td>
+      <td>[145 great]</td>
+      <td>3.0</td>
+      <td>12638.374562</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>239645</th>
+      <td>151357.0_9</td>
+      <td>151357.0</td>
+      <td>Jul 01, 2014 12:00:00 AM</td>
+      <td>Mar 01, 2015 12:00:00 AM</td>
+      <td>9-11</td>
+      <td>FENTON ST</td>
+      <td>EDEN TERRACE</td>
+      <td>Waitemata</td>
+      <td>New Flats</td>
+      <td>1200.0</td>
+      <td>3760.0</td>
+      <td>3000000.0</td>
+      <td>37.0</td>
+      <td>Residential</td>
+      <td>Attached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1998.0</td>
+      <td>419702.0</td>
+      <td>2013.0</td>
+      <td>Business - Mixed Use Zone</td>
+      <td>Business</td>
+      <td>12.0</td>
+      <td>ACC_10</td>
+      <td>Business MU</td>
+      <td>Business</td>
+      <td>Commercial</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.757447</td>
+      <td>-36.868315</td>
+      <td>POINT (1756646.878 5918294.000)</td>
+      <td>True</td>
+      <td>9 fenton</td>
+      <td>9-11 fenton st eden terrace</td>
+      <td>4691125</td>
+      <td>[9 fenton]</td>
+      <td>3.0</td>
+      <td>15090.188564</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5714 rows × 40 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">==</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">df</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">==</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>&lt;string&gt;:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+&lt;string&gt;:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
 <span class="n">phase0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/parcels_phase0.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;LINZ_parcel_ID&quot;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">phase0</span>
@@ -20065,8 +20719,8 @@ Wall time: 14 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 12.5 s, sys: 8.04 s, total: 20.5 s
-Wall time: 21 s
+<pre>CPU times: user 11.6 s, sys: 1.65 s, total: 13.3 s
+Wall time: 14.3 s
 </pre>
 </div>
 </div>
@@ -20826,7 +21480,7 @@ Wall time: 21 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>(239651, 153555, 547902, 547902)</pre>
+<pre>(239651, 152928, 547902, 547902)</pre>
 </div>
 
 </div>
@@ -20863,8 +21517,8 @@ Wall time: 21 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 9.94 s, sys: 1.41 s, total: 11.4 s
-Wall time: 11.6 s
+<pre>CPU times: user 9.99 s, sys: 1.6 s, total: 11.6 s
+Wall time: 12 s
 </pre>
 </div>
 </div>
@@ -21943,61 +22597,61 @@ Wall time: 11.6 s
       <td>True</td>
       <td>168 hobson</td>
       <td>164-168 hobson st auckland</td>
-      <td>6752833.0</td>
-      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>5.0</td>
       <td>0.000000</td>
       <td>1.0</td>
-      <td>Lot 1 DP 348651</td>
-      <td>DP 348651, DP 497469</td>
-      <td>Fee Simple Title</td>
-      <td>Primary</td>
       <td>NaN</td>
-      <td>North Auckland</td>
-      <td>734869, 734870, 734871, 734872, 734873, 734874...</td>
-      <td>664.0</td>
-      <td>664.0</td>
-      <td>174.760350</td>
-      <td>-36.851522</td>
-      <td>[174.760735; 174.760552; 174.760475; 174.76038...</td>
-      <td>[-36.851544; -36.85149; -36.851468; -36.851668...</td>
-      <td>[174.760387; 174.760133; 174.760254; 174.76027]</td>
-      <td>[-36.851668; -36.851597; -36.851407; -36.851382]</td>
-      <td>35.0</td>
-      <td>Business - City Centre Zone</td>
-      <td>[5238725, 5241240, 5245509, 5127911, 6703018]</td>
-      <td>['27', '27', '27', '35', '35']</td>
       <td>NaN</td>
-      <td>0.0</td>
-      <td>['Mount Eden']</td>
-      <td>['RSVS_47']</td>
-      <td>1.0</td>
-      <td>11015.432271</td>
-      <td>3.0</td>
-      <td>Rural - Countryside Living Zone</td>
-      <td>0.000000</td>
-      <td>35.0</td>
-      <td>Business - City Centre Zone</td>
-      <td>461.942869</td>
-      <td>8.0</td>
-      <td>Residential - Terrace Housing and Apartment Bu...</td>
-      <td>718.145089</td>
-      <td>1388.878784</td>
-      <td>1160.296223</td>
-      <td>461.942869</td>
-      <td>Auckland Central</td>
-      <td>Hobson Ridge Central</td>
-      <td>133400.0</td>
-      <td>Auckland Central West</td>
-      <td>514102.0</td>
-      <td>4000057.0</td>
-      <td>434200.0</td>
-      <td>728.566386</td>
-      <td>333.059740</td>
-      <td>27.128068</td>
-      <td>1061.448125</td>
-      <td>383.915160</td>
-      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
