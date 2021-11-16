@@ -44,3 +44,4 @@ These Python Jupyter (.ipynb) notebooks have been converted to HTML with `jupyte
 - [phase1](https://uoa-eresearch.github.io/auckland-housing/phase1)
 - [phase2](https://uoa-eresearch.github.io/auckland-housing/phase2)
 - [phase3](https://uoa-eresearch.github.io/auckland-housing/phase3)
+- [phase4](https://uoa-eresearch.github.io/auckland-housing/phase4)
