@@ -14307,9 +14307,9 @@ a.  Indicator (1 or 0) for LINZ parcel that is part of a ranged address consent 
 
 
 
-<div id="ac794257-e786-4855-a1a9-55d16e3a3033" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="d72bc202-b047-455a-9e22-d6aa3c41f2d3" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('ac794257-e786-4855-a1a9-55d16e3a3033');
+var element = document.getElementById('d72bc202-b047-455a-9e22-d6aa3c41f2d3');
 Jupyter.utils.load_extensions('nodebook/nodebookext')
 </script>
 </div>
@@ -14975,6 +14975,43 @@ Wall time: 18.3 s
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">any</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">full_address</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;[āēīōū]&quot;</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">parcels</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;input/lds-nz-primary-parcels-FGDB.zip!nz-primary-parcels.gdb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">2193</span><span class="p">)</span>
 <span class="n">parcels</span> <span class="o">=</span> <span class="n">parcels</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
 <span class="n">parcels</span>
@@ -15587,7 +15624,7 @@ Wall time: 18.3 s
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">number_name_addresses</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">addresses</span><span class="p">[</span><span class="s1">&#39;address_number_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">full_address</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">number_name_addresses</span><span class="p">)</span>
+<span class="n">addresses</span><span class="p">[</span><span class="s1">&#39;address_number_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">addresses</span><span class="o">.</span><span class="n">full_address_ascii</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">number_name_addresses</span><span class="p">)</span>
 <span class="n">addresses</span>
 </pre></div>
 
@@ -16002,8 +16039,8 @@ Wall time: 18.3 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 38.5 s, sys: 2.94 s, total: 41.4 s
-Wall time: 41.8 s
+<pre>CPU times: user 38 s, sys: 4.15 s, total: 42.1 s
+Wall time: 42.4 s
 </pre>
 </div>
 </div>
@@ -16094,7 +16131,7 @@ Name: full_addresses, Length: 547903, dtype: object</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 30.5 s, sys: 3.47 s, total: 33.9 s
+<pre>CPU times: user 30.8 s, sys: 3.44 s, total: 34.2 s
 Wall time: 34.4 s
 </pre>
 </div>
@@ -16131,8 +16168,8 @@ Wall time: 34.4 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 30.3 s, sys: 1.03 s, total: 31.4 s
-Wall time: 31.6 s
+<pre>CPU times: user 30.1 s, sys: 1.12 s, total: 31.2 s
+Wall time: 31.4 s
 </pre>
 </div>
 </div>
@@ -16766,8 +16803,8 @@ Wall time: 31.6 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    124049
-NaN     83177
+<pre>1.0    124136
+NaN     83090
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -16813,7 +16850,7 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;scipy.spatial.ckdtree.cKDTree at 0x7f7aafc485f0&gt;</pre>
+<pre>&lt;scipy.spatial.ckdtree.cKDTree at 0x7f382ef0cdd0&gt;</pre>
 </div>
 
 </div>
@@ -17049,12 +17086,12 @@ a.       Search for a match of the consent address within the set of LINZ parcel
 
 
 
-<div id="54bb7efd-c59e-47f1-95df-305acd3f76cb" class="jupyter-widgets jp-OutputArea-output ">
+<div id="d3b3260e-c8e3-481a-80c3-1748db40913f" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('54bb7efd-c59e-47f1-95df-305acd3f76cb');
+var element = document.getElementById('d3b3260e-c8e3-481a-80c3-1748db40913f');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "418b7ed5457449d49f350923ecea5f3a", "version_major": 2, "version_minor": 0}
+{"model_id": "ab8798a4a0a74877a87124de019c7ee8", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -17603,7 +17640,7 @@ var element = document.getElementById('54bb7efd-c59e-47f1-95df-305acd3f76cb');
     </tr>
   </tbody>
 </table>
-<p>40667 rows × 38 columns</p>
+<p>40669 rows × 38 columns</p>
 </div>
 </div>
 
@@ -17642,9 +17679,9 @@ var element = document.getElementById('54bb7efd-c59e-47f1-95df-305acd3f76cb');
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    124049
-NaN     48840
-2.0     34337
+<pre>1.0    124136
+NaN     48751
+2.0     34339
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -18245,12 +18282,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="d8ddc0c3-4bdb-4dff-a3a7-4b8264f423ee" class="jupyter-widgets jp-OutputArea-output ">
+<div id="170ef0a8-d722-40de-a6e9-1cdcba2d445b" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('d8ddc0c3-4bdb-4dff-a3a7-4b8264f423ee');
+var element = document.getElementById('170ef0a8-d722-40de-a6e9-1cdcba2d445b');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b94b90a52bd34e609d512aad50884a96", "version_major": 2, "version_minor": 0}
+{"model_id": "6c848a00e5e8466d8083306d4c642ed1", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -18263,8 +18300,8 @@ var element = document.getElementById('d8ddc0c3-4bdb-4dff-a3a7-4b8264f423ee');
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 10min 20s, sys: 3.6 s, total: 10min 24s
-Wall time: 10min 22s
+<pre>CPU times: user 11min 4s, sys: 13.5 s, total: 11min 18s
+Wall time: 11min 16s
 </pre>
 </div>
 </div>
@@ -18278,9 +18315,9 @@ Wall time: 10min 22s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    124049
-NaN     42510
-2.0     34337
+<pre>1.0    124136
+NaN     42421
+2.0     34339
 3.0      6330
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
@@ -18946,12 +18983,12 @@ dtype: int64</pre>
 
 
 
-<div id="19639c9f-58d1-4192-be4c-6311e0b49446" class="jupyter-widgets jp-OutputArea-output ">
+<div id="bf94326f-c873-49f3-a402-ea148da6334f" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('19639c9f-58d1-4192-be4c-6311e0b49446');
+var element = document.getElementById('bf94326f-c873-49f3-a402-ea148da6334f');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b2b61713e76f45ec9fac465c015652c2", "version_major": 2, "version_minor": 0}
+{"model_id": "4a683ddbf5224c429221adf513ae1a51", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -19583,12 +19620,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="2ec718d2-397d-4e98-85ae-180b6d733e9d" class="jupyter-widgets jp-OutputArea-output ">
+<div id="aa5f0644-950c-4ffa-a9ab-0dd4938487c3" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('2ec718d2-397d-4e98-85ae-180b6d733e9d');
+var element = document.getElementById('aa5f0644-950c-4ffa-a9ab-0dd4938487c3');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ae54e5e5f52140b488c489dde36cd822", "version_major": 2, "version_minor": 0}
+{"model_id": "f930beacb1634fbc99ca69834f803283", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -20802,7 +20839,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
     <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">number_name</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">addresses</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="n">match</span> <span class="o">=</span> <span class="n">maybe_subdivision</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">addresses</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">check_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">maybe_subdivision</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">maybe_subdivision</span><span class="o">.</span><span class="n">addresses</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">check_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">maybe_subdivision</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">match</span>
 <span class="n">match</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -20882,12 +20919,12 @@ dtype: int64</pre>
 
 
 
-<div id="66fefca5-87ff-4613-bb10-c3ba3aa04e11" class="jupyter-widgets jp-OutputArea-output ">
+<div id="497d68a8-9f46-4d82-93e7-dde4c2a5fb59" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('66fefca5-87ff-4613-bb10-c3ba3aa04e11');
+var element = document.getElementById('497d68a8-9f46-4d82-93e7-dde4c2a5fb59');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "51ac702d2fbb4433b0e5f547e7fd2e8d", "version_major": 2, "version_minor": 0}
+{"model_id": "ce6d0dc718e34de5a27f0fbf967db2a1", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -20970,12 +21007,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="4cdfc796-e4e9-4a6f-85c5-9712c978793b" class="jupyter-widgets jp-OutputArea-output ">
+<div id="46f1704b-ec50-4f49-b8e9-9d95f11e6eae" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('4cdfc796-e4e9-4a6f-85c5-9712c978793b');
+var element = document.getElementById('46f1704b-ec50-4f49-b8e9-9d95f11e6eae');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dc51a309afba426eb2a10f97521cec1b", "version_major": 2, "version_minor": 0}
+{"model_id": "88c67ca5c4cc4c38bb98e40bee3013b0", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -21635,8 +21672,8 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 12.4 s, sys: 855 ms, total: 13.3 s
-Wall time: 13.5 s
+<pre>CPU times: user 12.7 s, sys: 2.54 s, total: 15.2 s
+Wall time: 15.3 s
 </pre>
 </div>
 </div>
@@ -21698,13 +21735,13 @@ Length: 207054, dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>count     42296.000000
-mean       2692.892300
-std        8363.917414
+<pre>count     42298.000000
+mean       2693.034879
+std        8365.395653
 min           0.000062
-25%           9.653831
+25%           9.654039
 50%          29.402110
-75%         233.349492
+75%         233.304418
 max      100594.158959
 dtype: float64</pre>
 </div>
@@ -21732,7 +21769,7 @@ dtype: float64</pre>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Identify the LINZ parcel of the geo-coordinate of the consent. This will be the LINZ parcel used. Set LINZ_MATCH_CODE = 4. If there is no parcel under the geo-coordinate, go to step 5:</p>
+<p>Identify the LINZ parcel of the geo-coordinate of the consent. If the name of the road in the address of the LINZ parcel matches the road name of the address given in the consent dataset, set the parcel to be the LINZ parcel of the of geocoordinate of the consent. Set LINZ_MATCH_CODE = 7 and stop. If not, proceed to 8:</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -21741,7 +21778,199 @@ dtype: float64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">7</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;number_name&quot;</span><span class="p">,</span> <span class="s2">&quot;addresses&quot;</span><span class="p">]]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>number_name</th>
+      <th>addresses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>398 pakiri</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ahuroa road</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>upper orewa</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>56 vinistra</td>
+      <td>[56 vinistra]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>77 vinistra</td>
+      <td>[77 vinistra]</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>207221</th>
+      <td>164-168 hobson</td>
+      <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
+    </tr>
+    <tr>
+      <th>207222</th>
+      <td>464 remuera</td>
+      <td>[2/464 remuera, 1/464 remuera, 3b/464 remuera,...</td>
+    </tr>
+    <tr>
+      <th>207223</th>
+      <td>55b panorama</td>
+      <td>[55b panorama]</td>
+    </tr>
+    <tr>
+      <th>207224</th>
+      <td>67 customs</td>
+      <td>[67 customs]</td>
+    </tr>
+    <tr>
+      <th>207225</th>
+      <td>67 customs</td>
+      <td>[67 customs]</td>
+    </tr>
+  </tbody>
+</table>
+<p>207226 rows × 2 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">check_street_match</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">number_name</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">number_name</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">street</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">number_name</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">street</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">addresses</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">7</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">street_matches</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="n">check_street_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">street_matches</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">street_matches</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+
+
+
+<div id="ae2237bd-74eb-4fa0-8fdc-43d26da436aa" class="jupyter-widgets jp-OutputArea-output ">
+<script type="text/javascript">
+var element = document.getElementById('ae2237bd-74eb-4fa0-8fdc-43d26da436aa');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "c8e3ebe00e3946b4850b3a6ca8f4064d", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>NaN    25983
+7.0    12180
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Identify the LINZ parcel of the geo-coordinate of the consent and use this. Set LINZ_MATCH_CODE = 8 and stop. If there is no parcel under the geo-coordinate, go to step 9:</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">8</span>
 </pre></div>
 
      </div>
@@ -21773,13 +22002,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Set LINZ_MATCH_CODE = 9. This indicates no match even with just the consent long-lat.</p>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">8</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
@@ -21796,35 +22031,21 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>&lt;string&gt;:1: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
     <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    124049
-7.0     38080
-2.0     34337
+<pre>1.0    124136
+2.0     34339
+8.0     25867
+7.0     12180
 3.0      6330
 4.0      2629
 5.0       896
 6.0       733
-8.0       172
+9.0       116
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -21862,11 +22083,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>7.0    5494
+<pre>7.0    3268
+8.0    2226
 1.0     391
 2.0     389
 3.0     103
-8.0       1
+9.0       1
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -22390,7 +22612,7 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
       <td>7533935</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.0</td>
     </tr>
     <tr>
@@ -22609,7 +22831,7 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
         <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">])]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">find_match_in_range</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
 
-    <span class="c1"># If no matches are found at step 2, but at least one match in the ranged address is found at step 1 or step 2, stop and set LINZ_match_code to 9</span>
+    <span class="c1"># If no matches are found at step 2, but at least one match in the ranged address is found at step 1 or step 2, stop and set LINZ_match_code to 10</span>
     <span class="c1"># This avoids matching parcels that are far away from the rest of the group</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)):</span> <span class="c1"># all na here means no matches in step 1 or 2</span>
         <span class="c1"># Only if there is no match within the ranged addresses at either step 1 or step 2 do we proceed to step 3. </span>
@@ -22665,12 +22887,14 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
             <span class="n">sample</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">maybe_subdivision</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)):</span>
-            <span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">),</span> <span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
-            <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+            <span class="n">street_matches</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">check_street_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">street_matches</span><span class="p">)</span>
+            <span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">),</span> <span class="s2">&quot;LINZ_MATCH_CODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
             <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
     <span class="c1">#We include an additional flag for each ranged address that indicates the best (i.e. lowest) LINZ_MATCH_CODE for that range.</span>
     <span class="c1">#E.g. for a ranged address with five addresses, if at least one of them had LINZ_MATCH_CODE = 2,</span>
     <span class="c1">#and all others were LINZ_MATCH_CODE &gt; 2, then the best LINZ_MATCH_CODE would be 2. This is call LINZ_2ND_MATCH_CODE below.</span>
@@ -22702,12 +22926,12 @@ Each address (in the ranged address set) is assigned its own unique LINZ parcel.
 
 
 
-<div id="1bdc2e06-1111-4ad7-b39c-758871ec2b6d" class="jupyter-widgets jp-OutputArea-output ">
+<div id="7e6f782f-e793-4c31-9d03-096aa0944844" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('1bdc2e06-1111-4ad7-b39c-758871ec2b6d');
+var element = document.getElementById('7e6f782f-e793-4c31-9d03-096aa0944844');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "86e23575b0cf40c1ab23dc924e210a64", "version_major": 2, "version_minor": 0}
+{"model_id": "32a7a9b27f834111a63701536934481b", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -22788,8 +23012,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 21min 15s, sys: 12.6 s, total: 21min 27s
-Wall time: 21min 22s
+<pre>CPU times: user 22min 29s, sys: 13.9 s, total: 22min 43s
+Wall time: 22min 38s
 </pre>
 </div>
 </div>
@@ -22927,7 +23151,7 @@ Wall time: 21min 22s
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -22970,7 +23194,7 @@ Wall time: 21min 22s
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -23013,7 +23237,7 @@ Wall time: 21min 22s
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -23357,7 +23581,7 @@ Wall time: 21min 22s
       <td>6752833.0</td>
       <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
       <td>[37 Cook Street, Auckland Central, Auckland, 1...</td>
-      <td>9.0</td>
+      <td>10.0</td>
       <td>0.000000</td>
       <td>1.0</td>
     </tr>
@@ -23401,14 +23625,15 @@ Wall time: 21min 22s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>2.0    15232
-9.0    13152
-1.0     3689
-7.0     3567
-3.0     2914
-5.0      168
-4.0       55
-6.0       26
+<pre>2.0     15232
+10.0    13152
+1.0      3689
+3.0      2914
+8.0      2524
+7.0      1043
+5.0       168
+4.0        55
+6.0        26
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -23449,7 +23674,8 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <pre>2.0    15887
 1.0    14210
 3.0     4114
-7.0     3567
+8.0     2524
+7.0     1043
 NaN      780
 5.0      166
 4.0       53
@@ -23491,15 +23717,16 @@ Name: LINZ_2ND_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    127347
-2.0     49180
-7.0     36153
-9.0     13152
-3.0      9141
-4.0      2684
-5.0      1064
-6.0       759
-8.0       171
+<pre>1.0     127434
+2.0      49182
+8.0      26165
+10.0     13152
+7.0       9955
+3.0       9141
+4.0       2684
+5.0       1064
+6.0        759
+9.0        115
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -23566,13 +23793,13 @@ Length: 239480, dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>count     60276.000000
-mean       3040.595984
-std        8974.125575
+<pre>count     60278.000000
+mean       3040.684497
+std        8975.069162
 min           0.000062
-25%          11.296841
-50%          42.224324
-75%         282.268890
+25%          11.297059
+50%          42.221786
+75%         282.222013
 max      100594.158959
 dtype: float64</pre>
 </div>
@@ -23586,8 +23813,8 @@ dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 11.7 s, sys: 1.14 s, total: 12.8 s
-Wall time: 13.1 s
+<pre>CPU times: user 11.7 s, sys: 2.31 s, total: 14 s
+Wall time: 14.2 s
 </pre>
 </div>
 </div>
@@ -23832,6 +24059,50 @@ Wall time: 13.1 s
       <td>NaN</td>
     </tr>
     <tr>
+      <th>19</th>
+      <td>23</td>
+      <td>228825.0</td>
+      <td>Feb 01, 2021 12:00:00 AM</td>
+      <td>Mar 01, 2020 12:00:00 AM</td>
+      <td>26 KAIRAKAU STREET</td>
+      <td>PAPAKURA</td>
+      <td>Auckland</td>
+      <td>Rodney</td>
+      <td>Houses</td>
+      <td>1111.0</td>
+      <td>113.0</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Residential</td>
+      <td>Detached</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2014.0</td>
+      <td>209400.0</td>
+      <td>2013.0</td>
+      <td>Residential - Single House Zone</td>
+      <td>Residential</td>
+      <td>19.0</td>
+      <td>RDC_27</td>
+      <td>Residential Medium Inten</td>
+      <td>Residential</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>174.452771</td>
+      <td>-36.679915</td>
+      <td>POINT (1729805.685 5939651.570)</td>
+      <td>False</td>
+      <td>26 kairakau</td>
+      <td>26 kairakau street papakura auckland</td>
+      <td>8140668.0</td>
+      <td>[26 kairakau]</td>
+      <td>[26 Kairākau Street, Papakura]</td>
+      <td>3.0</td>
+      <td>59911.460069</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
       <th>22</th>
       <td>26</td>
       <td>228828.0</td>
@@ -23873,50 +24144,6 @@ Wall time: 13.1 s
       <td>[139 Grove Road, Papakura]</td>
       <td>3.0</td>
       <td>28181.672558</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>27</td>
-      <td>228829.0</td>
-      <td>Feb 01, 2021 12:00:00 AM</td>
-      <td>Mar 01, 2020 12:00:00 AM</td>
-      <td>157 GROVE ROAD</td>
-      <td>PAPAKURA</td>
-      <td>Auckland</td>
-      <td>Devonport - Takapuna</td>
-      <td>Houses</td>
-      <td>1111.0</td>
-      <td>133.0</td>
-      <td>NaN</td>
-      <td>1.0</td>
-      <td>Residential</td>
-      <td>Detached</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2014.0</td>
-      <td>332800.0</td>
-      <td>2013.0</td>
-      <td>Road</td>
-      <td>General</td>
-      <td>27.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>174.804500</td>
-      <td>-36.819603</td>
-      <td>POINT (1760943.384 5923620.191)</td>
-      <td>False</td>
-      <td>157 grove</td>
-      <td>157 grove road papakura auckland</td>
-      <td>8140631.0</td>
-      <td>[157 grove]</td>
-      <td>[157 Grove Road, Papakura]</td>
-      <td>3.0</td>
-      <td>28122.170061</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -24231,12 +24458,12 @@ Wall time: 13.1 s
 
 
 
-<div id="4066afc4-6075-4521-864d-c5a94b4b847a" class="jupyter-widgets jp-OutputArea-output ">
+<div id="f572d1f0-fddd-48d1-996d-addc3cfaccec" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('4066afc4-6075-4521-864d-c5a94b4b847a');
+var element = document.getElementById('f572d1f0-fddd-48d1-996d-addc3cfaccec');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "49e7e2692f564b9e96a7aca762ce2312", "version_major": 2, "version_minor": 0}
+{"model_id": "e27b987546b349d9b9719339e510f6b5", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -24249,8 +24476,8 @@ var element = document.getElementById('4066afc4-6075-4521-864d-c5a94b4b847a');
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 26.1 s, sys: 692 ms, total: 26.8 s
-Wall time: 26.7 s
+<pre>CPU times: user 29.6 s, sys: 572 ms, total: 30.2 s
+Wall time: 30.1 s
 </pre>
 </div>
 </div>
@@ -24365,7 +24592,7 @@ Wall time: 26.7 s
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -24409,7 +24636,7 @@ Wall time: 26.7 s
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -24453,7 +24680,7 @@ Wall time: 26.7 s
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
     </tr>
@@ -24805,7 +25032,7 @@ Wall time: 26.7 s
       <td>6752833.0</td>
       <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
       <td>[37 Cook Street, Auckland Central, Auckland, 1...</td>
-      <td>9.0</td>
+      <td>10.0</td>
       <td>0.000000</td>
       <td>1.0</td>
     </tr>
@@ -24834,7 +25061,7 @@ Wall time: 26.7 s
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
-<span class="n">bad_matches</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">full_address</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])]</span>
+<span class="n">bad_matches</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">full_address</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])]</span>
 <span class="n">geocoding_results</span> <span class="o">=</span> <span class="n">bad_matches</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="n">geocode</span><span class="p">)</span>
 <span class="n">geocoding_results</span>
 </pre></div>
@@ -24860,12 +25087,12 @@ Wall time: 26.7 s
 
 
 
-<div id="db97cceb-d415-4c26-8e5c-90d7bf21cd8e" class="jupyter-widgets jp-OutputArea-output ">
+<div id="aa1f7315-0e34-4a26-8b77-2af51089a9d7" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('db97cceb-d415-4c26-8e5c-90d7bf21cd8e');
+var element = document.getElementById('aa1f7315-0e34-4a26-8b77-2af51089a9d7');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a7b03deb97e240fc8a60d6891241bca6", "version_major": 2, "version_minor": 0}
+{"model_id": "a4dd23d2f23e441098fd610d9199d115", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -25079,7 +25306,7 @@ var element = document.getElementById('db97cceb-d415-4c26-8e5c-90d7bf21cd8e');
     </tr>
   </tbody>
 </table>
-<p>59376 rows × 12 columns</p>
+<p>59287 rows × 12 columns</p>
 </div>
 </div>
 
@@ -25120,7 +25347,7 @@ var element = document.getElementById('db97cceb-d415-4c26-8e5c-90d7bf21cd8e');
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
 <pre>highway      32546
-place         9723
+place         9637
 leisure       1053
 amenity        932
 building       595
@@ -25155,7 +25382,7 @@ Name: category, dtype: int64</pre>
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
 <pre>residential               10795
-house                      8547
+house                      8461
 secondary                  7802
 tertiary                   6363
 unclassified               3370
@@ -25580,7 +25807,7 @@ Name: type, dtype: int64</pre>
     </tr>
   </tbody>
 </table>
-<p>46378 rows × 13 columns</p>
+<p>46292 rows × 13 columns</p>
 </div>
 </div>
 
@@ -25619,12 +25846,12 @@ Name: type, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>count    4.637800e+04
-mean     7.830175e+03
-std      6.036129e+04
+<pre>count    4.629200e+04
+mean     7.844720e+03
+std      6.041639e+04
 min      0.000000e+00
-25%      1.127019e+02
-50%      4.056238e+02
+25%      1.133749e+02
+50%      4.082306e+02
 75%      1.189692e+03
 max      1.728650e+06
 Name: distance_from_geocoding_result, dtype: float64</pre>
@@ -25664,8 +25891,8 @@ Name: distance_from_geocoding_result, dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 14.6 s, sys: 2.21 s, total: 16.8 s
-Wall time: 16.9 s
+<pre>CPU times: user 14.1 s, sys: 1 s, total: 15.1 s
+Wall time: 15.2 s
 </pre>
 </div>
 </div>
@@ -25939,7 +26166,7 @@ Wall time: 16.9 s
     </tr>
   </tbody>
 </table>
-<p>46378 rows × 15 columns</p>
+<p>46292 rows × 15 columns</p>
 </div>
 </div>
 
@@ -25980,8 +26207,8 @@ Wall time: 16.9 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>NaN    43992
-1.0     2386
+<pre>NaN    43905
+1.0     2387
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -26039,12 +26266,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="882187db-48a9-404e-9105-86f4c82ceb2a" class="jupyter-widgets jp-OutputArea-output ">
+<div id="ed74d566-6d93-4f85-ae5d-5af65a8a3a15" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('882187db-48a9-404e-9105-86f4c82ceb2a');
+var element = document.getElementById('ed74d566-6d93-4f85-ae5d-5af65a8a3a15');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "4985f375e25740f88f4d75bb59e85942", "version_major": 2, "version_minor": 0}
+{"model_id": "78cfeddb57a246f1a9b881d84fa73f14", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -26083,8 +26310,8 @@ var element = document.getElementById('882187db-48a9-404e-9105-86f4c82ceb2a');
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>NaN    43793
-1.0     2386
+<pre>NaN    43706
+1.0     2387
 2.0      199
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
@@ -26196,7 +26423,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
       <td>398 pakiri</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -26218,7 +26445,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
       <td>ahuroa road</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -26240,7 +26467,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
       <td>upper orewa</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
     </tr>
     <tr>
       <th>6</th>
@@ -26416,11 +26643,11 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
       <td>168 hobson</td>
       <td>NaN</td>
       <td>1.0</td>
-      <td>9.0</td>
+      <td>10.0</td>
     </tr>
   </tbody>
 </table>
-<p>46378 rows × 19 columns</p>
+<p>46292 rows × 19 columns</p>
 </div>
 </div>
 
@@ -26458,9 +26685,72 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>6654
+<pre>6653
 </pre>
 </div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">street_matches</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="n">check_street_match</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">street_matches</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">street_matches</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+
+
+
+<div id="cc6c6801-a11c-4ab6-9db7-656f57105919" class="jupyter-widgets jp-OutputArea-output ">
+<script type="text/javascript">
+var element = document.getElementById('cc6c6801-a11c-4ab6-9db7-656f57105919');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0e1faea73c654d858c4f57a429a61115", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>NaN    32492
+7.0     4561
+dtype: int64</pre>
+</div>
+
 </div>
 
 </div>
@@ -26476,11 +26766,11 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_2ND_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span>
-    <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_2ND_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">9</span>
 </pre></div>
 
      </div>
@@ -26522,43 +26812,6 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">made_it_worse</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;</span> <span class="n">geocoding_results</span><span class="o">.</span><span class="n">original_LINZ_MATCH_CODE</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">made_it_worse</span><span class="p">))</span>
-<span class="n">geocoding_results</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="p">[</span><span class="o">~</span><span class="n">made_it_worse</span><span class="p">]</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>481
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
@@ -26581,11 +26834,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>7.0    21782
-NaN    14825
-1.0     2386
+<pre>8.0    14299
+NaN    13494
+7.0     4561
+1.0     2387
 2.0      199
-8.0       51
+9.0       51
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -26604,8 +26858,8 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">geocoding_results</span><span class="p">[</span><span class="s2">&quot;OBS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">OBS</span><span class="p">[</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span>
     <span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_2ND_MATCH_CODE</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
-<span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">8</span>
 </pre></div>
 
      </div>
@@ -26662,6 +26916,43 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">made_it_worse</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;</span> <span class="n">geocoding_results</span><span class="o">.</span><span class="n">original_LINZ_MATCH_CODE</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">made_it_worse</span><span class="p">))</span>
+<span class="n">geocoding_results</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="p">[</span><span class="o">~</span><span class="n">made_it_worse</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>759
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">geocoding_results</span><span class="p">[</span><span class="s2">&quot;change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">geocoding_results</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">original_LINZ_MATCH_CODE</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">geocoding_results</span><span class="p">[</span><span class="s2">&quot;change&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
@@ -26685,19 +26976,23 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>7.0 -&gt; 7.0    24508
-9.0 -&gt; 9.0    10931
-3.0 -&gt; 1.0     1858
-9.0 -&gt; 7.0     1140
-6.0 -&gt; 4.0      363
-9.0 -&gt; 1.0      165
-3.0 -&gt; 2.0      104
-6.0 -&gt; 5.0       54
-8.0 -&gt; 8.0       51
-9.0 -&gt; 2.0       41
-8.0 -&gt; 7.0       18
-7.0 -&gt; nan        9
-9.0 -&gt; nan        1
+<pre>8.0 -&gt; 8.0      15844
+10.0 -&gt; 10.0    10094
+7.0 -&gt; 7.0       2395
+3.0 -&gt; 1.0       1859
+8.0 -&gt; 7.0       1257
+10.0 -&gt; 8.0      1068
+10.0 -&gt; 7.0       909
+6.0 -&gt; 4.0        363
+10.0 -&gt; 1.0       165
+3.0 -&gt; 2.0        104
+6.0 -&gt; 5.0         54
+9.0 -&gt; 9.0         51
+10.0 -&gt; 2.0        41
+9.0 -&gt; 8.0         18
+8.0 -&gt; nan          6
+7.0 -&gt; nan          3
+10.0 -&gt; nan         1
 Name: change, dtype: int64</pre>
 </div>
 
@@ -26736,13 +27031,15 @@ Name: change, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>7.0 -&gt; 7.0    21764
-3.0 -&gt; 1.0     1545
+<pre>8.0 -&gt; 8.0    14281
+7.0 -&gt; 7.0     2183
+3.0 -&gt; 1.0     1546
+8.0 -&gt; 7.0     1047
 6.0 -&gt; 4.0      354
 3.0 -&gt; 2.0       83
 6.0 -&gt; 5.0       54
-8.0 -&gt; 8.0       51
-8.0 -&gt; 7.0       18
+9.0 -&gt; 9.0       51
+9.0 -&gt; 8.0       18
 Name: change, dtype: int64</pre>
 </div>
 
@@ -26757,16 +27054,20 @@ Name: change, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>9.0 -&gt; 9.0    10931
-7.0 -&gt; 7.0     2744
-9.0 -&gt; 7.0     1140
-3.0 -&gt; 1.0      313
-9.0 -&gt; 1.0      165
-9.0 -&gt; 2.0       41
-3.0 -&gt; 2.0       21
-7.0 -&gt; nan        9
-6.0 -&gt; 4.0        9
-9.0 -&gt; nan        1
+<pre>10.0 -&gt; 10.0    10094
+8.0 -&gt; 8.0       1563
+10.0 -&gt; 8.0      1068
+10.0 -&gt; 7.0       909
+3.0 -&gt; 1.0        313
+7.0 -&gt; 7.0        212
+8.0 -&gt; 7.0        210
+10.0 -&gt; 1.0       165
+10.0 -&gt; 2.0        41
+3.0 -&gt; 2.0         21
+6.0 -&gt; 4.0          9
+8.0 -&gt; nan          6
+7.0 -&gt; nan          3
+10.0 -&gt; nan         1
 Name: change, dtype: int64</pre>
 </div>
 
@@ -26805,7 +27106,7 @@ Name: change, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>3743
+<pre>5838
 </pre>
 </div>
 </div>
@@ -26819,14 +27120,16 @@ Name: change, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>3.0 -&gt; 1.0    1858
-9.0 -&gt; 7.0    1140
-6.0 -&gt; 4.0     363
-9.0 -&gt; 1.0     165
-3.0 -&gt; 2.0     104
-6.0 -&gt; 5.0      54
-9.0 -&gt; 2.0      41
-8.0 -&gt; 7.0      18
+<pre>3.0 -&gt; 1.0     1859
+8.0 -&gt; 7.0     1257
+10.0 -&gt; 8.0    1068
+10.0 -&gt; 7.0     909
+6.0 -&gt; 4.0      363
+10.0 -&gt; 1.0     165
+3.0 -&gt; 2.0      104
+6.0 -&gt; 5.0       54
+10.0 -&gt; 2.0      41
+9.0 -&gt; 8.0       18
 Name: change, dtype: int64</pre>
 </div>
 
@@ -26967,7 +27270,7 @@ Name: change, dtype: int64</pre>
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>2248.259536</td>
@@ -27012,7 +27315,7 @@ Name: change, dtype: int64</pre>
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>9110.806700</td>
@@ -27057,7 +27360,7 @@ Name: change, dtype: int64</pre>
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>1002.985573</td>
@@ -27410,14 +27713,14 @@ Name: change, dtype: int64</pre>
       <td>NaN</td>
       <td>174.760314</td>
       <td>-36.851526</td>
-      <td>POINT (1756936.812 5920152.000)</td>
+      <td>POINT (1756935.430 5920164.089)</td>
       <td>True</td>
       <td>168 hobson</td>
       <td>168 hobson st auckland</td>
-      <td>6752833.0</td>
+      <td>6752833</td>
       <td>[37 cook, 1305/168 hobson, 1304/168 hobson, 12...</td>
       <td>[37 Cook Street, Auckland Central, Auckland, 1...</td>
-      <td>9.0</td>
+      <td>7.0</td>
       <td>0.000000</td>
       <td>1.0</td>
       <td>12.168140</td>
@@ -27462,15 +27765,16 @@ Name: change, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    129370
-2.0     49325
-7.0     37311
-9.0     11806
-3.0      7179
-4.0      3047
-5.0      1118
-6.0       342
-8.0       153
+<pre>1.0     129458
+2.0      49327
+8.0      25994
+7.0      12121
+10.0     10969
+3.0       7178
+4.0       3047
+5.0       1118
+6.0        342
+9.0         97
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -27508,7 +27812,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>441</pre>
+<pre>651</pre>
 </div>
 
 </div>
@@ -27546,7 +27850,7 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f38f78c59d0&gt;</pre>
+<pre>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f0f785206d0&gt;</pre>
 </div>
 
 </div>
@@ -27595,12 +27899,12 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 
 
 
-<div id="9d58a767-64cb-4d43-8c23-37548a00a1cc" class="jupyter-widgets jp-OutputArea-output ">
+<div id="8a419cd0-57d0-4b2a-9032-952e51a5df27" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('9d58a767-64cb-4d43-8c23-37548a00a1cc');
+var element = document.getElementById('8a419cd0-57d0-4b2a-9032-952e51a5df27');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c07dc7e94c65426e95ff4770ffc07cbf", "version_major": 2, "version_minor": 0}
+{"model_id": "0e57471763e8479f9c1b85a9a559f2a3", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -28240,15 +28544,15 @@ var element = document.getElementById('9d58a767-64cb-4d43-8c23-37548a00a1cc');
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.0    129370
-2.0     49325
-7.0     36162
-9.0     13522
-3.0      6612
+<pre>1.0    129458
+2.0     49327
+8.0     24917
+9.0     13619
+7.0     11212
+3.0      6611
 4.0      3047
 5.0      1118
 6.0       342
-8.0       153
 Name: LINZ_MATCH_CODE, dtype: int64</pre>
 </div>
 
@@ -28264,9 +28568,9 @@ Name: LINZ_MATCH_CODE, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="n">df</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="n">df</span><span class="o">.</span><span class="n">full_addresses</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_parcel_ID</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">df</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">df</span><span class="o">.</span><span class="n">full_addresses</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">LINZ_MATCH_CODE</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 </pre></div>
 
      </div>
@@ -28361,14 +28665,14 @@ Length: 225976, dtype: float64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>count    57396.000000
-mean      2626.990585
-std       8581.483557
-min          0.000062
-25%         10.817323
-50%         37.791961
-75%        199.162820
-max      90206.335641
+<pre>count     57400.000000
+mean       2639.078375
+std        8798.117365
+min           0.000062
+25%          10.817805
+50%          37.791961
+75%         199.164946
+max      399996.638879
 dtype: float64</pre>
 </div>
 
@@ -28574,7 +28878,7 @@ dtype: float64</pre>
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>2248.259536</td>
@@ -28619,7 +28923,7 @@ dtype: float64</pre>
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>9110.806700</td>
@@ -28664,7 +28968,7 @@ dtype: float64</pre>
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>1002.985573</td>
@@ -29017,7 +29321,7 @@ dtype: float64</pre>
       <td>NaN</td>
       <td>174.760314</td>
       <td>-36.851526</td>
-      <td>POINT (1756936.812 5920152.000)</td>
+      <td>POINT (1756935.430 5920164.089)</td>
       <td>True</td>
       <td>168 hobson</td>
       <td>168 hobson st auckland</td>
@@ -29077,12 +29381,12 @@ dtype: float64</pre>
 
 
 
-<div id="3b7bca37-756b-4fcc-a86b-53760ac02b8a" class="jupyter-widgets jp-OutputArea-output ">
+<div id="e5bd5c62-44b1-4169-8855-9c51ca063cde" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
+var element = document.getElementById('e5bd5c62-44b1-4169-8855-9c51ca063cde');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "456eb8b0c7874b6ebfcbaf961295ecc4", "version_major": 2, "version_minor": 0}
+{"model_id": "6b5f55a906f446529308f61525374009", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -29200,7 +29504,7 @@ var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>2248.259536</td>
@@ -29246,7 +29550,7 @@ var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>9110.806700</td>
@@ -29292,7 +29596,7 @@ var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>1002.985573</td>
@@ -29653,7 +29957,7 @@ var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
       <td>NaN</td>
       <td>174.760314</td>
       <td>-36.851526</td>
-      <td>POINT (1756936.812 5920152.000)</td>
+      <td>POINT (1756935.430 5920164.089)</td>
       <td>True</td>
       <td>168 hobson</td>
       <td>168 hobson st auckland</td>
@@ -29706,8 +30010,8 @@ var element = document.getElementById('3b7bca37-756b-4fcc-a86b-53760ac02b8a');
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 11.8 s, sys: 2.05 s, total: 13.8 s
-Wall time: 14.4 s
+<pre>CPU times: user 12.4 s, sys: 9.87 s, total: 22.3 s
+Wall time: 22.7 s
 </pre>
 </div>
 </div>
@@ -30467,7 +30771,7 @@ Wall time: 14.4 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>(239651, 152679, 547902, 547902)</pre>
+<pre>(239651, 152633, 547902, 547902)</pre>
 </div>
 
 </div>
@@ -30504,8 +30808,8 @@ Wall time: 14.4 s
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 9.97 s, sys: 3.43 s, total: 13.4 s
-Wall time: 13.5 s
+<pre>CPU times: user 10.5 s, sys: 2.56 s, total: 13.1 s
+Wall time: 13.3 s
 </pre>
 </div>
 </div>
@@ -30670,7 +30974,7 @@ Wall time: 13.5 s
       <td>5209817</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>2248.259536</td>
@@ -30765,7 +31069,7 @@ Wall time: 13.5 s
       <td>5227114</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>9110.806700</td>
@@ -30860,7 +31164,7 @@ Wall time: 13.5 s
       <td>6605265</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>7.0</td>
+      <td>8.0</td>
       <td>0.000000</td>
       <td>NaN</td>
       <td>1002.985573</td>
