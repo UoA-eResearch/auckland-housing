@@ -53,7 +53,8 @@ max_workers = 30
 
 
 # %%time
-parcels = gpd.read_file('input/NZ_Primary_Parcels_Nov_2016.zip')
+# parcels = gpd.read_file('input/NZ_Primary_Parcels_Nov_2016.zip')
+parcels = gpd.read_file('input/NZ_Primary_Parcels_Nov_2016_filtered.gpkg')
 
 parcels = parcels[parcels.land_district.isin(['North Auckland', 'South Auckland'])].to_crs(4326)
 
