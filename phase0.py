@@ -149,7 +149,7 @@ def extract_verts(geometry):
     lng = np.nan
     if geometry:
         coordinates = []
-        for polygon in geometry:
+        for polygon in geometry.geoms:
             # the last point is the same as the first
             coordinates.extend(polygon.exterior.coords[:-1])
         lng = f"[{'; '.join([str(round(point[0], 6)) for point in coordinates])}]"
@@ -225,7 +225,7 @@ def get_points_in_roads(row, return_matarray=True):
     assert isinstance(geom, MultiPolygon), f"not implemented for geometry of type {type(geom)}"
     road_points = []
     # iterate over polygons
-    for poly in geom:
+    for poly in geom.geoms:
         # split polygon into vertices
         # the last point is the same as the first
         coords = poly.exterior.coords[:-1]
@@ -234,7 +234,7 @@ def get_points_in_roads(row, return_matarray=True):
         # create gdf with one row per vertex
         points_gdf = gpd.GeoDataFrame(geometry=gpd.points_from_xy(pointsx, pointsy)).set_crs(4326)
         # sjoin with roads, to eliminate vertices that don't intersect a road
-        road_points.extend(gpd.sjoin(points_gdf, roads_dissolved, op = 'intersects').geometry.values)
+        road_points.extend(gpd.sjoin(points_gdf, roads_dissolved, predicate='intersects').geometry.values)
     # split into matlab compatible longs and lats like [(longs_list, lats_list), (longs_list, lats_list),...]
     if return_matarray:
         road_points = pointarray2matarrays(road_points)
@@ -325,7 +325,7 @@ aup_zones = aup_zones.rename(columns={'ZONE_resol': 'LINZmatch_AUP_name', 'ZONE'
 
 
 # %%time
-parcels_zoned = gpd.sjoin(parcels, aup_zones[['LINZmatch_AUP_name', 'LINZmatch_AUP_code', 'geometry']], how='left', op='within').drop(columns=['index_right'])
+parcels_zoned = gpd.sjoin(parcels, aup_zones[['LINZmatch_AUP_name', 'LINZmatch_AUP_code', 'geometry']], how='left', predicate='within').drop(columns=['index_right'])
 # index for dropping duplicates
 parcels_zoned['index_'] = parcels_zoned.index
 parcels_zoned = parcels_zoned.drop_duplicates(subset=['index_', 'LINZmatch_AUP_code'])
@@ -370,7 +370,7 @@ row_chunk_size=100
 def find_neighbour_info(i):
     """find neighbours of parcels from i * row_chunk_size to (i+1) * row_chunk_size, then find ids and zones of those neighbouring parcels"""
     parcels_chunk = parcels_output.iloc[i*row_chunk_size:min((i+1)*row_chunk_size, len(parcels_output))]
-    neighbour_gdf = gpd.sjoin(parcels_chunk, parcels, op='touches')
+    neighbour_gdf = gpd.sjoin(parcels_chunk, parcels, predicate='touches')
     neighbour_zones = []
     neighbour_ids = []
     for idx in parcels_chunk.index:
