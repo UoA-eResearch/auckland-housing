@@ -7,3 +7,6 @@ shapely
 requests
 scipy
 contextily
+pygeos
+nodebook
+matplotlib_scalebar
