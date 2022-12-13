@@ -53,7 +53,9 @@ max_workers = 30
 
 
 # %%time
-# parcels = gpd.read_file('input/NZ_Primary_Parcels_Nov_2016.zip')
+# Ryan's prepared data, including only plots in the Auckland council boundary
+# parcels = gpd.read_file('input/Primary_Parcels_2016_prepared.gpkg')
+# Original data, including all data in the 'North Auckland' region
 parcels = gpd.read_file('input/NZ_Primary_Parcels_Nov_2016_filtered.gpkg')
 
 parcels = parcels[parcels.land_district.isin(['North Auckland', 'South Auckland'])].to_crs(4326)
@@ -385,7 +387,8 @@ def find_neighbour_info(i):
         
 # each call to find_neighbours will return two lists like this: [list of neighbour ids], [list of niehgbour zones]
 # The final structure will be of shape (n_chunks, 2, n_neighbours), where n_neighbours will vary between lists
-parcel_neighbour_chunks = process_map(find_neighbour_info, list(range((int(np.ceil(len(parcels_output) / row_chunk_size))))), max_workers=max_workers, chunksize=10)
+parcel_neighbour_chunks = process_map(find_neighbour_info, list(range((int(np.ceil(len(parcels_output) / row_chunk_size))))),
+                                      max_workers=int(max_workers/2), chunksize=50)
 
 
 # In[ ]:
@@ -1105,7 +1108,7 @@ for params in param_sets:
             return overlaid.loc[np.argmax(overlaid.area)][area_code_col], overlaid.loc[np.argmax(overlaid.area)][area_name_col]
         return overlaid.loc[np.argmax(overlaid.area)][area_code_col]
 
-    area_matches = process_map(find_greatest_area_match, ambiguous_idx, max_workers=max_workers, chunksize=10)
+    area_matches = process_map(find_greatest_area_match, ambiguous_idx, max_workers=int(max_workers/2), chunksize=50)
 
     # keep first row of groups of duplicates indexes
     joined = joined[~joined.index.duplicated(keep='first')]
@@ -1442,7 +1445,7 @@ parcels_output = parcels_output.set_crs(4326)
 # In[ ]:
 
 cols_to_drop = ["geometry", "id", "geometry_polygon_4326", "geometry_polygon_2193", "geometry_centroid_2193", "representative_point_2193", "geometry_centroid_4326", "representative_point_4326"]
-parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv', index_col=False)
+parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv', index=False)
 # errors out because some entries are lists:
 # parcels_output.drop([c for c in orginal_columns if c != 'geometry'], axis=1, errors='ignore').to_file('parcels_phase0.gpkg', driver='GPKG')
 
