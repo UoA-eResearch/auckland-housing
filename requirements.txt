@@ -1,7 +1,11 @@
 geopandas
+pygeos
 pandas
 numpy
+jupyter
 matplotlib
+matplotlib_venn
+seaborn
 tqdm
 shapely
 requests
@@ -10,3 +14,7 @@ contextily
 pygeos
 nodebook
 matplotlib_scalebar
+openpyxl
+matplotlib_venn
+requests_cache
+openpyxl
