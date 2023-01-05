@@ -1,58 +1,31 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import pandas as pd
 import geopandas as gpd
-import fiona
-import glob
-from collections import namedtuple
-import os
 import contextily as ctx
-from scipy.spatial import cKDTree
-from shapely.geometry import Point, shape, LineString, MultiLineString, GeometryCollection, MultiPoint, Polygon, MultiPolygon  # creating points
-import json
+from shapely.geometry import MultiPolygon  # creating points
 from tqdm.auto import tqdm
-from tqdm.contrib.concurrent import process_map, thread_map
-pd.set_option('min_rows', 30)
-import sys
-from importlib import reload
-from util import *
+from tqdm.contrib.concurrent import process_map
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-import multiprocessing
-# from pandarallel import pandarallel # parallel operations for speed
-# pandarallel.initialize(nb_workers=8, progress_bar=True)
-# import swifter
+import time
+from datetime import timedelta
+
+
 tqdm.pandas()
 plt.rcParams['figure.figsize'] = (16, 16)
+pd.set_option('min_rows', 30)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', 10)
-gpd.options.use_pygeos 
+gpd.options.use_pygeos = True
 
-
-# In[2]:
-
-
-import time
 start = time.time()
 last = time.time()
 
-
-# In[3]:
-
-
 max_workers = 30
 
-
 # ## Setup
-
-# In[ ]:
-
-
-# %%time
 # Ryan's prepared data, including only plots in the Auckland council boundary
 # parcels = gpd.read_file('input/Primary_Parcels_2016_prepared.gpkg')
 # Original data, including all data in the 'North Auckland' region
@@ -648,9 +621,6 @@ parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2n
 # In[ ]:
 
 
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
-
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan')
 name2colour = {name: colour for name, colour in zip(rural_code2name.values(), colours)}
 
@@ -740,10 +710,6 @@ parcels_output['Hdist_bus_name'] = parcels_output.apply(lambda x: business_code2
 
 
 # In[ ]:
-
-
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
 
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
 name2colour = {name: colour for name, colour in zip(business_code2name.values(), colours)}
@@ -847,8 +813,6 @@ parcels_output['Hdist_resid_name'] = parcels_output.apply(lambda x: resid_code2n
 # In[ ]:
 
 
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
 
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
 name2colour = {name: colour for name, colour in zip(resid_code2name.values(), colours)}
@@ -1450,10 +1414,6 @@ parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv', in
 # parcels_output.drop([c for c in orginal_columns if c != 'geometry'], axis=1, errors='ignore').to_file('parcels_phase0.gpkg', driver='GPKG')
 
 
-# In[ ]:
-
-
-from datetime import timedelta
 end = time.time()
 elapsed = end - start
 print('total execution time:', elapsed)
