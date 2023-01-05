@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
+from functools import partial
+
 import numpy as np
 import pandas as pd
 import geopandas as gpd
@@ -24,6 +26,58 @@ start = time.time()
 last = time.time()
 
 max_workers = 30
+
+
+# Function definitions
+def extract_verts(geometry):
+    lat = np.nan
+    lng = np.nan
+    if geometry:
+        coordinates = []
+        for polygon in geometry.geoms:
+            # the last point is the same as the first
+            coordinates.extend(polygon.exterior.coords[:-1])
+        lng = f"[{'; '.join([str(round(point[0], 6)) for point in coordinates])}]"
+        lat = f"[{'; '.join([str(round(point[1], 6)) for point in coordinates])}]"
+    return lng, lat
+
+
+def pointarray2matarrays(pointarray):
+    """list of points to matlab compatible arrays of longs and lats
+
+    i.e.
+    [point1, point2,...] -> 'point1_x; point2_x; ...', 'point1_y; point2_y; ...'
+    """
+    lon = [point.xy[0][0] for point in pointarray]
+    lat = [point.xy[1][0] for point in pointarray]
+    lon = f"[{'; '.join([str(round(lon, 6)) for lon in list(lon)])}]"
+    lat = f"[{'; '.join([str(round(lat, 6)) for lat in list(lat)])}]"
+    return lon, lat
+
+
+def get_points_in_roads(row, roads_dissolved=None, return_matarray=True):
+    """return a list of points from the geometry that fall within roads_dissolved"""
+    # assume multipolygon
+    if row[1].parcel_intent == 'road':
+        return None
+    geom = row[1].geometry
+    assert isinstance(geom, MultiPolygon), f"not implemented for geometry of type {type(geom)}"
+    road_points = []
+    # iterate over polygons
+    for poly in geom.geoms:
+        # split polygon into vertices
+        # the last point is the same as the first
+        coords = poly.exterior.coords[:-1]
+        pointsx = [x for x, _ in coords]
+        pointsy = [y for _, y in coords]
+        # create gdf with one row per vertex
+        points_gdf = gpd.GeoDataFrame(geometry=gpd.points_from_xy(pointsx, pointsy)).set_crs(4326)
+        # sjoin with roads, to eliminate vertices that don't intersect a road
+        road_points.extend(gpd.sjoin(points_gdf, roads_dissolved, predicate='intersects').geometry.values)
+    # split into matlab compatible longs and lats like [(longs_list, lats_list), (longs_list, lats_list),...]
+    if return_matarray:
+        road_points = pointarray2matarrays(road_points)
+    return road_points
 
 # ## Setup
 # Ryan's prepared data, including only plots in the Auckland council boundary
@@ -120,17 +174,6 @@ print()
 parcels_output['geometry'] = parcels_output.geometry_polygon_4326
 parcels_output = parcels_output.set_crs(4326)
 
-def extract_verts(geometry):
-    lat = np.nan
-    lng = np.nan
-    if geometry:
-        coordinates = []
-        for polygon in geometry.geoms:
-            # the last point is the same as the first
-            coordinates.extend(polygon.exterior.coords[:-1])
-        lng = f"[{'; '.join([str(round(point[0], 6)) for point in coordinates])}]"
-        lat = f"[{'; '.join([str(round(point[1], 6)) for point in coordinates])}]"
-    return lng, lat
 
 
 
@@ -176,53 +219,10 @@ roads = roads.to_crs(parcels.crs)
 roads_dissolved = roads.dissolve()
 
 
-# In[20]:
-
-
-def pointarray2matarrays(pointarray):
-    """list of points to matlab compatible arrays of longs and lats
-    
-    i.e.
-    [point1, point2,...] -> 'point1_x; point2_x; ...', 'point1_y; point2_y; ...'
-    """
-    lon = [point.xy[0][0] for point in pointarray]
-    lat = [point.xy[1][0] for point in pointarray]
-    lon = f"[{'; '.join([str(round(lon, 6)) for lon in list(lon)])}]"
-    lat = f"[{'; '.join([str(round(lat, 6)) for lat in list(lat)])}]"
-    return lon, lat
-
-
-def get_points_in_roads(row, return_matarray=True):
-    """return a list of points from the geometry that fall within roads_dissolved"""
-    # assume multipolygon
-    if row[1].parcel_intent == 'road':
-        return None
-    geom = row[1].geometry
-    assert isinstance(geom, MultiPolygon), f"not implemented for geometry of type {type(geom)}"
-    road_points = []
-    # iterate over polygons
-    for poly in geom.geoms:
-        # split polygon into vertices
-        # the last point is the same as the first
-        coords = poly.exterior.coords[:-1]
-        pointsx = [x for x, _ in coords]
-        pointsy = [y for _, y in coords]
-        # create gdf with one row per vertex
-        points_gdf = gpd.GeoDataFrame(geometry=gpd.points_from_xy(pointsx, pointsy)).set_crs(4326)
-        # sjoin with roads, to eliminate vertices that don't intersect a road
-        road_points.extend(gpd.sjoin(points_gdf, roads_dissolved, predicate='intersects').geometry.values)
-    # split into matlab compatible longs and lats like [(longs_list, lats_list), (longs_list, lats_list),...]
-    if return_matarray:
-        road_points = pointarray2matarrays(road_points)
-    return road_points
-
-
-# In[21]:
-
-
 # %%time
 # this might hang for a few minutes before multiprocessing starts
-road_intersections = process_map(get_points_in_roads, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
+get_points_in_roads_partial = partial(get_points_in_roads, roads_dissolved=roads_dissolved)
+road_intersections = process_map(get_points_in_roads_partial, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 parcels_output['LINZ_parcel_roadvertices_lon'] = [r[0] for r in road_intersections]
 parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersections]
