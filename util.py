@@ -2,6 +2,7 @@ import os
 import datetime
 import pandas as pd
 
+
 def ls(directory="input"):
     files = []
     for file in sorted(os.scandir(directory), key=lambda file: file.name):
