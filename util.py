@@ -1,5 +1,8 @@
 import os
 import datetime
+import time
+from datetime import timedelta
+
 import pandas as pd
 
 
@@ -15,3 +18,23 @@ def ls(directory="input"):
     with pd.option_context('display.max_colwidth', None):
         display(output)
     print(f"Total: {output['filesize (MB)'].sum().round()}MB")
+
+
+class Timer:
+    def __init__(self):
+        self.start = time.time()
+        self.last = time.time()
+
+    def report(self, message, reset=True):
+        print(message)
+        now = time.time()
+        print(now - self.last, 'seconds')
+        if reset:
+            self.last = now
+        print()
+
+    def report_total(self):
+        end = time.time()
+        elapsed = end - self.start
+        print('total execution time:', elapsed)
+        print(str(timedelta(seconds=elapsed)))
