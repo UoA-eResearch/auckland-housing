@@ -91,7 +91,7 @@ def extract_distance_from_dissolved(dataframe: gpd.GeoDataFrame):
     return ret_func
 
 
-def find_nearest(item, zone: dict = None):
+def find_nearest_candidates(item, zone: dict = None):
     index, row = item
     distance_candidates = []
     code_candidates = []
@@ -99,6 +99,37 @@ def find_nearest(item, zone: dict = None):
         distance_candidates.append(row.geometry.distance(zone_gdf.geometry[0]))
         code_candidates.append(zone_gdf.ZONE[0])
     return distance_candidates, code_candidates
+
+
+def find_nearest_zone(zone_type: str, _aup_zones, _parcels_output, max_workers: int):
+    # Zone codes containing zone type (e.g.: 'rural')
+    zone_codes = _aup_zones[_aup_zones.ZONE_resol.str.lower().str.contains(f'{zone_type} - ', na=False)]['ZONE'].unique()
+
+    # check that each zone code matches with a unique zone name
+    assert all([len(_aup_zones[_aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for code in zone_codes])
+    # dictionary mapping code to names
+    zone_code2name = {code: _aup_zones[_aup_zones.ZONE == code].ZONE_resol.unique()[0] for code in zone_codes}
+
+    # Zones matching zone type
+    zones = _aup_zones[_aup_zones.ZONE.isin(zone_codes)]
+
+    # Mapping of sub-zone codes to zones in that classification
+    zone_dict = {code: zones[zones.ZONE == code].dissolve() for code in zone_codes}
+
+    # Find the nearest zone to each row in the data
+    find_nearest_zone_candidates = partial(find_nearest_candidates, zone=zone_dict)
+
+    # this might hang for a few minutes before multiprocessing starts
+    output = process_map(find_nearest_zone_candidates, _parcels_output.iterrows(), max_workers=max_workers,
+                         chunksize=100, total=len(_parcels_output))
+
+    # all distances (to any zone)
+    distance_candidates = np.array([x[0] for x in output])
+    code_candidates = np.array([x[1] for x in output])
+    # indices of minimum distances
+    min_idx = np.argmin(distance_candidates, axis=-1)
+
+    return zones, zone_code2name, distance_candidates, code_candidates, min_idx
 
 
 # ## Setup
@@ -452,6 +483,7 @@ def get_powerlines(id):
 
     else:
         return None
+
 parcel_powerlines = process_map(get_powerlines, list(parcels_output.index), max_workers=max_workers, chunksize=1000)
 parcels_output['LINZ_TRNSPWR_ohead_name'] = parcel_powerlines
 parcels_output['LINZ_TRNSPWR_ohead_indicator'] = [int(p is not None) for p in parcel_powerlines]
@@ -575,66 +607,14 @@ aup_zones.sample(3)
 
 # In[ ]:
 
-
-rural_codes = aup_zones[aup_zones.ZONE_resol.str.lower().str.contains('rural - ', na=False)]['ZONE'].unique()
-
-
-# In[ ]:
-
-
-# check that each rural zone code matches with a unique rural zone name 
-assert all([len(aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for code in rural_codes])
-# dictionary mapping code to names
-rural_code2name = {code: aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()[0] for code in rural_codes}
-
-
-# In[ ]:
-
-
-aup_zones[aup_zones.ZONE_resol.isna()]
-
-
-# In[ ]:
-
-
-# 2 NAs in ZONE_resol are from a zone 58, which only has observations
-aup_zones[aup_zones.ZONE == '58']
-
-
-# In[ ]:
-
-
-rural = aup_zones[aup_zones.ZONE.isin(rural_codes)]
-
-
-# In[ ]:
-
-
-rural_by_zone_dict = {code: rural[rural.ZONE == code].dissolve() for code in rural_codes}
-
-find_nearest_rural = partial(find_nearest, zone=rural_by_zone_dict)
-
-# this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest_rural, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
-
-# all distances (to any zone)
-distance_candidates = np.array([x[0] for x in output])
-code_candidates = np.array([x[1] for x in output])
-
-# indices of minimum distances
-min_idx = np.argmin(distance_candidates, axis=-1)
-
-
-# In[ ]:
-
+rural, rural_code2name, distance_candidates, code_candidates, min_idx =\
+    find_nearest_zone('rural', aup_zones, parcels_output, max_workers)
 
 parcels_output['Hdist_rural'] = distance_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_rural_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2name[x.Hdist_rural_code], axis=1)
 
-
 # In[ ]:
-
 
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan')
 name2colour = {name: colour for name, colour in zip(rural_code2name.values(), colours)}
@@ -670,54 +650,13 @@ print()
 # ##### d. i. **Hdist_bus_name**
 # ##### d. ii. **Hdist_bus_code**
 
-# In[ ]:
-
-
-business_codes = aup_zones[aup_zones.ZONE_resol.str.lower().str.contains('business - ', na=False)]['ZONE'].unique()
-
-
-# In[ ]:
-
-
-# check that each business zone code matches with a unique business zone name 
-assert all([len(aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for code in business_codes])
-# dictionary mapping code to names
-business_code2name = {code: aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()[0] for code in business_codes}
-business_code2name
-
-
-# In[ ]:
-
-
-business = aup_zones[aup_zones.ZONE.isin(business_codes)]
-
-
-# In[ ]:
-
-
-business_by_zone_dict = {code: business[business.ZONE == code].dissolve() for code in business_codes}
-
-find_nearest_business = partial(find_nearest, zone=business_by_zone_dict)
-
-# this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest_business, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
-
-# all distances (to any zone)
-distance_candidates = np.array([x[0] for x in output])
-code_candidates = np.array([x[1] for x in output])
-# indices of minimum distances
-min_idx = np.argmin(distance_candidates, axis=-1)
-
-
-# In[ ]:
-
+business, business_code2name, distance_candidates, code_candidates, min_idx = \
+    find_nearest_zone('business', aup_zones, parcels_output, max_workers)
 
 parcels_output['Hdist_bus'] = distance_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_bus_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_bus_name'] = parcels_output.apply(lambda x: business_code2name[x.Hdist_bus_code], axis=1)
 
-
-# In[ ]:
 
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
 name2colour = {name: colour for name, colour in zip(business_code2name.values(), colours)}
@@ -757,63 +696,14 @@ print()
 # ##### e. i. **Hdist_resid_name**
 # ##### e. ii. **Hdist_resid_code**
 
-# In[ ]:
-
-
-resid_codes = aup_zones[aup_zones.ZONE_resol.str.lower().str.contains('resid', na=False)]['ZONE'].unique()
-
-
-# In[ ]:
-
-
-resid_codes
-
-
-# In[ ]:
-
-
-# check that each resid zone code matches with a unique resid zone name 
-assert all([len(aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for code in resid_codes])
-# dictionary mapping code to names
-resid_code2name = {code: aup_zones[aup_zones.ZONE == code].ZONE_resol.unique()[0] for code in resid_codes}
-resid_code2name
-
-
-# In[ ]:
-
-
-resid = aup_zones[aup_zones.ZONE.isin(resid_codes)]
-
-
-# In[ ]:
-
-
-resid_by_zone_dict = {code: resid[resid.ZONE == code].dissolve() for code in resid_codes}
-
-find_nearest_resid = partial(find_nearest, zone=resid_by_zone_dict)
-
-# this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest_resid, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
-
-# all distances (to any zone)
-distance_candidates = np.array([x[0] for x in output])
-code_candidates = np.array([x[1] for x in output])
-
-# indices of minimum distances
-min_idx = np.argmin(distance_candidates, axis=-1)
-
-
-# In[ ]:
-
+resid, resid_code2name, distance_candidates, code_candidates, min_idx = \
+    find_nearest_zone('resid', aup_zones, parcels_output, max_workers)
 
 parcels_output['Hdist_resid'] = distance_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_resid_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_resid_name'] = parcels_output.apply(lambda x: resid_code2name[x.Hdist_resid_code], axis=1)
 
-
 # In[ ]:
-
-
 
 colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
 name2colour = {name: colour for name, colour in zip(resid_code2name.values(), colours)}
