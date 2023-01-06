@@ -14,6 +14,8 @@ import matplotlib.pyplot as plt
 import time
 from datetime import timedelta
 
+from util import Timer
+
 tqdm.pandas()
 plt.rcParams['figure.figsize'] = (16, 16)
 pd.set_option('min_rows', 30)
@@ -21,8 +23,7 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', 10)
 gpd.options.use_pygeos = True
 
-start = time.time()
-last = time.time()
+timer = Timer()
 
 max_workers = 30
 
@@ -179,19 +180,13 @@ orginal_columns = parcels.columns
 # it could be a copy of parcels, a sample of parcels, etc.
 parcels_output = parcels.copy()
 
-print('loading parcels complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('loading parcels complete')
 
 # ## 1. LINZ parcel information
 # ##### a. **LINZ_parcel_ID** Parcel identifier - “certificate of title”.
 parcels_output['LINZ_parcel_ID'] = parcels_output.id
 
-print('1a complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1a complete')
 
 # ##### b. **LINZ_parcel_centroid_lon**
 # ##### c. **LINZ_parcel_centroid_lat**
@@ -200,10 +195,7 @@ parcels_output = parcels_output.set_crs(4326)
 parcels_output['LINZ_parcel_centroid_lon'] = parcels_output.geometry.x
 parcels_output['LINZ_parcel_centroid_lat'] = parcels_output.geometry.y
 
-print('1bc complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1bc complete')
 
 # ##### d. **LINZ_parcel_vertices_lon** vector of longitudes of the vertices of the matched LINZ parcels
 # ##### e. **LINZ_parcel_vertices_lat**
@@ -216,10 +208,7 @@ vertices = process_map(extract_verts, parcels_output.geometry, max_workers=max_w
 parcels_output["LINZ_parcel_vertices_lon"] = [v[0] for v in vertices]
 parcels_output["LINZ_parcel_vertices_lat"] = [v[1] for v in vertices]
 
-print('1de complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1de complete')
 
 # ##### f. **LINZ_parcel_roadvertices_lon** subvector of longitudes of parcel that sits adjacent to a road 
 # ##### g. **LINZ_parcel_roadvertices_lat**
@@ -255,10 +244,7 @@ plt.xlim(x1, x2)
 plt.ylim(y1, y2)
 plt.draw()
 
-print('1fg complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1fg complete')
 
 # ##### h. **LINZ_adjoining_parcel_ID** id of adjoining LINZ parcels  
 # ##### i. **LINZ_parcel_sides_zones** AUP Zone Code of adjoining parcels (this includes residential, business, and rural zones; it should also include roads, water and open spaces)  
@@ -346,10 +332,7 @@ sample = parcels_output.sample(1)
 ax = sample.plot(color='red')
 parcels[parcels.id.isin(sample.LINZ_adjoining_parcel_ID.values[0])].plot(ax=ax)
 
-print('2ab 1hi complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('2ab 1hi complete')
 
 # ##### j. i. **LINZ_TRNSPWR_ohead_indicator** Indicator (0 or 1) for LINZ parcel located under overhead transpower line. Leave blank otherwise. Note that ‘TRANSLINE’ denotes overhead transmission lines in the GIS dataset, while ‘CABLE’ denotes underground transmission lines and can be ignored. 
 # ##### j. ii. **LINZ_TRNSPWR_ohead_name**  
@@ -386,10 +369,7 @@ plt.xlim((parcels_output.total_bounds[0], parcels_output.total_bounds[2]))
 plt.ylim((parcels_output.total_bounds[1], parcels_output.total_bounds[3]))
 ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
 
-print('1j complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1j complete')
 
 # ##### k. i. **LINZ_VWSHFT_ohead_indicator** Indicator (0 or 1) for LINZ parcel located under viewshafts. Leave blank otherwise.
 # ##### k. ii. **LINZ_VWSHFT_ohead_name** Name of the volcanic cone (e.g. Mt Albert). Leave blank if no viewshaft applies. 
@@ -436,10 +416,7 @@ parcels_output['LINZ_VWSHFT_ohead_indicator'] = [int(p is not None) for p in par
 ax = parcels_output[parcels_output.LINZ_VWSHFT_ohead_indicator == 1].plot()
 ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
 
-print('1 all complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('1 all complete')
 
 # ## 2. AUP shapefile information. Calculations are based on centroid of matched parcels: 
 # ##### a. **LINZmatch_AUP_name** AUP zone (string) consent is located in (from the AUP shapefiles) 
@@ -478,10 +455,7 @@ parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2n
 
 plot_nearest_zones(parcels_output, rural, rural_code2name, 'Hdist_rural')
 
-print('2c complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('2c complete')
 
 # ##### d. **Hdist_bus** Minimum Haversine distance to nearest Business Zone
 # ##### d. i. **Hdist_bus_name**
@@ -496,10 +470,7 @@ parcels_output['Hdist_bus_name'] = parcels_output.apply(lambda x: business_code2
 
 plot_nearest_zones(parcels_output, business, business_code2name, 'Hdist_bus')
 
-print('2d complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('2d complete')
 
 # ##### e. **Hdist_resid** Minimum Haversine distance to nearest Residential Zone,
 # ##### e. i. **Hdist_resid_name**
@@ -514,10 +485,7 @@ parcels_output['Hdist_resid_name'] = parcels_output.apply(lambda x: resid_code2n
 
 plot_nearest_zones(parcels_output, resid, resid_code2name, 'Hdist_resid')
 
-print('2e complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('2e complete')
 
 # ##### f. **Hdist_SH** Minimum Haversine distance to Residential - Single House Zone
 # ##### g. **Hdist_MHS** Minimum Haversine distance to Residential - Mixed Housing Suburban Zone
@@ -552,10 +520,7 @@ ax = subsample.plot(color='red', alpha=0.4)
 resid[resid.ZONE_resol == postfix2name[postfix]].plot(ax=ax)
 ctx.add_basemap(ax, crs=2193)
 
-print('2fghi complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('2fghi complete')
 
 print('2 all complete')
 
@@ -656,10 +621,7 @@ param_sets.append(
     }
 )
 
-print('3-7 reading files complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('3-7 reading files complete')
 
 # ## 3 - 7. perform the joins
 
@@ -746,10 +708,7 @@ plt.title(area_code_col)
 # ctx.add_basemap(ax, crs=plot_gdf.crs, source=ctx.providers.Esri.WorldImagery)
 plt.draw()
 
-print('3-7 complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('3-7 complete')
 
 # ## 8. Additional distance information from consent location  
 # For these distance calculations, use EPSG 2193 (less distortion).
@@ -784,10 +743,7 @@ subsample['geometry'] = subsample['coast_buffer']
 ax = subsample.plot(color='red', alpha=0.4)
 coastline.cx[1.7e6:1.8e6, 5.85e6:5.97e6].plot(ax=ax)
 
-print('8a complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('8a complete')
 
 # ##### b. Minimum Haversinedistance to Open Space(set of AUP Zones) **Hdist_open**
 
@@ -828,10 +784,7 @@ subsample['geometry'] = subsample['highway_buffer']
 ax = subsample.plot(color='red', alpha=0.4)
 highways.plot(ax=ax)
 
-print('8bcd complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('8bcd complete')
 
 # ##### e. Minimum Haversine distance to rail line **Hdist_rail**
 railroads = gpd.read_file('input/lds-nz-railway-centrelines-topo-150k-SHP.zip').to_crs(2193)
@@ -853,10 +806,7 @@ ax = subsample.plot(color='red', alpha=0.4)
 railroads_dissolved.plot(ax=ax)
 ctx.add_basemap(ax, crs=subsample.crs)
 
-print('8e complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('8e complete')
 # ##### f. Haversine distance to downtown (use Skytower coordinates) **Hdist_skytower**
 skytower = [-36.84838748948485, 174.7621736911587]
 skytower = gpd.points_from_xy(x=[skytower[1]], y=[skytower[0]])
@@ -878,10 +828,7 @@ ax = subsample.plot(color='red', alpha=0.2)
 skytower.plot(ax=ax, color='black')
 ctx.add_basemap(ax, crs=parcels_output.crs)
 
-print('8f complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('8f complete')
 
 # ## 9. Special Housing Area (SpHAs)
 # Indicator (1 or 0) for consent located in SpHAs **SpHA_indicator**  
@@ -908,10 +855,7 @@ plt.xlim((1.73e6, 1.78e6))
 spha_dissolved.boundary.plot(ax=ax)
 ctx.add_basemap(ax, crs=spha_dissolved.crs)
 
-print('9 complete')
-print(time.time() - last, 'seconds')
-last = time.time()
-print()
+timer.report('9 complete')
 
 # ## Save
 parcels_output['geometry'] = parcels_output.geometry_polygon_4326
@@ -923,11 +867,7 @@ parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv', in
 # errors out because some entries are lists:
 # parcels_output.drop([c for c in orginal_columns if c != 'geometry'], axis=1, errors='ignore').to_file('parcels_phase0.gpkg', driver='GPKG')
 
-end = time.time()
-elapsed = end - start
-print('total execution time:', elapsed)
-str(timedelta(seconds=elapsed))
-
+timer.report_total()
 print('saving complete')
 
 # ## 10. Ranged Address Indicator
