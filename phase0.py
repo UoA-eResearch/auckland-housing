@@ -11,9 +11,6 @@ from tqdm.auto import tqdm
 from tqdm.contrib.concurrent import process_map
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-import time
-from datetime import timedelta
-
 from util import Timer
 
 tqdm.pandas()
@@ -26,6 +23,8 @@ gpd.options.use_pygeos = True
 timer = Timer()
 
 max_workers = 30
+
+plotting = False
 
 
 # Function definitions
@@ -231,18 +230,19 @@ parcels_output['LINZ_parcel_roadvertices_lon'] = [r[0] for r in road_intersectio
 parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersections]
 
 # example
-# get a sample 
-sample = parcels_output.sample(10000)
-# sample one row that has a non empty list of road vertices
-sample = sample[sample.apply(lambda x: len(x.LINZ_parcel_roadvertices_lat) != 0, axis=1)].sample(1)
-road_points = get_points_in_roads((None, sample.iloc[0]), _roads_dissolved=roads_dissolved, return_matarray=False)
-ax = gpd.GeoDataFrame(geometry=road_points).plot()
-sample.plot(ax=ax, alpha=0.5)
-roads_dissolved.plot(ax=ax, color='red', alpha=0.5)
-x1, y1, x2, y2 = sample.buffer(0.001).total_bounds
-plt.xlim(x1, x2)
-plt.ylim(y1, y2)
-plt.draw()
+if plotting:
+    # get a sample
+    sample = parcels_output.sample(10000)
+    # sample one row that has a non empty list of road vertices
+    sample = sample[sample.apply(lambda x: len(x.LINZ_parcel_roadvertices_lat) != 0, axis=1)].sample(1)
+    road_points = get_points_in_roads((None, sample.iloc[0]), _roads_dissolved=roads_dissolved, return_matarray=False)
+    ax = gpd.GeoDataFrame(geometry=road_points).plot()
+    sample.plot(ax=ax, alpha=0.5)
+    roads_dissolved.plot(ax=ax, color='red', alpha=0.5)
+    x1, y1, x2, y2 = sample.buffer(0.001).total_bounds
+    plt.xlim(x1, x2)
+    plt.ylim(y1, y2)
+    plt.draw()
 
 timer.report('1fg complete')
 
@@ -328,9 +328,10 @@ parcels_output['LINZ_adjoining_parcel_ID'] = [ids for chunk in parcel_neighbour_
 parcels_output['LINZ_parcel_sides_zones'] = [zones for chunk in parcel_neighbour_chunks for zones in chunk[1]]
 
 # plot a random parcel and its neighbours
-sample = parcels_output.sample(1)
-ax = sample.plot(color='red')
-parcels[parcels.id.isin(sample.LINZ_adjoining_parcel_ID.values[0])].plot(ax=ax)
+if plotting:
+    sample = parcels_output.sample(1)
+    ax = sample.plot(color='red')
+    parcels[parcels.id.isin(sample.LINZ_adjoining_parcel_ID.values[0])].plot(ax=ax)
 
 timer.report('2ab 1hi complete')
 
@@ -344,8 +345,6 @@ power = power[power['type'] == 'TRANSLINE']
 # get dataframe associating parcel indices with overhead power lines
 # alternative approach is to do how='left', then combine on index using group by, but that seems much slower when incorporating the results into the final gdf
 power_intersect = gpd.sjoin(parcels_output, power[['descriptio', 'geometry']]).drop(columns=['index_right'])
-
-power_intersect.index.value_counts()
 
 
 def get_powerlines(id):
@@ -363,11 +362,12 @@ parcel_powerlines = process_map(get_powerlines, list(parcels_output.index), max_
 parcels_output['LINZ_TRNSPWR_ohead_name'] = parcel_powerlines
 parcels_output['LINZ_TRNSPWR_ohead_indicator'] = [int(p is not None) for p in parcel_powerlines]
 
-ax = parcels_output[parcels_output['LINZ_TRNSPWR_ohead_indicator'] == 1].plot()
-power.plot(column='designvolt', legend=True, ax=ax)
-plt.xlim((parcels_output.total_bounds[0], parcels_output.total_bounds[2]))
-plt.ylim((parcels_output.total_bounds[1], parcels_output.total_bounds[3]))
-ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
+if plotting:
+    ax = parcels_output[parcels_output['LINZ_TRNSPWR_ohead_indicator'] == 1].plot()
+    power.plot(column='designvolt', legend=True, ax=ax)
+    plt.xlim((parcels_output.total_bounds[0], parcels_output.total_bounds[2]))
+    plt.ylim((parcels_output.total_bounds[1], parcels_output.total_bounds[3]))
+    ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
 
 timer.report('1j complete')
 
@@ -413,8 +413,9 @@ parcels_output['LINZ_VWSHFT_ohead_name'] = [vs[1] if vs is not None else None fo
 parcels_output['LINZ_VWSHFT_ohead_ID'] = [vs[0] if vs is not None else None for vs in parcel_viewshafts]
 parcels_output['LINZ_VWSHFT_ohead_indicator'] = [int(p is not None) for p in parcel_viewshafts]
 
-ax = parcels_output[parcels_output.LINZ_VWSHFT_ohead_indicator == 1].plot()
-ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
+if plotting:
+    ax = parcels_output[parcels_output.LINZ_VWSHFT_ohead_indicator == 1].plot()
+    ctx.add_basemap(ax, source=ctx.providers.Esri.WorldImagery, crs=parcels_output.crs)
 
 timer.report('1 all complete')
 
@@ -442,7 +443,6 @@ parcels_output = parcels_output.set_crs(2193)
 aup_zones = gpd.read_file(
     'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_BaseZone.shp')
 aup_zones = aup_zones.to_crs(2193)
-aup_zones.sample(3)
 
 # Find distance to nearest rural zone
 
@@ -453,7 +453,8 @@ parcels_output['Hdist_rural'] = distance_candidates[(np.arange(len(distance_cand
 parcels_output['Hdist_rural_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2name[x.Hdist_rural_code], axis=1)
 
-plot_nearest_zones(parcels_output, rural, rural_code2name, 'Hdist_rural')
+if plotting:
+    plot_nearest_zones(parcels_output, rural, rural_code2name, 'Hdist_rural')
 
 timer.report('2c complete')
 
@@ -468,7 +469,8 @@ parcels_output['Hdist_bus'] = distance_candidates[(np.arange(len(distance_candid
 parcels_output['Hdist_bus_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_bus_name'] = parcels_output.apply(lambda x: business_code2name[x.Hdist_bus_code], axis=1)
 
-plot_nearest_zones(parcels_output, business, business_code2name, 'Hdist_bus')
+if plotting:
+    plot_nearest_zones(parcels_output, business, business_code2name, 'Hdist_bus')
 
 timer.report('2d complete')
 
@@ -483,7 +485,8 @@ parcels_output['Hdist_resid'] = distance_candidates[(np.arange(len(distance_cand
 parcels_output['Hdist_resid_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_resid_name'] = parcels_output.apply(lambda x: resid_code2name[x.Hdist_resid_code], axis=1)
 
-plot_nearest_zones(parcels_output, resid, resid_code2name, 'Hdist_resid')
+if plotting:
+    plot_nearest_zones(parcels_output, resid, resid_code2name, 'Hdist_resid')
 
 timer.report('2e complete')
 
@@ -511,14 +514,15 @@ for postfix, zone in tqdm(postfix2name.items()):
     parcels_output[f'Hdist_{postfix}'] = process_map(get_distance, parcels_output.geometry, max_workers=max_workers,
                                                      chunksize=100)
 
-postfix = 'THA'
-column = f'Hdist_{postfix}'
-subsample = parcels_output.sample(10)
-subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
-subsample['geometry'] = subsample['buffer']
-ax = subsample.plot(color='red', alpha=0.4)
-resid[resid.ZONE_resol == postfix2name[postfix]].plot(ax=ax)
-ctx.add_basemap(ax, crs=2193)
+if plotting:
+    postfix = 'THA'
+    column = f'Hdist_{postfix}'
+    subsample = parcels_output.sample(10)
+    subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
+    subsample['geometry'] = subsample['buffer']
+    ax = subsample.plot(color='red', alpha=0.4)
+    resid[resid.ZONE_resol == postfix2name[postfix]].plot(ax=ax)
+    ctx.add_basemap(ax, crs=2193)
 
 timer.report('2fghi complete')
 
@@ -548,8 +552,6 @@ param_sets.append(
         'area_code_col': 'Local_Area_name',
     }
 )
-
-LA.sample(3)
 
 # ### 4. 2018 Statistical Area 2 Information (information on the 2018SA2 that the consent is located in)
 
@@ -674,7 +676,6 @@ for params in param_sets:
 
     gdf = joined
 
-    print()
     # store ambiguous idx for later, e.g. plotting
     params['ambiguous_idx'] = ambiguous_idx
 
@@ -684,29 +685,30 @@ parcels_output = gdf
 # red outline: parcel
 # hatched: largest overlapping area
 # others: other areas that intersect the parcel
-params = param_sets[np.random.randint(len(param_sets))]
-ambiguous_idx = params['ambiguous_idx']
-area_gdf = params['area_gdf']
-area_code_col = params['area_code_col']
+if plotting:
+    params = param_sets[np.random.randint(len(param_sets))]
+    ambiguous_idx = params['ambiguous_idx']
+    area_gdf = params['area_gdf']
+    area_code_col = params['area_code_col']
 
-plot_idx = ambiguous_idx[np.random.randint(len(ambiguous_idx))]
-plot_gdf = gdf.loc[[plot_idx]]
-plot_mb = gpd.sjoin(params['area_gdf'][[params['area_code_col'], 'geometry']], plot_gdf[['geometry']]).drop(
-    columns=['index_right'])
+    plot_idx = ambiguous_idx[np.random.randint(len(ambiguous_idx))]
+    plot_gdf = gdf.loc[[plot_idx]]
+    plot_mb = gpd.sjoin(params['area_gdf'][[params['area_code_col'], 'geometry']], plot_gdf[['geometry']]).drop(
+        columns=['index_right'])
 
-plot_bounds = plot_gdf.buffer(100).total_bounds
+    plot_bounds = plot_gdf.buffer(100).total_bounds
 
-ax = area_gdf[area_gdf[area_code_col] == gdf.loc[plot_idx][area_code_col]].plot(facecolor='None', hatch="///")
-plot_gdf.boundary.plot(color='red', ax=ax)
+    ax = area_gdf[area_gdf[area_code_col] == gdf.loc[plot_idx][area_code_col]].plot(facecolor='None', hatch="///")
+    plot_gdf.boundary.plot(color='red', ax=ax)
 
-plot_mb.boundary.plot(ax=ax, alpha=0.3)
-plot_mb.plot(ax=ax, column=area_code_col, legend=True, alpha=0.3)
+    plot_mb.boundary.plot(ax=ax, alpha=0.3)
+    plot_mb.plot(ax=ax, column=area_code_col, legend=True, alpha=0.3)
 
-plt.xlim((plot_bounds[0], plot_bounds[2]))
-plt.ylim((plot_bounds[1], plot_bounds[3]))
-plt.title(area_code_col)
-# ctx.add_basemap(ax, crs=plot_gdf.crs, source=ctx.providers.Esri.WorldImagery)
-plt.draw()
+    plt.xlim((plot_bounds[0], plot_bounds[2]))
+    plt.ylim((plot_bounds[1], plot_bounds[3]))
+    plt.title(area_code_col)
+    # ctx.add_basemap(ax, crs=plot_gdf.crs, source=ctx.providers.Esri.WorldImagery)
+    plt.draw()
 
 timer.report('3-7 complete')
 
@@ -737,11 +739,12 @@ parcels_output['Hdist_coast'] = process_map(extract_coastal_dist, parcels_output
                                             chunksize=10)
 
 # if distance work, then red circles should extend to the nearest coastline, and no further
-subsample = parcels_output.sample(10)
-subsample['coast_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_coast), axis=1)
-subsample['geometry'] = subsample['coast_buffer']
-ax = subsample.plot(color='red', alpha=0.4)
-coastline.cx[1.7e6:1.8e6, 5.85e6:5.97e6].plot(ax=ax)
+if plotting:
+    subsample = parcels_output.sample(10)
+    subsample['coast_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_coast), axis=1)
+    subsample['geometry'] = subsample['coast_buffer']
+    ax = subsample.plot(color='red', alpha=0.4)
+    coastline.cx[1.7e6:1.8e6, 5.85e6:5.97e6].plot(ax=ax)
 
 timer.report('8a complete')
 
@@ -763,9 +766,10 @@ arterial_roads = gpd.read_file(
     2193)
 arterial_roads_dissolved = arterial_roads.dissolve()
 
-ax = highways.plot()
-arterial_roads.plot(ax=ax, color='red')
-ctx.add_basemap(ax, crs=arterial_roads.crs)
+if plotting:
+    ax = highways.plot()
+    arterial_roads.plot(ax=ax, color='red')
+    ctx.add_basemap(ax, crs=arterial_roads.crs)
 
 extract_highway_dist = extract_distance_from_dissolved(highways_dissolved)
 extract_main_road_dist = extract_distance_from_dissolved(arterial_roads_dissolved)
@@ -778,11 +782,12 @@ parcels_output['Hdist_main_road'] = process_map(extract_main_road_dist, parcels_
                                                 max_workers=max_workers, chunksize=10)
 
 # if distance work, then red circles should extend to the nearest coastline, and no further
-subsample = parcels_output.sample(10)
-subsample['highway_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_motorway), axis=1)
-subsample['geometry'] = subsample['highway_buffer']
-ax = subsample.plot(color='red', alpha=0.4)
-highways.plot(ax=ax)
+if plotting:
+    subsample = parcels_output.sample(10)
+    subsample['highway_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_motorway), axis=1)
+    subsample['geometry'] = subsample['highway_buffer']
+    ax = subsample.plot(color='red', alpha=0.4)
+    highways.plot(ax=ax)
 
 timer.report('8bcd complete')
 
@@ -799,12 +804,13 @@ extract_rail_dist = extract_distance_from_dissolved(railroads_dissolved)
 parcels_output['Hdist_rail'] = process_map(extract_rail_dist, parcels_output.geometry, max_workers=max_workers,
                                            chunksize=10)
 
-subsample = parcels_output.sample(10)
-subsample['rail_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_rail), axis=1)
-subsample['geometry'] = subsample['rail_buffer']
-ax = subsample.plot(color='red', alpha=0.4)
-railroads_dissolved.plot(ax=ax)
-ctx.add_basemap(ax, crs=subsample.crs)
+if plotting:
+    subsample = parcels_output.sample(10)
+    subsample['rail_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_rail), axis=1)
+    subsample['geometry'] = subsample['rail_buffer']
+    ax = subsample.plot(color='red', alpha=0.4)
+    railroads_dissolved.plot(ax=ax)
+    ctx.add_basemap(ax, crs=subsample.crs)
 
 timer.report('8e complete')
 # ##### f. Haversine distance to downtown (use Skytower coordinates) **Hdist_skytower**
@@ -821,12 +827,13 @@ parcels_output['Hdist_skytower'] = process_map(extract_skytower_dist, parcels_ou
                                                chunksize=10)
 
 # if distance works, then red circles should extend to the nearest sky tower, and no further
-subsample = parcels_output.sample(10)
-subsample['skytower_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_skytower), axis=1)
-subsample['geometry'] = subsample['skytower_buffer']
-ax = subsample.plot(color='red', alpha=0.2)
-skytower.plot(ax=ax, color='black')
-ctx.add_basemap(ax, crs=parcels_output.crs)
+if plotting:
+    subsample = parcels_output.sample(10)
+    subsample['skytower_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_skytower), axis=1)
+    subsample['geometry'] = subsample['skytower_buffer']
+    ax = subsample.plot(color='red', alpha=0.2)
+    skytower.plot(ax=ax, color='black')
+    ctx.add_basemap(ax, crs=parcels_output.crs)
 
 timer.report('8f complete')
 
@@ -848,12 +855,13 @@ def get_spha_indicator(geom):
 parcels_output['SpHA_indicator'] = process_map(get_spha_indicator, parcels_output.geometry, max_workers=max_workers,
                                                chunksize=10)
 
-subsample = parcels_output.sample(min(500, len(parcels_output)))
-ax = subsample.plot(column='SpHA_indicator')
-plt.ylim((5.89e6, 5.95e6))
-plt.xlim((1.73e6, 1.78e6))
-spha_dissolved.boundary.plot(ax=ax)
-ctx.add_basemap(ax, crs=spha_dissolved.crs)
+if plotting:
+    subsample = parcels_output.sample(min(500, len(parcels_output)))
+    ax = subsample.plot(column='SpHA_indicator')
+    plt.ylim((5.89e6, 5.95e6))
+    plt.xlim((1.73e6, 1.78e6))
+    spha_dissolved.boundary.plot(ax=ax)
+    ctx.add_basemap(ax, crs=spha_dissolved.crs)
 
 timer.report('9 complete')
 
