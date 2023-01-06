@@ -54,7 +54,7 @@ def pointarray2matarrays(pointarray):
     return lon, lat
 
 
-def get_points_in_roads(row, roads_dissolved=None, return_matarray=True):
+def get_points_in_roads(row, _roads_dissolved=None, return_matarray=True):
     """return a list of points from the geometry that fall within roads_dissolved"""
     # assume multipolygon
     if row[1].parcel_intent == 'road':
@@ -72,7 +72,7 @@ def get_points_in_roads(row, roads_dissolved=None, return_matarray=True):
         # create gdf with one row per vertex
         points_gdf = gpd.GeoDataFrame(geometry=gpd.points_from_xy(pointsx, pointsy)).set_crs(4326)
         # sjoin with roads, to eliminate vertices that don't intersect a road
-        road_points.extend(gpd.sjoin(points_gdf, roads_dissolved, predicate='intersects').geometry.values)
+        road_points.extend(gpd.sjoin(points_gdf, _roads_dissolved, predicate='intersects').geometry.values)
     # split into matlab compatible longs and lats like [(longs_list, lats_list), (longs_list, lats_list),...]
     if return_matarray:
         road_points = pointarray2matarrays(road_points)
@@ -246,7 +246,7 @@ parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersectio
 sample = parcels_output.sample(10000)
 # sample one row that has a non empty list of road vertices
 sample = sample[sample.apply(lambda x: len(x.LINZ_parcel_roadvertices_lat) != 0, axis=1)].sample(1)
-road_points = get_points_in_roads((None, sample.iloc[0]), roads_dissolved=roads_dissolved, return_matarray=False)
+road_points = get_points_in_roads((None, sample.iloc[0]), _roads_dissolved=roads_dissolved, return_matarray=False)
 ax = gpd.GeoDataFrame(geometry=road_points).plot()
 sample.plot(ax=ax, alpha=0.5)
 roads_dissolved.plot(ax=ax, color='red', alpha=0.5)
@@ -595,7 +595,7 @@ sa2 = gpd.read_file(
     'input/statsnzstatistical-area-2-higher-geographies-2018-clipped-generalis-FGDB.zip!statistical-area-2-higher-geographies-2018-clipped-generalis.gdb').to_crs(
     parcels_output.crs)
 sa2 = sa2.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-      parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+             parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 sa2 = sa2.rename(columns={'SA22018_V1_00': 'SA22018_code', 'SA22018_V1_00_NAME': 'SA22018_name'})
 
 param_sets.append(
@@ -613,7 +613,7 @@ param_sets.append(
 
 au2013 = gpd.read_file('input/area-unit-2013.gdb.zip').to_crs(parcels_output.crs)
 au2013 = au2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                   parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 au2013 = au2013.rename(columns={'AU2013_V1_00': 'AU2013_code', 'AU2013_V1_00_NAME': 'AU2013_name'})
 
 param_sets.append(
@@ -630,7 +630,7 @@ param_sets.append(
 
 mb2018 = gpd.read_file('input/meshblock-2018-clipped-generalised.gdb.zip').to_crs(parcels_output.crs)
 mb2018 = mb2018.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                   parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 mb2018 = mb2018.rename(columns={'MB2018_V1_00': 'MB2018_code'})
 
 param_sets.append(
@@ -646,7 +646,7 @@ param_sets.append(
 
 mb2013 = gpd.read_file('input/meshblock-2013.gdb.zip').to_crs(parcels_output.crs)
 mb2013 = mb2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                   parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 mb2013 = mb2013.rename(columns={'MeshblockNumber': 'MB2013_code'})
 
 param_sets.append(
@@ -768,7 +768,7 @@ parcels_output = parcels_output.set_crs(2193)
 coastline = gpd.read_file('input/lds-nz-coastline-mean-high-water-FGDB.zip!nz-coastline-mean-high-water.gdb').to_crs(
     2193)
 coastline = coastline.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-            parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 
 coastline_dissolved = coastline.dissolve()
 
@@ -799,7 +799,7 @@ parcels_output = parcels_output.set_crs(2193)
 
 roads = gpd.read_file('input/lds-nz-road-centrelines-topo-150k-FGDB.zip!nz-road-centrelines-topo-150k.gdb').to_crs(2193)
 roads = roads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-        parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                 parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 highways = roads[~roads.hway_num.isna()]
 highways_dissolved = highways.dissolve()
 arterial_roads = gpd.read_file(
@@ -836,7 +836,7 @@ print()
 # ##### e. Minimum Haversine distance to rail line **Hdist_rail**
 railroads = gpd.read_file('input/lds-nz-railway-centrelines-topo-150k-SHP.zip').to_crs(2193)
 railroads = railroads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
-            parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+                         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 railroads_dissolved = railroads.dissolve()
 
 parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
