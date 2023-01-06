@@ -80,13 +80,14 @@ def get_points_in_roads(row, roads_dissolved=None, return_matarray=True):
     return road_points
 
 
-def extract_distance_from_dissolved(dataframe: gpd.GeoDataFrame):
+def extract_distance_from_dissolved(dissolved: gpd.GeoDataFrame):
     """
-    Function generator returning a function that calculates the distance from input geometry to the dissolved
-    geometry passed to this generator
+    Returns a closure that calculates the distance from input geometry to the dissolved
+    geometry passed to this function
     """
+
     def ret_func(geom: gpd.GeoSeries):
-        return geom.distance(dataframe.geometry[0])
+        return geom.distance(dissolved.geometry[0])
 
     return ret_func
 
