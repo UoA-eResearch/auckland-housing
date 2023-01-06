@@ -79,6 +79,18 @@ def get_points_in_roads(row, roads_dissolved=None, return_matarray=True):
         road_points = pointarray2matarrays(road_points)
     return road_points
 
+
+def extract_distance_from_dissolved(dataframe: gpd.GeoDataFrame):
+    """
+    Function generator returning a function that calculates the distance from input geometry to the dissolved
+    geometry passed to this generator
+    """
+    def ret_func(geom: gpd.GeoSeries):
+        return geom.distance(dataframe.geometry[0])
+
+    return ret_func
+
+
 # ## Setup
 # Ryan's prepared data, including only plots in the Auckland council boundary
 # parcels = gpd.read_file('input/Primary_Parcels_2016_prepared.gpkg')
@@ -1170,8 +1182,7 @@ coastline_dissolved = coastline.dissolve()
 
 
 # %%time
-def extract_coastal_dist(geom):
-    return geom.distance(coastline_dissolved.geometry[0])
+extract_coastal_dist = extract_distance_from_dissolved(coastline_dissolved)
 
 parcels_output['Hdist_coast'] = process_map(extract_coastal_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
 
@@ -1228,13 +1239,8 @@ ctx.add_basemap(ax, crs=arterial_roads.crs)
 
 
 # In[ ]:
-
-
-def extract_highway_dist(geom):
-    return geom.distance(highways_dissolved.geometry[0])
-
-def extract_main_road_dist(geom):
-    return geom.distance(arterial_roads_dissolved.geometry[0])
+extract_highway_dist = extract_distance_from_dissolved(highways_dissolved)
+extract_main_road_dist = extract_distance_from_dissolved(arterial_roads_dissolved)
 
 # parcels_output['Hdist_motorway'] = parcels_output.progress_apply(lambda x: x.geometry.distance(highways_dissolved.geometry[0]), axis=1)
 parcels_output['Hdist_motorway'] = process_map(extract_highway_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
@@ -1277,10 +1283,9 @@ railroads_dissolved = railroads.dissolve()
 
 parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
 parcels_output = parcels_output.set_crs(2193)
-def get_rail_distance(geom):
-    return geom.distance(railroads_dissolved.geometry[0])
+extract_rail_dist = extract_distance_from_dissolved(railroads_dissolved)
 
-parcels_output['Hdist_rail'] = process_map(get_rail_distance, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_rail'] = process_map(extract_rail_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
 
 
 # In[ ]:
@@ -1319,10 +1324,9 @@ skytower = gpd.GeoDataFrame([{"name": "Skytower", "value": 1}], geometry=skytowe
 parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
 parcels_output = parcels_output.set_crs(2193)
 
-def get_skytower_distance(geom):
-    return geom.distance(skytower.geometry[0])
+extract_skytower_dist = extract_distance_from_dissolved(skytower)
 
-parcels_output['Hdist_skytower'] = process_map(get_skytower_distance, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_skytower'] = process_map(extract_skytower_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
 
 
 # In[ ]:
