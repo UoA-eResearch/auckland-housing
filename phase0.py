@@ -146,7 +146,7 @@ def plot_nearest_zones(_parcels_output, zones, zone_code2name, column):
     subsample = subsample[~subsample.is_empty]
 
     zone_plot = zones.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
-    ax = zone_plot.plot(color=[name2colour[z] for z in resid_plot.ZONE_resol])
+    ax = zone_plot.plot(color=[name2colour[z] for z in zone_plot.ZONE_resol])
     subsample.plot(color=[name2colour[z] for z in subsample[f'{column}_name']], alpha=0.65, ax=ax)
 
     # add legend
@@ -245,7 +245,7 @@ parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersectio
 sample = parcels_output.sample(10000)
 # sample one row that has a non empty list of road vertices
 sample = sample[sample.apply(lambda x: len(x.LINZ_parcel_roadvertices_lat) != 0, axis=1)].sample(1)
-road_points = get_points_in_roads((None, sample.iloc[0]), return_matarray=False)
+road_points = get_points_in_roads((None, sample.iloc[0]), roads_dissolved=roads_dissolved, return_matarray=False)
 ax = gpd.GeoDataFrame(geometry=road_points).plot()
 sample.plot(ax=ax, alpha=0.5)
 roads_dissolved.plot(ax=ax, color='red', alpha=0.5)
