@@ -132,6 +132,28 @@ def find_nearest_zone(zone_type: str, _aup_zones, _parcels_output, max_workers: 
     return zones, zone_code2name, distance_candidates, code_candidates, min_idx
 
 
+def plot_nearest_zones(_parcels_output, zones, zone_code2name, column):
+    colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
+    name2colour = {name: colour for name, colour in zip(zone_code2name.values(), colours)}
+
+    # hard to see, subset to smaller area
+    bounds = {'x1': 1.76e6, 'x2': 1.7613e6, 'y1': 5.9123e6, 'y2': 5.914e6}
+
+    subsample = _parcels_output.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
+    subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
+    subsample['geometry'] = subsample['buffer']
+
+    subsample = subsample[~subsample.is_empty]
+
+    zone_plot = zones.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
+    ax = zone_plot.plot(color=[name2colour[z] for z in resid_plot.ZONE_resol])
+    subsample.plot(color=[name2colour[z] for z in subsample[f'{column}_name']], alpha=0.65, ax=ax)
+
+    # add legend
+    legend_patches = [mpatches.Patch(color=col, label=name) for name, col in name2colour.items()]
+    plt.legend(handles=legend_patches)
+
+
 # ## Setup
 # Ryan's prepared data, including only plots in the Auckland council boundary
 # parcels = gpd.read_file('input/Primary_Parcels_2016_prepared.gpkg')
@@ -614,28 +636,7 @@ parcels_output['Hdist_rural'] = distance_candidates[(np.arange(len(distance_cand
 parcels_output['Hdist_rural_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_rural_name'] = parcels_output.apply(lambda x: rural_code2name[x.Hdist_rural_code], axis=1)
 
-# In[ ]:
-
-colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan')
-name2colour = {name: colour for name, colour in zip(rural_code2name.values(), colours)}
-
-column = 'Hdist_rural'
-subsample = parcels_output[parcels_output[column] > 0].sample(10)
-subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
-subsample['geometry'] = subsample['buffer']
-subsample = subsample[~subsample.is_empty]
-# ax = rural.plot(column='ZONE_resol', legend=True)
-# subsample.plot(column='Hdist_rural_name', alpha=0.4, ax=ax)
-ax = rural.plot(color=[name2colour[z] for z in rural.ZONE_resol])
-subsample.plot(color=[name2colour[z] for z in subsample.Hdist_rural_name], alpha=0.65, ax=ax)
-# plt.ylim((5.88e6, 5.96e6))
-
-# add legend
-legend_patches = [mpatches.Patch(color=col, label=name) for name, col in name2colour.items()]
-plt.legend(handles=legend_patches)
-
-# ctx.add_basemap(ax=ax, crs=subsample.crs)
-
+plot_nearest_zones(parcels_output, rural, rural_code2name, 'Hdist_rural')
 
 # In[ ]:
 
@@ -657,31 +658,7 @@ parcels_output['Hdist_bus'] = distance_candidates[(np.arange(len(distance_candid
 parcels_output['Hdist_bus_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_bus_name'] = parcels_output.apply(lambda x: business_code2name[x.Hdist_bus_code], axis=1)
 
-
-colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
-name2colour = {name: colour for name, colour in zip(business_code2name.values(), colours)}
-
-# hard to see, subset to smaller area
-bounds = {'x1': 1.76e6, 'x2': 1.7613e6, 'y1': 5.9123e6, 'y2': 5.914e6}
-
-column = 'Hdist_bus'
-subsample = parcels_output.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
-subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
-subsample['geometry'] = subsample['buffer']
-
-subsample = subsample[~subsample.is_empty]
-
-business_plot = business.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
-ax = business_plot.plot(color=[name2colour[z] for z in business_plot.ZONE_resol])
-subsample.plot(color=[name2colour[z] for z in subsample.Hdist_bus_name], alpha=0.65, ax=ax)
-# plt.ylim((5.88e6, 5.96e6))
-
-# add legend
-legend_patches = [mpatches.Patch(color=col, label=name) for name, col in name2colour.items()]
-plt.legend(handles=legend_patches)
-
-# ctx.add_basemap(ax=ax, crs=subsample.crs)
-
+plot_nearest_zones(parcels_output, business, business_code2name, 'Hdist_bus')
 
 # In[ ]:
 
@@ -703,32 +680,7 @@ parcels_output['Hdist_resid'] = distance_candidates[(np.arange(len(distance_cand
 parcels_output['Hdist_resid_code'] = code_candidates[(np.arange(len(distance_candidates)), min_idx)]
 parcels_output['Hdist_resid_name'] = parcels_output.apply(lambda x: resid_code2name[x.Hdist_resid_code], axis=1)
 
-# In[ ]:
-
-colours = ('blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'cyan', 'black', 'white')
-name2colour = {name: colour for name, colour in zip(resid_code2name.values(), colours)}
-
-# hard to see, subset to smaller area
-bounds = {'x1': 1.76e6, 'x2': 1.7613e6, 'y1': 5.9123e6, 'y2': 5.914e6}
-
-column = 'Hdist_resid'
-subsample = parcels_output.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
-subsample['buffer'] = subsample.apply(lambda x: x.geometry.buffer(x[column]), axis=1)
-subsample['geometry'] = subsample['buffer']
-
-subsample = subsample[~subsample.is_empty]
-
-resid_plot = resid.cx[bounds['x1']:bounds['x2'], bounds['y1']:bounds['y2']]
-ax = resid_plot.plot(color=[name2colour[z] for z in resid_plot.ZONE_resol])
-subsample.plot(color=[name2colour[z] for z in subsample.Hdist_resid_name], alpha=0.65, ax=ax)
-# plt.ylim((5.88e6, 5.96e6))
-
-# add legend
-legend_patches = [mpatches.Patch(color=col, label=name) for name, col in name2colour.items()]
-plt.legend(handles=legend_patches)
-
-# ctx.add_basemap(ax=ax, crs=subsample.crs)
-
+plot_nearest_zones(parcels_output, resid, resid_code2name, 'Hdist_resid')
 
 # In[ ]:
 
