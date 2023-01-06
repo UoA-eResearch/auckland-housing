@@ -91,6 +91,16 @@ def extract_distance_from_dissolved(dataframe: gpd.GeoDataFrame):
     return ret_func
 
 
+def find_nearest(item, zone: dict = None):
+    index, row = item
+    distance_candidates = []
+    code_candidates = []
+    for code, zone_gdf in zone.items():
+        distance_candidates.append(row.geometry.distance(zone_gdf.geometry[0]))
+        code_candidates.append(zone_gdf.ZONE[0])
+    return distance_candidates, code_candidates
+
+
 # ## Setup
 # Ryan's prepared data, including only plots in the Auckland council boundary
 # parcels = gpd.read_file('input/Primary_Parcels_2016_prepared.gpkg')
@@ -602,17 +612,10 @@ rural = aup_zones[aup_zones.ZONE.isin(rural_codes)]
 
 rural_by_zone_dict = {code: rural[rural.ZONE == code].dissolve() for code in rural_codes}
 
-def find_nearest(item):
-    index, row = item
-    distance_candidates = []
-    code_candidates = []
-    for code, rural_gdf in rural_by_zone_dict.items():
-        distance_candidates.append(row.geometry.distance(rural_gdf.geometry[0]))
-        code_candidates.append(rural_gdf.ZONE[0])
-    return distance_candidates, code_candidates
+find_nearest_rural = partial(find_nearest, zone=rural_by_zone_dict)
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
+output = process_map(find_nearest_rural, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
@@ -694,17 +697,10 @@ business = aup_zones[aup_zones.ZONE.isin(business_codes)]
 
 business_by_zone_dict = {code: business[business.ZONE == code].dissolve() for code in business_codes}
 
-def find_nearest(item):
-    index, row = item
-    distance_candidates = []
-    code_candidates = []
-    for code, business_gdf in business_by_zone_dict.items():
-        distance_candidates.append(row.geometry.distance(business_gdf.geometry[0]))
-        code_candidates.append(business_gdf.ZONE[0])
-    return distance_candidates, code_candidates
+find_nearest_business = partial(find_nearest, zone=business_by_zone_dict)
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
+output = process_map(find_nearest_business, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
@@ -794,17 +790,10 @@ resid = aup_zones[aup_zones.ZONE.isin(resid_codes)]
 
 resid_by_zone_dict = {code: resid[resid.ZONE == code].dissolve() for code in resid_codes}
 
-def find_nearest(item):
-    index, row = item
-    distance_candidates = []
-    code_candidates = []
-    for code, gdf in resid_by_zone_dict.items():
-        distance_candidates.append(row.geometry.distance(gdf.geometry[0]))
-        code_candidates.append(gdf.ZONE[0])
-    return distance_candidates, code_candidates
+find_nearest_resid = partial(find_nearest, zone=resid_by_zone_dict)
 
 # this might hang for a few minutes before multiprocessing starts
-output = process_map(find_nearest, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
+output = process_map(find_nearest_resid, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
 
 # all distances (to any zone)
 distance_candidates = np.array([x[0] for x in output])
