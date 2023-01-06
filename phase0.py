@@ -14,7 +14,6 @@ import matplotlib.pyplot as plt
 import time
 from datetime import timedelta
 
-
 tqdm.pandas()
 plt.rcParams['figure.figsize'] = (16, 16)
 pd.set_option('min_rows', 30)
@@ -104,7 +103,8 @@ def find_nearest_candidates(item, zone: dict = None):
 
 def find_nearest_zone(zone_type: str, _aup_zones, _parcels_output, max_workers: int):
     # Zone codes containing zone type (e.g.: 'rural')
-    zone_codes = _aup_zones[_aup_zones.ZONE_resol.str.lower().str.contains(f'{zone_type} - ', na=False)]['ZONE'].unique()
+    zone_codes = _aup_zones[_aup_zones.ZONE_resol.str.lower().str.contains(f'{zone_type} - ', na=False)][
+        'ZONE'].unique()
 
     # check that each zone code matches with a unique zone name
     assert all([len(_aup_zones[_aup_zones.ZONE == code].ZONE_resol.unique()) == 1 for code in zone_codes])
@@ -233,10 +233,10 @@ roads = parcels[parcels.parcel_intent == "Road"]
 roads = roads.to_crs(parcels.crs)
 
 roads_dissolved = roads.dissolve()
-# %%time
 # this might hang for a few minutes before multiprocessing starts
 get_points_in_roads_partial = partial(get_points_in_roads, roads_dissolved=roads_dissolved)
-road_intersections = process_map(get_points_in_roads_partial, parcels_output.iterrows(), max_workers=max_workers, chunksize=100, total=len(parcels_output))
+road_intersections = process_map(get_points_in_roads_partial, parcels_output.iterrows(), max_workers=max_workers,
+                                 chunksize=100, total=len(parcels_output))
 
 parcels_output['LINZ_parcel_roadvertices_lon'] = [r[0] for r in road_intersections]
 parcels_output['LINZ_parcel_roadvertices_lat'] = [r[1] for r in road_intersections]
@@ -275,7 +275,8 @@ print()
 # Bonus: representative point + within is many, many, many times faster than using intersects + not touches (~10s vs not finishing before killing after at least 30 minutes)
 
 # **first, 2a and 2b** - needed for 1i.
-aup_zones = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_BaseZone.shp')
+aup_zones = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_BaseZone.shp')
 
 # use 2193 for AUP; this will be useful later when calculating haversine distances to nearest zones
 # representative point is much faster for sjoin
@@ -284,7 +285,8 @@ parcels = parcels.set_crs(2193)
 aup_zones = aup_zones.to_crs(parcels.crs)
 aup_zones = aup_zones.rename(columns={'ZONE_resol': 'LINZmatch_AUP_name', 'ZONE': 'LINZmatch_AUP_code'})
 
-parcels_zoned = gpd.sjoin(parcels, aup_zones[['LINZmatch_AUP_name', 'LINZmatch_AUP_code', 'geometry']], how='left', predicate='within').drop(columns=['index_right'])
+parcels_zoned = gpd.sjoin(parcels, aup_zones[['LINZmatch_AUP_name', 'LINZmatch_AUP_code', 'geometry']], how='left',
+                          predicate='within').drop(columns=['index_right'])
 # index for dropping duplicates
 parcels_zoned['index_'] = parcels_zoned.index
 parcels_zoned = parcels_zoned.drop_duplicates(subset=['index_', 'LINZmatch_AUP_code'])
@@ -308,13 +310,15 @@ parcels_output.geometry = parcels_output['geometry_polygon_4326']
 parcels_output = parcels_output.set_crs(4326)
 
 # number of rows to process at once
-row_chunk_size=100
+row_chunk_size = 100
+
+
 def find_neighbour_info(i):
     """
     find neighbours of parcels from i * row_chunk_size to (i+1) * row_chunk_size, then find ids and zones of those
     neighbouring parcels
     """
-    parcels_chunk = parcels_output.iloc[i*row_chunk_size:min((i+1)*row_chunk_size, len(parcels_output))]
+    parcels_chunk = parcels_output.iloc[i * row_chunk_size:min((i + 1) * row_chunk_size, len(parcels_output))]
     neighbour_gdf = gpd.sjoin(parcels_chunk, parcels, predicate='touches')
     neighbour_zones = []
     neighbour_ids = []
@@ -326,11 +330,13 @@ def find_neighbour_info(i):
             neighbour_ids.append([])
             neighbour_zones.append([])
     return neighbour_ids, neighbour_zones
-        
+
+
 # each call to find_neighbours will return two lists like this: [list of neighbour ids], [list of niehgbour zones]
 # The final structure will be of shape (n_chunks, 2, n_neighbours), where n_neighbours will vary between lists
-parcel_neighbour_chunks = process_map(find_neighbour_info, list(range((int(np.ceil(len(parcels_output) / row_chunk_size))))),
-                                      max_workers=int(max_workers/2), chunksize=50)
+parcel_neighbour_chunks = process_map(find_neighbour_info,
+                                      list(range((int(np.ceil(len(parcels_output) / row_chunk_size))))),
+                                      max_workers=int(max_workers / 2), chunksize=50)
 
 parcels_output['LINZ_adjoining_parcel_ID'] = [ids for chunk in parcel_neighbour_chunks for ids in chunk[0]]
 parcels_output['LINZ_parcel_sides_zones'] = [zones for chunk in parcel_neighbour_chunks for zones in chunk[1]]
@@ -364,10 +370,11 @@ def get_powerlines(id):
         powerlines = power_intersect.loc[[id]]
         # filter out duplicates
         return powerlines.descriptio.unique().tolist()
-#         return ','.join(powerlines.descriptio.unique())
+    #         return ','.join(powerlines.descriptio.unique())
 
     else:
         return None
+
 
 parcel_powerlines = process_map(get_powerlines, list(parcels_output.index), max_workers=max_workers, chunksize=1000)
 parcels_output['LINZ_TRNSPWR_ohead_name'] = parcel_powerlines
@@ -387,12 +394,20 @@ print()
 # ##### k. i. **LINZ_VWSHFT_ohead_indicator** Indicator (0 or 1) for LINZ parcel located under viewshafts. Leave blank otherwise.
 # ##### k. ii. **LINZ_VWSHFT_ohead_name** Name of the volcanic cone (e.g. Mt Albert). Leave blank if no viewshaft applies. 
 # ##### k. iii. **LINZ_VWSHFT_ohead_ID** OBJECTID of the viewshaft. Leave blank if no viewshaft applies.  
-viewshafts_local = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_LocallySignificantVolcanicViewshafts.shp').to_crs(parcels_output.crs)
-viewshafts_regional = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_RegionallySignificantVolcanicViewShaftsAndHeightSensitiveAreasOverlay.shp').to_crs(parcels_output.crs)
-viewshafts_museum = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_AucklandMuseumViewshaftOverlay.shp').to_crs(parcels_output.crs)
+viewshafts_local = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_LocallySignificantVolcanicViewshafts.shp').to_crs(
+    parcels_output.crs)
+viewshafts_regional = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_RegionallySignificantVolcanicViewShaftsAndHeightSensitiveAreasOverlay.shp').to_crs(
+    parcels_output.crs)
+viewshafts_museum = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_AucklandMuseumViewshaftOverlay.shp').to_crs(
+    parcels_output.crs)
 
 # include dilworth?
-viewshafts_dilworth = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_DilworthTerraceHousesViewshaftOverlay.shp').to_crs(parcels_output.crs)
+viewshafts_dilworth = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_DilworthTerraceHousesViewshaftOverlay.shp').to_crs(
+    parcels_output.crs)
 
 viewshafts_museum['OBJECTID'] = ['Museum_' + str(s) for s in viewshafts_museum['OBJECTID']]
 viewshafts_regional['OBJECTID'] = ['RSVS_' + str(s) for s in viewshafts_regional['OBJECTID']]
@@ -410,7 +425,8 @@ def get_viewshafts(id):
         return vs["OBJECTID"].unique().tolist(), vs["NAME"].unique().tolist()
     else:
         return None
-    
+
+
 parcel_viewshafts = process_map(get_viewshafts, list(parcels_output.index), max_workers=max_workers, chunksize=1000)
 
 parcels_output['LINZ_VWSHFT_ohead_name'] = [vs[1] if vs is not None else None for vs in parcel_viewshafts]
@@ -446,13 +462,14 @@ print()
 parcels_output['geometry'] = parcels_output.geometry_polygon_2193
 parcels_output = parcels_output.set_crs(2193)
 
-aup_zones = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_BaseZone.shp')
+aup_zones = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_BaseZone.shp')
 aup_zones = aup_zones.to_crs(2193)
 aup_zones.sample(3)
 
 # Find distance to nearest rural zone
 
-rural, rural_code2name, distance_candidates, code_candidates, min_idx =\
+rural, rural_code2name, distance_candidates, code_candidates, min_idx = \
     find_nearest_zone('rural', aup_zones, parcels_output, max_workers)
 
 parcels_output['Hdist_rural'] = distance_candidates[(np.arange(len(distance_candidates)), min_idx)]
@@ -502,8 +519,7 @@ print(time.time() - last, 'seconds')
 last = time.time()
 print()
 
-
-# ##### f. **Hdist_SH** Minimum Haversine distance to Residential - Single House Zone 
+# ##### f. **Hdist_SH** Minimum Haversine distance to Residential - Single House Zone
 # ##### g. **Hdist_MHS** Minimum Haversine distance to Residential - Mixed Housing Suburban Zone
 # ##### h. **Hdist_MHU** Minimum Haversine distance to Residential - Mixed Housing Urban Zone  
 # ##### i. **Zone Hdist_THA** Minimum Haversine distance to Residential - Terrace Housing and Apartments
@@ -511,18 +527,21 @@ print()
 
 # %%time
 postfix2name = {
-            'SH': 'Residential - Single House Zone',
-            'MHS': 'Residential - Mixed Housing Suburban Zone',
-            'MHU': 'Residential - Mixed Housing Urban Zone',
-            'THA': 'Residential - Terrace Housing and Apartment Building Zone'
-               }
+    'SH': 'Residential - Single House Zone',
+    'MHS': 'Residential - Mixed Housing Suburban Zone',
+    'MHU': 'Residential - Mixed Housing Urban Zone',
+    'THA': 'Residential - Terrace Housing and Apartment Building Zone'
+}
 for postfix, zone in tqdm(postfix2name.items()):
     resid_gdf = resid[resid.ZONE_resol == zone].dissolve()
 
 
     def get_distance(geo):
         return geo.distance(resid_gdf.geometry[0])
-    parcels_output[f'Hdist_{postfix}'] = process_map(get_distance, parcels_output.geometry, max_workers=max_workers, chunksize=100)
+
+
+    parcels_output[f'Hdist_{postfix}'] = process_map(get_distance, parcels_output.geometry, max_workers=max_workers,
+                                                     chunksize=100)
 
 postfix = 'THA'
 column = f'Hdist_{postfix}'
@@ -567,14 +586,16 @@ param_sets.append(
 
 LA.sample(3)
 
-
 # ### 4. 2018 Statistical Area 2 Information (information on the 2018SA2 that the consent is located in)
 
 # ##### a. Name (string) **SA22018_name**
 # ##### b. Numeric code **SA22018_code**
 
-sa2 = gpd.read_file('input/statsnzstatistical-area-2-higher-geographies-2018-clipped-generalis-FGDB.zip!statistical-area-2-higher-geographies-2018-clipped-generalis.gdb').to_crs(parcels_output.crs)
-sa2 = sa2.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+sa2 = gpd.read_file(
+    'input/statsnzstatistical-area-2-higher-geographies-2018-clipped-generalis-FGDB.zip!statistical-area-2-higher-geographies-2018-clipped-generalis.gdb').to_crs(
+    parcels_output.crs)
+sa2 = sa2.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+      parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 sa2 = sa2.rename(columns={'SA22018_V1_00': 'SA22018_code', 'SA22018_V1_00_NAME': 'SA22018_name'})
 
 param_sets.append(
@@ -591,7 +612,8 @@ param_sets.append(
 # ##### b. Numeric code **AU2013_code**
 
 au2013 = gpd.read_file('input/area-unit-2013.gdb.zip').to_crs(parcels_output.crs)
-au2013 = au2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+au2013 = au2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 au2013 = au2013.rename(columns={'AU2013_V1_00': 'AU2013_code', 'AU2013_V1_00_NAME': 'AU2013_name'})
 
 param_sets.append(
@@ -607,7 +629,8 @@ param_sets.append(
 # ##### a. Code **MB2018_code**
 
 mb2018 = gpd.read_file('input/meshblock-2018-clipped-generalised.gdb.zip').to_crs(parcels_output.crs)
-mb2018 = mb2018.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+mb2018 = mb2018.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 mb2018 = mb2018.rename(columns={'MB2018_V1_00': 'MB2018_code'})
 
 param_sets.append(
@@ -622,14 +645,15 @@ param_sets.append(
 # ##### a. Code **MB2013_code**
 
 mb2013 = gpd.read_file('input/meshblock-2013.gdb.zip').to_crs(parcels_output.crs)
-mb2013 = mb2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+mb2013 = mb2013.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+         parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 mb2013 = mb2013.rename(columns={'MeshblockNumber': 'MB2013_code'})
 
 param_sets.append(
     {
         'area_gdf': mb2013,
         'area_code_col': 'MB2013_code'
-    } 
+    }
 )
 
 print('3-7 reading files complete')
@@ -643,12 +667,13 @@ for params in param_sets:
     area_gdf = params['area_gdf']
     area_code_col = params['area_code_col']
     area_name_col = params.get('area_name_col')
-    
+
     print('adding', area_code_col)
-    
+
     # join
     keep_cols = ([area_name_col] if area_name_col else []) + [area_code_col]
-    joined = gpd.sjoin(gdf.drop(keep_cols, errors='ignore', axis=1), area_gdf[keep_cols + ['geometry']], how='left').drop(columns=['index_right'])
+    joined = gpd.sjoin(gdf.drop(keep_cols, errors='ignore', axis=1), area_gdf[keep_cols + ['geometry']],
+                       how='left').drop(columns=['index_right'])
 
     # find how many times each index value appears
     # more than one appearence indicates more than one area has been matched
@@ -657,6 +682,7 @@ for params in param_sets:
     ambiguous_idx = n_matched[n_matched > 1].index
 
     print(len(ambiguous_idx), 'parcels matched to multiple areas')
+
 
     def find_greatest_area_match(idx):
         """find the overlapping area with the greatest area"""
@@ -667,23 +693,25 @@ for params in param_sets:
         # break into distinct regions
         overlaid = gpd.overlay(parcel, matching)
         if area_name_col:
-            return overlaid.loc[np.argmax(overlaid.area)][area_code_col], overlaid.loc[np.argmax(overlaid.area)][area_name_col]
+            return overlaid.loc[np.argmax(overlaid.area)][area_code_col], overlaid.loc[np.argmax(overlaid.area)][
+                area_name_col]
         return overlaid.loc[np.argmax(overlaid.area)][area_code_col]
 
-    area_matches = process_map(find_greatest_area_match, ambiguous_idx, max_workers=int(max_workers/2), chunksize=50)
+
+    area_matches = process_map(find_greatest_area_match, ambiguous_idx, max_workers=int(max_workers / 2), chunksize=50)
 
     # keep first row of groups of duplicates indexes
     joined = joined[~joined.index.duplicated(keep='first')]
     # replace area code with that with largest overlap
-    
+
     if area_name_col:
         joined.loc[ambiguous_idx, area_code_col] = [a[0] for a in area_matches]
         joined.loc[ambiguous_idx, area_name_col] = [a[1] for a in area_matches]
     else:
         joined.loc[ambiguous_idx, area_code_col] = area_matches
-    
+
     gdf = joined
-    
+
     print()
     # store ambiguous idx for later, e.g. plotting
     params['ambiguous_idx'] = ambiguous_idx
@@ -701,11 +729,12 @@ area_code_col = params['area_code_col']
 
 plot_idx = ambiguous_idx[np.random.randint(len(ambiguous_idx))]
 plot_gdf = gdf.loc[[plot_idx]]
-plot_mb = gpd.sjoin(params['area_gdf'][[params['area_code_col'], 'geometry']], plot_gdf[['geometry']]).drop(columns=['index_right'])
+plot_mb = gpd.sjoin(params['area_gdf'][[params['area_code_col'], 'geometry']], plot_gdf[['geometry']]).drop(
+    columns=['index_right'])
 
 plot_bounds = plot_gdf.buffer(100).total_bounds
 
-ax = area_gdf[area_gdf[area_code_col] == gdf.loc[plot_idx][area_code_col]].plot(facecolor='None',hatch= "///")
+ax = area_gdf[area_gdf[area_code_col] == gdf.loc[plot_idx][area_code_col]].plot(facecolor='None', hatch="///")
 plot_gdf.boundary.plot(color='red', ax=ax)
 
 plot_mb.boundary.plot(ax=ax, alpha=0.3)
@@ -736,15 +765,17 @@ parcels_output = parcels_output.set_crs(2193)
 # 
 # The first doesn't have islands (e.g. Waiheke).  
 # The second is probably most appropriate.
-coastline = gpd.read_file('input/lds-nz-coastline-mean-high-water-FGDB.zip!nz-coastline-mean-high-water.gdb').to_crs(2193)
-coastline = coastline.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+coastline = gpd.read_file('input/lds-nz-coastline-mean-high-water-FGDB.zip!nz-coastline-mean-high-water.gdb').to_crs(
+    2193)
+coastline = coastline.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+            parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 
 coastline_dissolved = coastline.dissolve()
 
-
 extract_coastal_dist = extract_distance_from_dissolved(coastline_dissolved)
 
-parcels_output['Hdist_coast'] = process_map(extract_coastal_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_coast'] = process_map(extract_coastal_dist, parcels_output.geometry, max_workers=max_workers,
+                                            chunksize=10)
 
 # if distance work, then red circles should extend to the nearest coastline, and no further
 subsample = parcels_output.sample(10)
@@ -767,10 +798,13 @@ parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
 parcels_output = parcels_output.set_crs(2193)
 
 roads = gpd.read_file('input/lds-nz-road-centrelines-topo-150k-FGDB.zip!nz-road-centrelines-topo-150k.gdb').to_crs(2193)
-roads = roads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+roads = roads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+        parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 highways = roads[~roads.hway_num.isna()]
 highways_dissolved = highways.dissolve()
-arterial_roads = gpd.read_file('input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_ArterialRoad.shp').to_crs(2193)
+arterial_roads = gpd.read_file(
+    'input/2016_aup.zip!2016_Unitary_Plan_operational_15Nov/UP_OIP_15Nov2016_SHP/MASTER_UP_ArterialRoad.shp').to_crs(
+    2193)
 arterial_roads_dissolved = arterial_roads.dissolve()
 
 ax = highways.plot()
@@ -781,9 +815,11 @@ extract_highway_dist = extract_distance_from_dissolved(highways_dissolved)
 extract_main_road_dist = extract_distance_from_dissolved(arterial_roads_dissolved)
 
 # parcels_output['Hdist_motorway'] = parcels_output.progress_apply(lambda x: x.geometry.distance(highways_dissolved.geometry[0]), axis=1)
-parcels_output['Hdist_motorway'] = process_map(extract_highway_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_motorway'] = process_map(extract_highway_dist, parcels_output.geometry, max_workers=max_workers,
+                                               chunksize=10)
 # parcels_output['Hdist_main_road'] = parcels_output.progress_apply(lambda x: x.geometry.distance(arterial_roads_dissolved.geometry[0]), axis=1)
-parcels_output['Hdist_main_road'] = process_map(extract_main_road_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_main_road'] = process_map(extract_main_road_dist, parcels_output.geometry,
+                                                max_workers=max_workers, chunksize=10)
 
 # if distance work, then red circles should extend to the nearest coastline, and no further
 subsample = parcels_output.sample(10)
@@ -799,14 +835,16 @@ print()
 
 # ##### e. Minimum Haversine distance to rail line **Hdist_rail**
 railroads = gpd.read_file('input/lds-nz-railway-centrelines-topo-150k-SHP.zip').to_crs(2193)
-railroads = railroads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2], parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
+railroads = railroads.cx[parcels_output.total_bounds[0]:parcels_output.total_bounds[2],
+            parcels_output.total_bounds[1]:parcels_output.total_bounds[3]]
 railroads_dissolved = railroads.dissolve()
 
 parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
 parcels_output = parcels_output.set_crs(2193)
 extract_rail_dist = extract_distance_from_dissolved(railroads_dissolved)
 
-parcels_output['Hdist_rail'] = process_map(extract_rail_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_rail'] = process_map(extract_rail_dist, parcels_output.geometry, max_workers=max_workers,
+                                           chunksize=10)
 
 subsample = parcels_output.sample(10)
 subsample['rail_buffer'] = subsample.apply(lambda x: x.geometry.buffer(x.Hdist_rail), axis=1)
@@ -829,7 +867,8 @@ parcels_output = parcels_output.set_crs(2193)
 
 extract_skytower_dist = extract_distance_from_dissolved(skytower)
 
-parcels_output['Hdist_skytower'] = process_map(extract_skytower_dist, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+parcels_output['Hdist_skytower'] = process_map(extract_skytower_dist, parcels_output.geometry, max_workers=max_workers,
+                                               chunksize=10)
 
 # if distance works, then red circles should extend to the nearest sky tower, and no further
 subsample = parcels_output.sample(10)
@@ -849,7 +888,7 @@ print()
 # Note: here I've used centroids. Maybe should use parcel polygons instead.
 spha = gpd.read_file('input/AC_Special_Housing_Area.zip').to_crs(2193)
 spha_dissolved = spha.dissolve()
-assert(len(spha_dissolved) == 1)
+assert (len(spha_dissolved) == 1)
 
 parcels_output['geometry'] = parcels_output['geometry_centroid_2193']
 parcels_output = parcels_output.set_crs(2193)
@@ -858,10 +897,12 @@ parcels_output = parcels_output.set_crs(2193)
 def get_spha_indicator(geom):
     return spha_dissolved.geometry.contains(geom)[0]
 
-parcels_output['SpHA_indicator'] = process_map(get_spha_indicator, parcels_output.geometry, max_workers=max_workers, chunksize=10)
+
+parcels_output['SpHA_indicator'] = process_map(get_spha_indicator, parcels_output.geometry, max_workers=max_workers,
+                                               chunksize=10)
 
 subsample = parcels_output.sample(min(500, len(parcels_output)))
-ax=subsample.plot(column='SpHA_indicator')
+ax = subsample.plot(column='SpHA_indicator')
 plt.ylim((5.89e6, 5.95e6))
 plt.xlim((1.73e6, 1.78e6))
 spha_dissolved.boundary.plot(ax=ax)
@@ -876,7 +917,8 @@ print()
 parcels_output['geometry'] = parcels_output.geometry_polygon_4326
 parcels_output = parcels_output.set_crs(4326)
 
-cols_to_drop = ["geometry", "id", "geometry_polygon_4326", "geometry_polygon_2193", "geometry_centroid_2193", "representative_point_2193", "geometry_centroid_4326", "representative_point_4326"]
+cols_to_drop = ["geometry", "id", "geometry_polygon_4326", "geometry_polygon_2193", "geometry_centroid_2193",
+                "representative_point_2193", "geometry_centroid_4326", "representative_point_4326"]
 parcels_output.drop(columns=cols_to_drop).to_csv('output/parcels_phase0.csv', index=False)
 # errors out because some entries are lists:
 # parcels_output.drop([c for c in orginal_columns if c != 'geometry'], axis=1, errors='ignore').to_file('parcels_phase0.gpkg', driver='GPKG')
