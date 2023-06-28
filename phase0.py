@@ -223,7 +223,7 @@ if __name__ == '__main__':
 
     roads_dissolved = roads.dissolve()
     # this might hang for a few minutes before multiprocessing starts
-    get_points_in_roads_partial = partial(get_points_in_roads, roads_dissolved=roads_dissolved)
+    get_points_in_roads_partial = partial(get_points_in_roads, _roads_dissolved=roads_dissolved)
     road_intersections = process_map(get_points_in_roads_partial, parcels_output.iterrows(), max_workers=max_workers,
                                      chunksize=100, total=len(parcels_output))
 
